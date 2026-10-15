@@ -220,24 +220,24 @@ td.r,th.r{text-align:right}
 .lv4{background:var(--c1);color:var(--bg)}
 .cov-bad{color:var(--bad);font-weight:650}
 .cov-warn{color:var(--warn);font-weight:650}
-
-/* Governança */
-.rite{display:flex;flex-direction:column;gap:10px}
-.rite .freq{font-family:var(--mono);font-size:12px;color:var(--muted-fg);text-transform:uppercase;letter-spacing:.06em}
-.rite h4{margin:0;font-size:16px}
-.sentence{font-size:13.5px;line-height:1.6;border-left:2px solid var(--border);padding-left:12px;color:var(--muted-fg)}
-.sentence b{color:var(--fg);font-weight:550}
-.auto-col{display:flex;flex-direction:column;gap:8px}
-.auto-col ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:13.5px}
-
-/* Capacidade */
-.seg{display:inline-grid;grid-auto-flow:column;background:var(--muted);border-radius:8px;padding:3px;gap:2px}
-.seg button{border:0;background:transparent;border-radius:6px;padding:6px 12px;cursor:pointer;color:var(--muted-fg);font-weight:500}
-.seg button.on{background:var(--card);color:var(--fg);box-shadow:var(--shadow)}
-.range-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.range-row input[type=range]{flex:1 1 180px;accent-color:var(--fg)}
-.prem input{width:76px;height:30px;border:1px solid var(--input);border-radius:6px;background:var(--card);padding:0 8px;text-align:right;font-family:var(--mono)}
 .big{font-size:32px;font-weight:650;letter-spacing:-.02em}
+
+/* Equipe */
+.who{display:flex;align-items:center;gap:10px;min-width:180px}
+.who .pav{width:32px;height:32px;border-radius:10px;font-size:12px}
+tr.tl-row td{background:color-mix(in srgb,var(--primary) 5%,transparent)}
+.matrix tr.grp td{text-align:left;padding:10px 6px 4px;font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted-fg);border-bottom:0}
+.matrix th.st-bad{color:var(--bad);font-weight:650}
+.matrix th.st-warn{color:var(--warn);font-weight:650}
+.matrix tfoot tr:first-child td{border-top:1px solid var(--border)}
+.matrix tfoot tr:last-child td{border-bottom:0}
+.sub-h{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted-fg);margin-bottom:2px}
+.rk{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.rk:last-of-type{border-bottom:0}
+.rk.click{cursor:pointer;margin:0 -8px;padding:10px 8px;border-radius:8px}
+.rk.click:hover{background:var(--hover)}
+.kpi-inline{font-size:24px;font-weight:650;letter-spacing:-.02em}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
 
 /* Sheet & modal */
 .scrim{position:fixed;inset:0;background:var(--overlay);z-index:50}
@@ -769,16 +769,7 @@ const CLIENTS=RAW.map((r,i)=>{
 /* ---------- Estado ---------- */
 const SPRINT0={n:46,doneN:17,doneH:118};        // itens da sprint 42 e o que já foi concluído até agora
 const S={page:'overview',month:5,view:'gestor',price:85,q:'',quad:'Todos',pageN:0,sheet:null,modal:null,
-  scen:'cons',
-  prem:{cons:{rel:1.5,auto:70,tri:5,triR:50,ret:3,retR:50},mod:{rel:2,auto:80,tri:8,triR:60,ret:5,retR:60}},
   load:Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint])),
-  gtab:'men', gcli:'c1', greg:'dec', gdone:{},
-  dec:[
-   {id:'d1',t:'Reprecificar Ferro & Aço Industrial no próximo aditivo',resp:'Comercial',prazo:'31/10',st:'Pendente',orig:'Revisão mensal de agosto'},
-   {id:'d4',t:'Cobrar o excedente da Cooperativa Campo Forte',resp:'Gestor + comercial',prazo:'10/10',st:'Atrasada',orig:'Revisão mensal de agosto'},
-   {id:'d2',t:'Capacitar Carla em Oracle APEX até o nível 3',resp:'Gestor',prazo:'30/11',st:'Em andamento',orig:'Revisão da equipe · 3º trimestre'},
-   {id:'d3',t:'Usar o rascunho da IA no relatório mensal de todos os clientes',resp:'Gestor',prazo:'30/09',st:'Feita',orig:'Revisão mensal de agosto'}
-  ],
   urgIdx:0, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
   quadSel:null, ctab:'acoes', rtab:'task', kstage:{}, monthly:{}, msheet:null, add:false, addSel:null,
   reports:[
@@ -967,22 +958,6 @@ function sparkMargin(c){
   pts.forEach((p,k)=>g+=`<circle cx="${p[0]}" cy="${p[1]}" r="${k===pts.length-1?4:2.5}" fill="${p[2]<0?'var(--bad)':'var(--fg)'}"/>`);
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="Margem nos últimos meses">${g}</svg>`;
 }
-function chartPayback(cum){
-  const W=520,H=190,L=56,R=10,T=12,B=26;
-  const mn=Math.min(...cum),mx=Math.max(...cum);
-  const lo=-niceMax(-mn*1.1||1),hi=niceMax(mx*1.05||1);
-  const x=k=>L+(W-L-R)*k/(cum.length-1), y=v=>T+(H-T-B)*(hi-v)/(hi-lo);
-  let g='';
-  [lo,0,hi/2,hi].forEach(v=>g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${nf0.format(v/1000)}k</text>`);
-  g+=`<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--muted-fg)"/>`;
-  const pts=cum.map((v,k)=>`${x(k)},${y(v)}`).join(' ');
-  g+=`<polygon points="${x(0)},${y(0)} ${pts} ${x(cum.length-1)},${y(0)}" fill="var(--c1)" opacity=".12"/>`;
-  g+=`<polyline points="${pts}" fill="none" stroke="var(--c1)" stroke-width="2.5"/>`;
-  cum.forEach((v,k)=>{if(k%3===0||k===cum.length-1)g+=`<text x="${x(k)}" y="${H-6}" text-anchor="middle">m${k}</text>`;});
-  g+=`<circle cx="${x(cum.length-1)}" cy="${y(cum[cum.length-1])}" r="4" fill="var(--c1)"/>`;
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Resultado acumulado em 12 meses">${g}</svg>`;
-}
-
 /* ---------- Componentes ---------- */
 const kpi=(lbl,val,sub,icon)=>`<div class="card kpi"><div class="lbl"><span>${lbl}</span>${icon?ic(icon,'muted'):''}</div><div class="val">${val}</div><div class="sub">${sub||''}</div></div>`;
 function delta(cur,prev,good='up',fmt=v=>pct1(v)){
@@ -1000,9 +975,7 @@ const PAGES={
  clients:{label:'Clientes',icon:'building',group:'Operação'},
  sprint:{label:'Sprint e alocação',icon:'kanban',group:'Operação',gestor:true},
  reports:{label:'Relatórios',icon:'file',group:'Operação',gestor:true},
- team:{label:'Equipe',icon:'users',group:'Operação',gestor:true},
- gov:{label:'Governança',icon:'gov',group:'Gestão'},
- roi:{label:'Capacidade e retorno',icon:'trend',group:'Gestão'}
+ team:{label:'Equipe',icon:'users',group:'Operação',gestor:true}
 };
 
 function pgOverview(){
@@ -1046,7 +1019,7 @@ function pgOverview(){
       </div>
     </div>
     <div class="card">
-      <div class="card-h"><div><h3>Pauta da revisão mensal</h3><p>Gerada a partir dos alertas. Gestor e diretoria, 1 hora.</p></div><button type="button" class="btn sm" data-act="go" data-p="gov">Ver ritos</button></div>
+      <div class="card-h"><div><h3>Pauta da revisão mensal</h3><p>Gerada a partir dos alertas. Gestor e diretoria, 1 hora.</p></div></div>
       <div class="card-b"><ol class="pauta">${pauta}</ol></div>
     </div>
   </div>`;
@@ -1216,47 +1189,95 @@ function pgTeam(){
   if(S.person) return S.person==='tl'?pgTechLead():pgPerson(S.person);
   const m=S.month, mc=monthCalc(m);
   const used=new Set(CLIENTS.map(c=>c.st));
-  const risks=STACKS.filter(s=>used.has(s)&&coverage(s)<2);
+  const risks=STACKS.filter(s=>used.has(s)&&coverage(s)<2).sort((a,b)=>coverage(a)-coverage(b)||clientsByStack(b).length-clientsByStack(a).length);
   const over=PEOPLE.filter(p=>pCli(p,m)/p.ponto>0.9);
-  const levels=['Sênior','Pleno','Júnior'];
-  const INT=[['Documentação no GlobalDoc',0.34],['Capacitação e estudo',0.30],['Relatórios e reuniões com cliente',0.22],['Reuniões internas',0.14]];
+  const solo=CLIENTS.filter(c=>c.h[m]>0&&Object.keys(c.att).length===1);
   return `
-  <div class="page-head"><div><h1>Equipe</h1><p>Quem sabe o quê, onde a operação depende de uma pessoa só e como está a carga. Sem ranking: o dado individual serve para distribuir carga e planejar capacitação.</p></div></div>
+  <div class="page-head"><div><h1>Equipe</h1><p>Como está a carga, quem sabe o quê e onde a operação depende de uma pessoa só. Sem ranking: o dado individual serve para distribuir carga e planejar capacitação.</p></div></div>
   <div class="grid g-kpi">
     ${kpi('Ocupação média',pct(mc.occ),'<span>horas em clientes ÷ horas de ponto</span>','users')}
-    ${kpi('Acima de 90%',String(over.length),`<span>${over.length?over.map(p=>p.n).join(', ')+' · redistribuir':'ninguém'}</span>`,'alert')}
-    ${kpi('Stacks em risco',String(risks.length),`<span>${risks.join(', ')}</span>`,'info')}
-    ${kpi('Horas fora de chamado de cliente',hh(mc.int+mc.inv),`<span>${hh(mc.int)} em chamados internos · ${hh(mc.inv)} sem registro</span>`,'file')}
+    ${kpi('Acima de 90%',String(over.length),`<span>${over.length?over.map(p=>p.n).join(', ')+' · redistribuir carga':'ninguém sobrecarregado'}</span>`,'alert')}
+    ${kpi('Stacks em risco',String(risks.length),`<span>${risks.length?'menos de 2 pessoas com nível 3 ou 4':'todas cobertas'}</span>`,'code')}
+    ${kpi('Clientes com uma pessoa só',String(solo.length),'<span>se ela faltar, o atendimento para</span>','building')}
   </div>
 
-  ${teamRoster(m)}
+  ${teamTable(m)}
+  ${teamMatrix(used,risks)}
 
-  <div class="card">
-    <div class="card-h"><div><h3>Matriz de competências</h3><p>Nível de 1 a 4 por stack, autodeclarado e validado no rito trimestral. A última linha conta quantas pessoas têm nível 3 ou 4.</p></div></div>
+  <div class="grid g-2e">
+    ${teamRisks(risks,solo)}
+    ${teamOff(mc)}
+  </div>`;
+}
+const byName=(a,b)=>a.n.localeCompare(b.n);
+const topStacks=p=>Object.entries(p.sk).filter(e=>e[1]>=3).sort((a,b)=>b[1]-a[1]).map(e=>e[0]);
+function teamTable(m){
+  const sk=p=>{const t=topStacks(p);return t.length?esc(t.join(' · ')):'<span class="muted">em formação</span>';};
+  const tl=`<tr class="click tl-row" data-act="person" data-id="tl">
+      <td><div class="who">${avatarHTML(TL)}<div><div class="cell-main">${esc(TL.full)}</div><div class="cell-sub">${TL.role}</div></div></div></td>
+      <td class="cell-sub">${sk(TL)}</td>
+      <td colspan="5"><span class="badge b-info">Tech lead</span> <span class="cell-sub">revisa os PRs do time · fora da capacidade de atendimento</span></td>
+      <td class="r">${ic('right','muted')}</td></tr>`;
+  const rows=PEOPLE.slice().sort(byName).map(p=>{
+    const c=pCli(p,m), inv=p.ponto-c-pInt(p,m), nc=CLIENTS.filter(x=>x.att[p.id]&&x.h[m]>0).length;
+    return `<tr class="click" data-act="person" data-id="${p.id}">
+      <td><div class="who">${avatarHTML(p)}<div><div class="cell-main">${esc(fullOf(p))}</div><div class="cell-sub">${p.lv}</div></div></div></td>
+      <td class="cell-sub">${sk(p)}</td>
+      <td class="r num">${nc}</td>
+      <td class="r num">${p.ponto} h</td>
+      <td class="r num">${hh(c)}</td>
+      <td class="r num">${hh(inv)}</td>
+      <td style="min-width:150px">${useBar2(c/p.ponto)}</td>
+      <td class="r">${ic('right','muted')}</td></tr>`;}).join('');
+  return `<div class="card">
+    <div class="card-h"><div><h3>Pessoas e carga do mês</h3><p>Ponto do RH comparado às horas apontadas no GLPI. Ordem alfabética. Clique para abrir a ficha individual.</p></div></div>
+    <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
+      <thead><tr><th>Pessoa</th><th>Domina (nível 3+)</th><th class="r">Clientes</th><th class="r">Ponto</th><th class="r">Em clientes</th><th class="r">Sem registro</th><th>Ocupação</th><th></th></tr></thead>
+      <tbody>${tl}${rows}</tbody></table></div></div>
+  </div>`;
+}
+function teamMatrix(used,risks){
+  const groups=['Sênior','Pleno','Júnior'].map(lv=>[lv,PEOPLE.filter(p=>p.lv===lv).sort(byName)]);
+  const head=s=>{const r=risks.includes(s),z=r&&coverage(s)===0;return `<th class="rot${r?(z?' st-bad':' st-warn'):''}" title="${r?(z?'Ninguém com nível 3 ou 4':'Só 1 pessoa com nível 3 ou 4'):''}">${s}</th>`;};
+  return `<div class="card">
+    <div class="card-h"><div><h3>Matriz de competências</h3><p>Nível de 1 a 4 por stack, autodeclarado e validado no rito trimestral. Stacks em vermelho ou amarelo têm cliente e pouca cobertura.</p></div></div>
     <div class="card-b" style="padding-top:8px"><div class="tbl-wrap"><table class="matrix">
-      <thead><tr><th style="text-align:left">Pessoa</th>${STACKS.map(s=>`<th class="rot">${s}</th>`).join('')}</tr></thead>
-      <tbody>${PEOPLE.map(p=>`<tr class="click" data-act="person" data-id="${p.id}"><td class="name">${p.n} <span class="muted" style="font-weight:400;font-size:12px">${p.lv}</span></td>${STACKS.map(s=>{const l=p.sk[s]||0;return `<td><div class="lv lv${l}" title="${p.n} · ${s}: ${l||'—'}">${l||'·'}</div></td>`;}).join('')}</tr>`).join('')}
-      <tr><td class="name">Cobertura (nível ≥ 3)</td>${STACKS.map(s=>{const c=coverage(s),u=used.has(s);return `<td class="num ${u&&c===0?'cov-bad':u&&c===1?'cov-warn':''}">${c}</td>`;}).join('')}</tr>
-      <tr><td class="name muted" style="font-weight:400">Clientes na stack</td>${STACKS.map(s=>`<td class="num muted">${clientsByStack(s).length||'·'}</td>`).join('')}</tr>
-      </tbody></table></div>
-      <div class="legend" style="margin-top:10px"><span><i style="background:color-mix(in srgb,var(--c1) 14%,transparent)"></i>1 conhece</span><span><i style="background:color-mix(in srgb,var(--c1) 32%,transparent)"></i>2 resolve com apoio</span><span><i style="background:color-mix(in srgb,var(--c1) 62%,transparent)"></i>3 resolve sozinho</span><span><i style="background:var(--c1)"></i>4 referência</span></div>
+      <thead><tr><th style="text-align:left">Pessoa</th>${STACKS.map(head).join('')}</tr></thead>
+      <tbody>${groups.map(([lv,ps])=>`<tr class="grp"><td colspan="${STACKS.length+1}">${lv} · ${ps.length} pessoas</td></tr>
+        ${ps.map(p=>`<tr class="click" data-act="person" data-id="${p.id}"><td class="name">${esc(fullOf(p))}</td>${STACKS.map(s=>{const l=p.sk[s]||0;return `<td><div class="lv lv${l}" title="${p.n} · ${s}: ${l||'—'}">${l||'·'}</div></td>`;}).join('')}</tr>`).join('')}`).join('')}
+      </tbody>
+      <tfoot>
+        <tr><td class="name">Cobertura (nível ≥ 3)</td>${STACKS.map(s=>{const c=coverage(s),u=used.has(s);return `<td class="num ${u&&c===0?'cov-bad':u&&c===1?'cov-warn':''}">${c}</td>`;}).join('')}</tr>
+        <tr><td class="name muted" style="font-weight:400">Clientes na stack</td>${STACKS.map(s=>`<td class="num muted">${clientsByStack(s).length||'·'}</td>`).join('')}</tr>
+      </tfoot></table></div>
+      <div class="legend" style="margin-top:12px"><span><i style="background:color-mix(in srgb,var(--c1) 14%,transparent)"></i>1 conhece</span><span><i style="background:color-mix(in srgb,var(--c1) 32%,transparent)"></i>2 resolve com apoio</span><span><i style="background:color-mix(in srgb,var(--c1) 62%,transparent)"></i>3 resolve sozinho</span><span><i style="background:var(--c1)"></i>4 referência</span></div>
     </div>
-  </div>
-
-  <div class="grid g-2">
-    <div class="card">
-      <div class="card-h"><div><h3>Carga do mês</h3><p>Ordem alfabética. Ponto do RH comparado às horas apontadas no GLPI.</p></div></div>
-      <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
-        <thead><tr><th>Pessoa</th><th class="r">Ponto</th><th class="r">Clientes</th><th class="r">Interno</th><th class="r">Sem registro</th><th style="min-width:140px">Ocupação</th></tr></thead>
-        <tbody>${PEOPLE.slice().sort((a,b)=>a.n.localeCompare(b.n)).map(p=>{const c=pCli(p,m),i=pInt(p,m),o=c/p.ponto;return `<tr class="click" data-act="person" data-id="${p.id}"><td><b>${p.n}</b></td><td class="r num">${p.ponto}</td><td class="r num">${nf0.format(c)}</td><td class="r num">${i}</td><td class="r num">${nf0.format(p.ponto-c-i)}</td><td>${useBar2(o)}</td></tr>`;}).join('')}</tbody></table></div></div>
+  </div>`;
+}
+function teamRisks(risks,solo){
+  const st=risks.map(s=>{const cov=coverage(s),n=clientsByStack(s).length,who=PEOPLE.filter(p=>p.sk[s]).sort((a,b)=>b.sk[s]-a.sk[s]);
+    return `<div class="rk"><div><div class="cell-main">${s}</div><div class="cell-sub">${n} cliente${n>1?'s':''} · ${who.length?who.map(p=>`${p.n} (${p.sk[s]})`).join(', '):'ninguém conhece'}</div></div>
+      <span class="badge ${cov===0?'b-bad':'b-warn'}">${cov===0?'Ninguém nível 3+':'Só 1 pessoa nível 3+'}</span></div>`;}).join('');
+  const cl=solo.map(c=>{const p=P[Object.keys(c.att)[0]];
+    return `<div class="rk click" data-act="client" data-id="${c.id}"><div><div class="cell-main">${esc(c.n)}</div><div class="cell-sub">${c.st} · só ${esc(fullOf(p))} atende</div></div>${ic('right','muted')}</div>`;}).join('');
+  return `<div class="card">
+    <div class="card-h"><div><h3>Riscos de cobertura</h3><p>Onde a saída ou a sobrecarga de uma pessoa trava o atendimento.</p></div></div>
+    <div class="card-b" style="padding-top:10px">
+      <div class="sub-h">Stacks com pouca cobertura</div>${st||'<div class="muted" style="font-size:13px;padding:8px 0">Todas as stacks com cliente têm 2 pessoas ou mais.</div>'}
+      <div class="sub-h" style="margin-top:14px">Clientes que dependem de uma pessoa só</div>${cl||'<div class="muted" style="font-size:13px;padding:8px 0">Nenhum.</div>'}
     </div>
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="card"><div class="card-h"><div><h3>Trabalho fora de chamado</h3><p>Chamados internos recorrentes criados todo mês no GLPI.</p></div></div>
-        <div class="card-b">${INT.map(([n,s])=>`<div class="kv"><span>${n}</span><span class="num">${hh(mc.int*s)}</span></div>`).join('')}
-        <p class="note" style="margin:10px 0 0">${ic('info')}<span>Trabalho rápido pedido por fora (mensagem, ligação) entra num chamado "Atendimentos avulsos" do próprio cliente.</span></p></div></div>
-      <div class="card"><div class="card-h"><div><h3>Custo por nível</h3><p>Visível só para a gestão. Nunca por pessoa.</p></div></div>
-        <div class="card-b">${levels.map(l=>{const n=PEOPLE.filter(p=>p.lv===l).length;return `<div class="kv"><span>${l} · ${n} pessoas</span><span class="num">${brl(costHour(l))}/h</span></div>`;}).join('')}
-        <p class="note" style="margin:10px 0 0">${ic('info')}<span>Custo mensal com encargos e ferramentas ÷ ${BASE_H} h. Grupos com menos de 3 pessoas não são exibidos.</span></p></div></div>
+  </div>`;
+}
+function teamOff(mc){
+  const parts=[['Documentação no GlobalDoc',mc.int*0.34,'--c1'],['Capacitação e estudo',mc.int*0.30,'--c2'],['Relatórios e reuniões com cliente',mc.int*0.22,'--c3'],['Reuniões internas',mc.int*0.14,'--c4'],['Sem registro',mc.inv,'--muted-fg']];
+  const tot=mc.int+mc.inv;
+  return `<div class="card">
+    <div class="card-h"><div><h3>Tempo fora de chamado de cliente</h3><p>Chamados internos recorrentes no GLPI e o que o ponto registra sem chamado.</p></div></div>
+    <div class="card-b" style="padding-top:12px">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px"><span class="kpi-inline num">${hh(tot)}</span><span class="cell-sub">${pct(tot/mc.ponto)} das horas de ponto</span></div>
+      <div class="stack" style="margin-bottom:10px">${parts.map(([n,h,c])=>`<i style="width:${h/tot*100}%;background:var(${c})" title="${n}: ${hh(h)}"></i>`).join('')}</div>
+      ${parts.map(([n,h,c])=>`<div class="kv"><span><i class="sw" style="background:var(${c})"></i>${n}</span><span class="num">${hh(h)}</span></div>`).join('')}
+      <p class="note" style="margin:10px 0 0">${ic('info')}<span>Trabalho rápido pedido por fora (mensagem, ligação) entra num chamado "Atendimentos avulsos" do próprio cliente.</span></p>
     </div>
   </div>`;
 }
@@ -1554,204 +1575,6 @@ function modalPauta(id){
     <div class="sheet-f"><button type="button" class="btn" data-act="close-layer">Fechar</button><button type="button" class="btn pri" data-act="pauta-save" data-id="${id}">${ic('check')} Salvar no histórico do 1:1</button></div>
   </div>`;
 }
-function teamRoster(m){
-  const card=p=>{const tl=p.id==='tl',d=tl?null:devMonth(p,m),sk=Object.entries(p.sk).sort((a,b)=>b[1]-a[1]).slice(0,3).map(e=>e[0]).join(' · ');
-    return `<button type="button" class="pc${tl?' tl':''}" data-act="person" data-id="${p.id}">${avatarHTML(p)}
-      <div class="pc-b"><b>${esc(fullOf(p))}</b><span>${tl?TL.role:p.lv} · ${esc(sk)}</span>
-      ${tl?'<div class="pc-m"><span class="badge b-info">Tech lead</span><span class="cell-sub">revisa todos os PRs</span></div>':`<div class="pc-m"><div class="bar ${d.occ>.9?'bad':d.occ>=.8?'warn':'ok'}" style="flex:1"><i style="width:${Math.min(100,d.occ*100)}%"></i></div><span class="num">${pct(d.occ)}</span></div>`}</div>
-      ${ic('right','muted')}</button>`;};
-  return `<div class="card"><div class="card-h"><div><h3>Time</h3><p>Clique numa pessoa para abrir a ficha individual. Ordem alfabética, depois do tech lead.</p></div></div>
-    <div class="card-b"><div class="roster">${card(TL)}${PEOPLE.slice().sort((a,b)=>a.n.localeCompare(b.n)).map(card).join('')}</div></div></div>`;
-}
-
-const RITES={
- sem:{lab:'Semanal',n:'Planejamento da sprint',quem:'Gestor e equipe',dur:'Segunda, 9h · 30 min',tela:'Sprint e alocação',obj:'Fechar a próxima sprint abaixo de 100% da capacidade.'},
- men:{lab:'Mensal',n:'Revisão operacional',quem:'Gestor e diretoria · comercial quando há contrato na pauta',dur:'1º dia útil · 1 h',tela:'Visão geral e Clientes',obj:'Decidir o que fazer com contratos, stacks e carga da equipe.'},
- cli:{lab:'Trimestral · cliente',n:'Revisão de conta',quem:'Ponto focal e cliente · gestor nos clientes de criticidade alta',dur:'A cada trimestre · 45 min',tela:'Clientes',obj:'Mostrar o valor entregue com a mesma pauta e os mesmos indicadores para todos os clientes.'},
- eq:{lab:'Trimestral · equipe',n:'Revisão da matriz',quem:'Gestor e equipe',dur:'A cada trimestre · 1 h',tela:'Equipe',obj:'Diminuir a dependência de uma pessoa só e planejar capacitação.'}
-};
-const DEC_ST={'Pendente':'b-warn','Em andamento':'b-info','Atrasada':'b-bad','Feita':'b-ok','Adiada':'b-mute'};
-const ROLES=[
- ['Gestor da área','Conduz o rito semanal e a revisão mensal; aprova alocação; acompanha cada decisão até o fim.','Semanal · Mensal · Equipe'],
- ['Ponto focal do cliente','Conduz a revisão de conta; aprova e envia o relatório mensal.','Cliente'],
- ['Analista','Aponta horas qualificadas no GLPI; confere e aprova o relatório da task.','Semanal'],
- ['Diretoria','Decide sobre contratos e pessoas; recebe a visão enxuta do painel.','Mensal'],
- ['Comercial','Executa reprecificação e revisão de escopo decididas na mensal.','Mensal, quando há contrato na pauta']
-];
-// métricas acordadas por cliente (no real: SLA e reabertura vêm do GLPI; satisfação, da pesquisa pós-chamado)
-const cliSla=c=>0.90+((c.i*13)%9)/100;
-const cliRework=c=>0.02+((c.i*7)%6)/100;
-
-function gItems(tab){
-  const m=S.month, mc=monthCalc(m), out=[];
-  if(tab==='sem'){
-    const fc=forecast(), p=fc.total/SPRINT_CAP;
-    out.push({g:'s-prev',sev:p>1?'bad':p>0.9?'warn':'info',t:`Previsão da Sprint 43: ${fc.total} h de ${SPRINT_CAP} h (${pct(p)})`,d:`Média das últimas sprints ${fc.avg} h + ${fc.pend} h no topo da fila (${S.next.length} ${S.next.length===1?'item':'itens'}).`,dec:'Aprovar o planejamento da Sprint 43',resp:'Gestor',prazo:'20/10'});
-    const over=PEOPLE.filter(x=>pCli(x,m)/x.ponto>0.9);
-    if(over.length) out.push({g:'s-occ',sev:'warn',t:`${over.map(x=>x.n).join(', ')} acima de 90% de ocupação`,d:'Carga alta por várias semanas aumenta erro e atraso.',dec:`Tirar um cliente de ${over.map(x=>x.n).join(', ')} na Sprint 43`,resp:'Gestor',prazo:'20/10'});
-  }
-  if(tab==='men'){
-    mc.rows.filter(r=>negStreak(r.c,m)>=2).forEach(r=>out.push({g:'m-neg-'+r.c.id,cid:r.c.id,sev:'bad',t:`${r.c.n}: margem de ${pct(r.margin)} há ${negStreak(r.c,m)} meses`,d:'Pela regra, margem negativa por 2 meses seguidos entra na pauta.',dec:`Reprecificar ou encerrar o contrato de ${r.c.n}`,resp:'Comercial + diretoria',prazo:'14/11'}));
-    mc.rows.filter(r=>S.kstage[r.c.id]==='pauta'&&negStreak(r.c,m)<2).forEach(r=>out.push({g:'m-kb-'+r.c.id,cid:r.c.id,sev:'warn',t:`${r.c.n}: margem de ${pct(r.margin)}`,d:'Levado à pauta pelo gestor na página Clientes.',dec:`Rever preço ou escopo de ${r.c.n}`,resp:'Comercial',prazo:'14/11'}));
-    const leak=mc.rows.filter(r=>r.excLeak>0);
-    if(leak.length) out.push({g:'m-leak',sev:'warn',t:`${hh(mc.leak)} acima do pool sem faturamento`,d:`${leak.map(r=>r.c.n).join(', ')}. Valor não cobrado: ${brl(mc.leakR)}.`,dec:'Faturar o excedente a partir de novembro',resp:'Gestor + comercial',prazo:'31/10'});
-    const zero=STACKS.filter(st=>clientsByStack(st).length&&coverage(st)===0);
-    if(zero.length) out.push({g:'m-stack',sev:'bad',t:`${zero.join(' e ')}: ninguém com nível 3 ou 4`,d:`${zero.reduce((s,st)=>s+clientsByStack(st).length,0)} clientes dependem dessas stacks.`,dec:'Aprovar capacitação, ou contratação se o custo compensar',resp:'Gestor + diretoria',prazo:'30/11'});
-  }
-  if(tab==='cli'){
-    const c=CLIENTS.find(x=>x.id===S.gcli), u=gUse(c);
-    const nx=u>1?`Propor aumento do pool de ${c.pool} h (consumo médio de ${pct(u)})`:c.sat<4?'Combinar plano para subir a satisfação acima de 4':'Manter o contrato e o escopo atuais';
-    out.push({g:'c-next-'+c.id,sev:u>1||c.sat<4?'warn':'info',t:'Próximos passos combinados com o cliente',d:'Sugestão do painel a partir dos indicadores acordados.',dec:nx,resp:'Ponto focal',prazo:'30/10'});
-  }
-  if(tab==='eq'){
-    const used=new Set(CLIENTS.map(c=>c.st));
-    STACKS.filter(st=>used.has(st)&&coverage(st)<2).forEach(st=>{const cov=coverage(st),n=clientsByStack(st).length;
-      out.push({g:'e-st-'+st,sev:cov===0?'bad':'warn',t:`${st}: ${cov===0?'ninguém':'só 1 pessoa'} com nível 3 ou 4 · ${n} cliente${n>1?'s':''}`,d:cov===0?'Ninguém domina: cada chamado depende de estudo e custa mais caro.':'Se essa pessoa sair ou ficar sobrecarregada, o atendimento para.',dec:`Plano de capacitação em ${st}`,resp:'Gestor',prazo:'31/12',link:st==='Oracle APEX'?'d2':null});});
-    const solo=CLIENTS.filter(c=>Object.keys(c.att).length===1);
-    if(solo.length) out.push({g:'e-solo',sev:'warn',t:`${solo.length} clientes dependem de uma pessoa só`,d:solo.map(c=>`${c.n} (${P[Object.keys(c.att)[0]].n})`).join(', ')+'.',dec:'Colocar uma segunda pessoa em cada um deles',resp:'Gestor',prazo:'31/12'});
-  }
-  return out;
-}
-function gUse(c){const m=S.month,ks=[m-2,m-1,m].filter(k=>k>=0&&c.h[k]>0);return ks.reduce((s,k)=>s+c.h[k],0)/(ks.length*c.pool||1);}
-function gItemHTML(it){
-  const done=S.gdone[it.g], linked=it.link&&S.dec.find(d=>d.id===it.link);
-  const right=linked?`<span class="badge ${DEC_ST[linked.st]}">Já decidido · ${linked.st.toLowerCase()}</span>`
-    :done?`<span class="badge ${done==='Aprovado'?'b-ok':'b-mute'}">${done==='Aprovado'?ic('check')+' Aprovado':'Adiado'}</span>`
-    :`<div style="display:flex;gap:6px"><button type="button" class="btn sm" data-act="gdec" data-g="${it.g}" data-v="adiar">Adiar</button><button type="button" class="btn sm pri" data-act="gdec" data-g="${it.g}" data-v="ok">Aprovar</button></div>`;
-  return `<div class="alert">${ic(it.sev==='info'?'info':'alert','sev-'+it.sev)}<div><div class="t">${esc(it.t)}</div><div class="d">${esc(it.d)}</div>
-    <div class="d" style="margin-top:4px">Decisão proposta: <b style="color:var(--fg);font-weight:550">${esc(linked?linked.t:it.dec)}</b> · ${esc(linked?linked.resp:it.resp)} · até ${linked?linked.prazo:it.prazo}</div></div>${right}</div>`;
-}
-function gMetric(lbl,meta,real,ok,src){return `<tr><td><div class="cell-main">${lbl}</div><div class="cell-sub">${src}</div></td><td class="num">${meta}</td><td class="r num">${real}</td><td class="r"><span class="badge ${ok?'b-ok':'b-warn'}">${ok?'Dentro':'Fora'}</span></td></tr>`;}
-
-function pgGov(){
-  const tab=S.gtab, R=RITES[tab], m=S.month, items=gItems(tab);
-  const tabs=`<div class="tabs" role="tablist">${Object.entries(RITES).map(([k,r])=>`<button type="button" role="tab" class="${tab===k?'on':''}" data-act="gtab" data-t="${k}">${r.lab}</button>`).join('')}</div>`;
-  let body='';
-  if(tab==='men'){
-    const mc=monthCalc(m), sat=mean(mc.rows.map(r=>r.c.sat));
-    const pend=S.dec.filter(d=>d.st!=='Feita'&&d.st!=='Adiada'&&/mensal/i.test(d.orig)&&!d.now);
-    body=`<div class="ro" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div>Receita<b class="num">${brlk(mc.rev)}</b></div><div>Margem<b class="num">${pct(mc.margin)}</b></div><div>SLA<b class="num">${pct1(SLA[m])}</b></div><div>Satisfação<b class="num">${nf1.format(sat)} / 5</b></div></div>
-      <div><div style="font-weight:550;margin-bottom:2px">1. Pendências da revisão anterior <span class="muted num">${pend.length}</span></div>
-        <div class="alert-list">${pend.map(d=>`<div class="alert">${ic('clock','sev-'+(d.st==='Atrasada'?'bad':'warn'))}<div><div class="t">${esc(d.t)}</div><div class="d">${esc(d.resp)} · até ${d.prazo} · ${esc(d.orig)}</div></div><div style="display:flex;gap:6px;align-items:center"><span class="badge ${DEC_ST[d.st]}">${d.st}</span><button type="button" class="btn sm" data-act="dec-done" data-id="${d.id}">Marcar feita</button></div></div>`).join('')||'<div class="muted" style="font-size:13px;padding:8px 0">Nada pendente.</div>'}</div></div>
-      <div><div style="font-weight:550;margin-bottom:2px">2. Pauta do mês <span class="muted num">${items.length}</span></div><div class="alert-list">${items.map(gItemHTML).join('')||'<div class="muted" style="font-size:13px;padding:8px 0">Nenhum ponto novo neste mês.</div>'}</div></div>`;
-  } else if(tab==='cli'){
-    const c=CLIENTS.find(x=>x.id===S.gcli), ks=[m-2,m-1,m].filter(k=>k>=0&&c.h[k]>0), h=ks.reduce((s,k)=>s+c.h[k],0), u=gUse(c), sla=cliSla(c), rw=cliRework(c);
-    body=`<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><label class="muted" for="gcli" style="font-size:13px">Cliente</label><select class="select" id="gcli">${CLIENTS.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${esc(x.n)}</option>`).join('')}</select><span class="muted" style="font-size:13px">${esc(c.st)} · criticidade ${c.crit.toLowerCase()}</span></div>
-      <div><div style="font-weight:550;margin-bottom:2px">Pauta padrão (igual para todos os clientes)</div>
-        <div class="kv"><span>1. O que entregamos no trimestre</span><span class="num">${nf0.format(Math.round(h/6))} chamados · ${hh(h)}</span></div>
-        <div class="kv"><span>2. Indicadores acordados</span><span>${[sla>=0.95,c.sat>=4,u<=1,rw<=0.05].filter(Boolean).length} de 4 dentro da meta</span></div>
-        <div class="kv"><span>3. Consumo do pool</span><span class="num">${pct(u)} em média</span></div>
-        <div class="kv"><span>4. O que muda para o cliente</span><span>do relatório mensal aprovado</span></div>
-        <div class="kv"><span>5. Próximos passos</span><span>decisão abaixo</span></div></div>
-      <div class="tbl-wrap"><table><thead><tr><th>Indicador acordado</th><th>Meta</th><th class="r">Real</th><th class="r"></th></tr></thead><tbody>
-        ${gMetric('SLA cumprido','≥ 95%',pct(sla),sla>=0.95,'GLPI')}
-        ${gMetric('Satisfação','≥ 4,0',nf1.format(c.sat),c.sat>=4,'pesquisa após o chamado')}
-        ${gMetric('Consumo do pool','≤ 100% · aviso em 80%',pct(u),u<=1,'horas apontadas no GLPI')}
-        ${gMetric('Retrabalho','≤ 5%',pct(rw),rw<=0.05,'chamados reabertos no GLPI')}
-      </tbody></table></div>
-      <div class="alert-list">${items.map(gItemHTML).join('')}</div>`;
-  } else {
-    body=`<div class="alert-list">${items.map(gItemHTML).join('')||'<div class="muted" style="font-size:13px;padding:8px 0">Nenhum ponto nesta semana.</div>'}</div>`;
-  }
-  const open=S.dec.filter(d=>d.st!=='Feita'&&d.st!=='Adiada'), late=S.dec.filter(d=>d.st==='Atrasada');
-  const reg=S.greg==='dec'
-    ?`<div class="alert-list">${S.dec.map(d=>`<div class="alert">${ic(d.st==='Feita'?'check':'clock','sev-'+(d.st==='Atrasada'?'bad':d.st==='Feita'?'info':'warn'))}<div><div class="t">${esc(d.t)}</div><div class="d">${esc(d.resp)} · até ${d.prazo} · ${esc(d.orig)}</div></div>
-        <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><span class="badge ${DEC_ST[d.st]}">${d.st}</span>${d.st!=='Feita'&&d.st!=='Adiada'?`<button type="button" class="btn sm ghost" data-act="dec-done" data-id="${d.id}">Marcar feita</button>`:''}</div></div>`).join('')}</div>`
-    :`${S.log.length?`<div class="alert-list">${S.log.slice().reverse().map(l=>`<div class="alert">${ic('check','sev-info')}<div><div class="t">${esc(l.t)}</div><div class="d">${esc(l.d)}</div></div><span class="mono muted" style="font-size:12px">${l.at}</span></div>`).join('')}</div>`:'<div class="empty">Aprove uma alocação, encerre uma task ou envie um relatório. A aprovação aparece aqui.</div>'}`;
-  return `
-  <div class="page-head"><div><h1>Governança</h1><p>Cada rito tem dono, a pauta é montada pelo painel e a reunião termina em decisão com responsável e prazo.</p></div></div>
-  <div>${tabs}</div>
-  <div class="grid g-2">
-    <div class="card">
-      <div class="card-h"><div><h3>${R.n}</h3><p>${R.quem} · ${R.dur} · abre a tela ${R.tela}</p></div><span class="badge b-out">${R.lab}</span></div>
-      <div class="card-b" style="display:flex;flex-direction:column;gap:14px">
-        <p class="sentence" style="margin:0">${R.obj}</p>
-        ${body}
-        <p class="note" style="margin:0">${ic('info')}<span>A pauta sai dos dados do GLPI, do ponto e dos contratos. Quem conduz não monta slide: só decide. O que for aprovado vai para o registro.</span></p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-h"><div><h3>Registro de decisões</h3><p>${open.length} em aberto${late.length?` · <span style="color:var(--bad)">${late.length} atrasada${late.length>1?'s':''}</span>`:''}. O que não fecha volta na próxima pauta.</p></div></div>
-      <div class="card-b" style="display:flex;flex-direction:column;gap:10px">
-        <div class="tabs" role="tablist"><button type="button" role="tab" class="${S.greg==='dec'?'on':''}" data-act="greg" data-t="dec">Decisões dos ritos <span class="num muted">${S.dec.length}</span></button><button type="button" role="tab" class="${S.greg==='log'?'on':''}" data-act="greg" data-t="log">Dia a dia <span class="num muted">${S.log.length}</span></button></div>
-        ${reg}
-      </div>
-    </div>
-  </div>
-
-  <div class="grid g-2e">
-    <div class="card"><div class="card-h"><div><h3>Papéis</h3><p>Quem faz o quê na governança. Sem cargo novo.</p></div></div>
-      <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table><thead><tr><th>Papel</th><th>Responsável por</th><th>Ritos</th></tr></thead><tbody>${ROLES.map(r=>`<tr><td class="cell-main">${r[0]}</td><td>${r[1]}</td><td class="muted">${r[2]}</td></tr>`).join('')}</tbody></table></div></div></div>
-    <div class="card"><div class="card-h"><div><h3>O que é automático e o que é decisão</h3><p>A IA sugere e resume. Contratos e pessoas são sempre decisão humana.</p></div></div>
-      <div class="card-b"><div class="grid g-3">
-        <div class="auto-col"><span class="badge b-ok" style="align-self:flex-start">Automático</span><ul><li>Montar a pauta dos ritos</li><li>Rascunho do relatório mensal</li><li>Alertas de pool e sobrecarga</li></ul></div>
-        <div class="auto-col"><span class="badge b-info" style="align-self:flex-start">Sugere + 1 clique</span><ul><li>Quem atende a urgência</li><li>O que adiar na sprint</li><li>Enviar relatório ao cliente</li></ul></div>
-        <div class="auto-col"><span class="badge b-bad" style="align-self:flex-start">Só uma pessoa decide</span><ul><li>Reprecificar ou encerrar contrato</li><li>Contratar ou realocar</li><li>Metas da equipe</li></ul></div>
-      </div></div></div>
-  </div>`;
-}
-
-function roiCalc(){
-  const pr=S.prem[S.scen], H=1400, nCli=30, ch=OP_COST/H;
-  const rel=pr.rel*nCli*pr.auto/100, tri=H*pr.tri/100*pr.triR/100, ret=H*pr.ret/100*pr.retR/100;
-  const freed=rel+tri+ret;
-  const impl=170*ch, maint=20*ch+60;
-  const monthly=freed*ch-maint;
-  const pay=monthly>0?impl/monthly:Infinity;
-  const extra=freed/(H/nCli);
-  const cum=[];let acc=0;for(let k=0;k<=12;k++){if(k===0){acc=0;}else if(k<=3){acc-=impl/3;}else{acc+=monthly;}cum.push(acc);}
-  return {rel,tri,ret,freed,impl,maint,monthly,pay,extra,ch,cum,revPot:extra*(H/nCli)*S.price*12};
-}
-function pgRoi(){
-  const r=roiCalc(), pr=S.prem[S.scen], mc=monthCalc(5);
-  const crit=STACKS.filter(s=>clientsByStack(s).length&&coverage(s)===0);
-  const row=(lbl,k,unit,h)=>`<tr><td>${lbl}</td><td class="r prem"><input id="pm-${k}" type="number" step="0.5" min="0" value="${pr[k]}" data-k="${k}"> <span class="muted">${unit}</span></td><td class="r num">${h!==undefined?hh(h):''}</td></tr>`;
-  return `
-  <div class="page-head"><div><h1>Capacidade e retorno</h1><p>Quanto o modelo libera de horas e em quanto tempo se paga. Todos os ganhos são hipóteses ajustáveis, a validar nas 8 primeiras semanas.</p></div>
-  <div class="head-actions"><div class="seg" role="group" aria-label="Cenário"><button type="button" class="${S.scen==='cons'?'on':''}" data-act="scen" data-s="cons">Conservador</button><button type="button" class="${S.scen==='mod'?'on':''}" data-act="scen" data-s="mod">Moderado</button></div></div></div>
-
-  <div class="grid g-kpi">
-    ${kpi('Horas liberadas por mês',hh(r.freed),`<span>${pct(r.freed/1400)} das 1.400 h</span>`,'users')}
-    ${kpi('Clientes a mais sem contratar',nf1.format(r.extra),`<span>média de ${hh(1400/30)} por cliente</span>`,'building')}
-    ${kpi('Valor em custo por ano',brlk(r.freed*r.ch*12),`<span class="num">${brl(r.ch)}/h de custo</span>`,'trend')}
-    ${kpi('Payback',isFinite(r.pay)?nf1.format(r.pay)+' meses':'—',`<span>após a implantação (~3 meses)</span>`,'spark')}
-  </div>
-
-  <div class="grid g-2">
-    <div class="card"><div class="card-h"><div><h3>Premissas</h3><p>Edite para testar outras hipóteses.</p></div></div>
-      <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
-      <thead><tr><th>Fonte de horas liberadas</th><th class="r">Premissa</th><th class="r">Horas/mês</th></tr></thead>
-      <tbody>
-        ${row('Relatório manual por cliente','rel','h/mês')}
-        ${row('Parte automatizada do relatório','auto','%',r.rel)}
-        ${row('Tempo perdido com triagem e interrupções','tri','%')}
-        ${row('Redução da triagem com regra de alocação','triR','%',r.tri)}
-        ${row('Retrabalho e retomada de contexto','ret','%')}
-        ${row('Redução com alocação por stack e relação','retR','%',r.ret)}
-        <tr><td><b>Total</b></td><td></td><td class="r num"><b>${hh(r.freed)}</b></td></tr>
-      </tbody></table></div></div></div>
-    <div class="card"><div class="card-h"><div><h3>Resultado acumulado em 12 meses</h3><p>3 meses de implantação, depois ganho mensal menos manutenção.</p></div></div>
-      <div class="card-b">${chartPayback(r.cum)}
-        <div class="kv"><span>Implantação (170 h internas)</span><span class="num">${brl(r.impl)}</span></div>
-        <div class="kv"><span>Manutenção (20 h/mês + gateway de IA)</span><span class="num">${brl(r.maint)}/mês</span></div>
-        <div class="kv"><span>Licença nova</span><span class="num">R$ 0</span></div>
-      </div></div>
-  </div>
-
-  <div class="grid g-2e">
-    <div class="card"><div class="card-h"><div><h3>Receita potencial</h3><p>Se as horas liberadas virarem novos contratos.</p></div></div>
-      <div class="card-b"><div class="range-row"><label for="price-r" class="muted" style="font-size:13px">Preço médio da hora</label><input id="price-r" type="range" min="60" max="200" step="5" value="${S.price}"><b class="num" id="price-r-v">R$ ${S.price}/h</b></div>
-      <div class="big num" style="margin-top:10px">${brlk(r.revPot)}<span class="muted" style="font-size:15px;font-weight:500"> por ano</span></div>
-      <p class="note" style="margin:6px 0 0">${ic('info')}<span>O preço de venda da hora fica com o comercial. Aqui ele é uma premissa ajustável.</span></p></div></div>
-    <div class="card"><div class="card-h"><div><h3>Gatilho de contratação</h3><p>O próprio dado diz quando a equipe precisa crescer.</p></div></div>
-      <div class="card-b">
-        <div class="kv"><span>Ocupação acima de 85% por 2 meses</span><span>${mc.occ>0.85?'<span class="badge b-bad">Atingido</span>':`<span class="badge b-ok">Não · ${pct(mc.occ)}</span>`}</span></div>
-        <div class="kv"><span>Stack com cliente e ninguém no nível 3+</span><span>${crit.length?`<span class="badge b-bad">${crit.join(', ')}</span>`:'<span class="badge b-ok">Não</span>'}</span></div>
-        <p class="note" style="margin:10px 0 0">${ic('info')}<span>Hoje a resposta é capacitar ou contratar para ${crit.join(' e ')||'—'}, não aumentar a equipe inteira.</span></p>
-      </div></div>
-  </div>`;
-}
-
 /* ---------- Camadas: ficha do cliente e fechamento ---------- */
 const GAINS={'Java':'a integração com o ERP voltou a enviar notas sem intervenção manual','.NET':'o portal ficou estável no fechamento do mês','PHP':'o cadastro passou a validar dados antes de salvar','Python':'a exportação em lote passou a rodar sem erro','Node.js':'a fila de mensagens aguenta o pico sem travar','React':'o checkout deixou de duplicar descontos','Angular':'as telas de pedido carregam os filtros na primeira vez','Oracle APEX':'o relatório de safra passou a sair com os dados do dia','Delphi':'a emissão de documentos fiscais ficou mais rápida','Flutter':'o app deixou de fechar na tela de login','SQL':'as consultas de estoque ficaram mais rápidas','Go':'o rastreamento voltou a atualizar em tempo real'};
 const MST={'Rascunho gerado':'b-mute','Em revisão':'b-warn','Aprovado':'b-info','Enviado':'b-ok'};
@@ -1820,7 +1643,7 @@ const RST={'Rascunho':['b-mute','Rascunho'],'Pendente':['b-warn','Aguardando apr
 function pgReports(){
   const m=S.month, pend=S.reports.filter(r=>r.status!=='Aprovado'), apr=S.reports.filter(r=>r.status==='Aprovado');
   const act=monthCalc(m).rows, sent=act.filter(r=>S.monthly[r.c.id]==='Enviado').length;
-  const saved=S.prem.cons.rel*30*S.prem.cons.auto/100;
+  const saved=1.5*30*0.7; // 1,5 h por cliente × 30 clientes × 70% automatizado
   const tabTask=`<div class="tbl-wrap"><table>
     <thead><tr><th>Task</th><th>Cliente · projeto</th><th>Analista</th><th class="r">Horas</th><th>Avisos</th><th>Status</th><th></th></tr></thead>
     <tbody>${S.reports.map(r=>{const w=checks(r).filter(x=>!x.ok).length;return `<tr class="click" data-act="ropen" data-id="${r.id}">
@@ -1923,7 +1746,7 @@ let lastPage=null,enterT;
 function visiblePages(){return Object.entries(PAGES).filter(([k,v])=>S.view==='gestor'||!v.gestor);}
 function renderNav(){
   const groups={};visiblePages().forEach(([k,v])=>{(groups[v.group]=groups[v.group]||[]).push([k,v]);});
-  document.getElementById('nav').innerHTML=Object.entries(groups).map(([g,items])=>`<div class="nav-label">${g}</div>${items.map(([k,v])=>`<a data-act="go" data-p="${k}" class="${S.page===k?'active':''}" href="#${k}">${ic(v.icon)}<span>${v.label}</span>${k==='roi'?'<span class="tag">simulador</span>':''}</a>`).join('')}`).join('');
+  document.getElementById('nav').innerHTML=Object.entries(groups).map(([g,items])=>`<div class="nav-label">${g}</div>${items.map(([k,v])=>`<a data-act="go" data-p="${k}" class="${S.page===k?'active':''}" href="#${k}">${ic(v.icon)}<span>${v.label}</span></a>`).join('')}`).join('');
   document.getElementById('crumb').textContent=PAGES[S.page].label+(S.page==='team'&&S.person?' / '+(S.person==='tl'?TL.full:fullOf(P[S.person])):'');
   document.getElementById('vw-gestor').classList.toggle('on',S.view==='gestor');
   document.getElementById('vw-diretoria').classList.toggle('on',S.view==='diretoria');
@@ -1931,7 +1754,7 @@ function renderNav(){
 function render(){
   if(!visiblePages().some(([k])=>k===S.page)) S.page='overview';
   renderNav();
-  const fn={overview:pgOverview,clients:pgClients,sprint:pgSprint,reports:pgReports,team:pgTeam,gov:pgGov,roi:pgRoi}[S.page];
+  const fn={overview:pgOverview,clients:pgClients,sprint:pgSprint,reports:pgReports,team:pgTeam}[S.page];
   const pg=document.getElementById('page');
   pg.innerHTML=fn();
   if(lastPage!==null&&lastPage!==S.page){pg.classList.remove('enter');void pg.offsetWidth;pg.classList.add('enter');clearTimeout(enterT);enterT=setTimeout(()=>pg.classList.remove('enter'),900);}
@@ -1990,7 +1813,6 @@ document.addEventListener('click',e=>{
   if(a==='rtab'){S.rtab=el.dataset.t;render();return;}
   if(a==='quad'){S.quad=el.dataset.q;S.pageN=0;render();return;}
   if(a==='pg'){S.pageN+=+el.dataset.d;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));return;}
-  if(a==='scen'){S.scen=el.dataset.s;render();return;}
   if(a==='kadv'){
     const c=CLIENTS.find(x=>x.id===id), cur=S.kstage[id]||'alerta', ix=KST.findIndex(k=>k[0]===cur);
     if(ix>=KST.length-1) return;
@@ -2000,18 +1822,6 @@ document.addEventListener('click',e=>{
   }
   if(a==='send-rep'){const c=CLIENTS.find(x=>x.id===id);S.monthly[id]='Enviado';log(`Relatório de ${MONTHS[S.month].toLowerCase()} enviado`,`${c.n} · aprovado pelo ponto focal`,'');render();toast('Relatório aprovado e enviado ao cliente.');return;}
   if(a==='msheet'){closeLayers();S.msheet=id;if(S.monthly[id]==='Rascunho gerado')S.monthly[id]='Em revisão';render();return;}
-  if(a==='gtab'){S.gtab=el.dataset.t;render();return;}
-  if(a==='greg'){S.greg=el.dataset.t;render();return;}
-  if(a==='gdec'){
-    const it=gItems(S.gtab).find(x=>x.g===el.dataset.g); if(!it) return;
-    const ok=el.dataset.v==='ok', R=RITES[S.gtab];
-    S.gdone[it.g]=ok?'Aprovado':'Adiado';
-    S.dec.unshift({id:'n'+Date.now(),t:it.dec,resp:it.resp,prazo:ok?it.prazo:'próximo rito',st:ok?'Pendente':'Adiada',orig:R.n+' · hoje',now:true});
-    if(ok&&it.cid&&(S.kstage[it.cid]||'alerta')!=='resolvido') S.kstage[it.cid]='negociacao';
-    log(ok?'Decisão aprovada':'Decisão adiada',`${it.dec} · ${it.resp}`,'');
-    render();toast(ok?`Registrado: ${it.resp} até ${it.prazo}.`:'Adiado para o próximo rito.');return;
-  }
-  if(a==='dec-done'){const d=S.dec.find(x=>x.id===id);if(!d)return;d.st='Feita';log('Decisão concluída',d.t,'');render();toast('Decisão marcada como feita.');return;}
   if(a==='next-urg'){if(S.realloc)return;S.urgIdx++;S.pick=null;render();return;}
   if(a==='reset-urg'){S.urgIdx=0;S.pick=null;S.next=[];S.realloc=null;S.spN=SPRINT0.n;S.doneN=SPRINT0.doneN;S.doneH=SPRINT0.doneH;S.load=Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint]));S.tasks=S.tasks.filter(t=>!t.urg).map(t=>({...t,moved:false}));render();return;}
   if(a==='pick'){
@@ -2059,14 +1869,10 @@ function doAssign(pids,over){
   S.urgIdx++;S.pick=null;render();toast(`#${u.id} atribuído a ${names}.`);
 }
 document.addEventListener('input',e=>{
-  if(e.target.id==='q'){S.q=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));}
-  if(e.target.id==='price-r'){document.getElementById('price-r-v').textContent='R$ '+e.target.value+'/h';}
-});
+  if(e.target.id==='q'){S.q=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));}});
 document.addEventListener('change',e=>{
-  if(e.target.id==='price-c'||e.target.id==='price-r'){S.price=+e.target.value;render();}
-  if(e.target.id==='gcli'){S.gcli=e.target.value;render();}
+  if(e.target.id==='price-c'){S.price=+e.target.value;render();}
   if(e.target.id==='f-task'){S.addSel=+e.target.value||null;renderLayer();}
-  if(e.target.dataset&&e.target.dataset.k){const v=parseFloat(e.target.value);if(!isNaN(v)&&v>=0){S.prem[S.scen][e.target.dataset.k]=v;render();}}
 });
 function hl(id,on){document.querySelectorAll(`[data-hl="${id}"]`).forEach(n=>n.classList.toggle('hl',on));}
 document.addEventListener('mouseover',e=>{const n=e.target.closest&&e.target.closest('[data-hl]');if(n)hl(n.dataset.hl,true);});
