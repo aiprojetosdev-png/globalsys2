@@ -123,6 +123,11 @@ svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke
 .grid{display:grid;gap:16px}
 .g-kpi{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
 .g-kpi6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.ov-k .lbl{gap:6px;align-items:flex-start}
+.ov-k .lbl .badge{font-size:11px;height:20px;padding:0 7px;flex-shrink:0}
+.ov-sp{margin-top:auto;padding-top:4px}
+.ov-sp svg.spark{width:100%;height:30px;display:block}
+.ov-link{border:0;background:none;padding:0;text-align:left;color:var(--fg);cursor:pointer;text-decoration:underline;text-underline-offset:3px;font:inherit}
 @media (max-width:1280px){.g-kpi6{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:640px){.g-kpi6{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .val{font-size:22px}}
 .g-2{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
@@ -1232,50 +1237,102 @@ const PAGES={
  team:{label:'Equipe',icon:'users',group:'Operação'}
 };
 
+// chamados que entraram fora da sprint nas últimas 4 sprints (S38–S41), por cliente — fictício
+const OUT_SPR=[['Ferro & Aço Industrial',7,31],['Seguradora Âncora',5,24],['Vale Verde Agro',4,19],['Banco Arrecife Digital',3,14],['Outros 6 clientes',6,24]];
+function ovSeries(k){
+  const mc=monthCalc(k), act=mc.rows.map(r=>r.c);
+  return {occ:mc.occ,pool:mc.H/mc.pool,margin:mc.margin,sla:SLA[k],sat:mean(act.map(c=>satM(c,k))),conf:CONF[k],mc};
+}
+// mini tendência com escala mínima, para variação pequena não parecer queda grande
+function ovSpark(vals,m,span){
+  const W=104,H=30,P=3,a=Math.min(...vals),b=Math.max(...vals),sp=Math.max(b-a,span),mn=(a+b)/2-sp/2;
+  const x=k=>P+(W-2*P)*k/Math.max(1,vals.length-1), y=v=>H-P-(H-2*P)*(v-mn)/sp;
+  const pts=vals.map((v,k)=>`${x(k).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity=".9" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function ovCard(lbl,key,fmt,dir,tol,sub,icon,m,S6,span){
+  const vals=S6.slice(0,m+1).map(x=>x[key]), cur=vals[m];
+  let st;
+  if(m<3) st=['Formando a base','b-mute'];
+  else{const base=mean(S6.slice(0,3).map(x=>x[key])),d=(cur-base)*dir;
+    st=d>tol?['Melhor que a base','b-ok']:d<-tol?['Pior que a base','b-warn']:['Na média','b-mute'];
+    st.push(`Base: média de abril a junho = ${fmt(base)}`);}
+  return `<div class="card kpi ov-k">
+    <div class="lbl"><span>${lbl}</span><span class="badge ${st[1]}" ${st[2]?`title="${st[2]}"`:''}>${st[0]}</span></div>
+    <div class="val">${fmt(cur)}</div>
+    <div class="sub">${sub}</div>
+    ${vals.length>1?`<div class="ov-sp" title="${MS.slice(0,m+1).map((x,k)=>x+': '+fmt(vals[k])).join(' · ')}">${ovSpark(vals,m,span)}</div>`:''}
+  </div>`;
+}
+function ovNeeds(m){
+  const out=alerts(m).map(a=>({sev:a.sev,t:a.t,d:a.d,act:a.act.k==='client'?`data-act="client" data-id="${a.act.id}"`:`data-act="go" data-p="${a.act.p}"`,lab:a.act.k==='client'?'Abrir cliente':'Abrir'}));
+  const crit=URGENT.filter(u=>u.lv==='Crítica'&&qStatus(u).k==='free');
+  if(crit.length) out.unshift({sev:'bad',t:`${crit.length} chamado${crit.length>1?'s':''} crítico${crit.length>1?'s':''} sem dono`,d:crit.map(u=>`${u.cli}: ${u.t}`).join(' · '),act:'data-act="go" data-p="sprint"',lab:'Atribuir'});
+  const wait=S.reports.filter(r=>r.status!=='Aprovado');
+  if(wait.length) out.push({sev:'info',t:`${wait.length} relatório${wait.length>1?'s':''} de task esperando aprovação`,d:'O analista confere e aprova; depois entram no relatório mensal do cliente.',act:'data-act="go" data-p="reports"',lab:'Revisar'});
+  const mrows=monthCalc(m).rows, rev=mrows.filter(r=>['Rascunho gerado','Em revisão'].includes(S.monthly[r.c.id]));
+  if(rev.length) out.push({sev:'info',t:`${rev.length} relatório${rev.length>1?'s mensais':' mensal'} de ${MONTHS[m].toLowerCase()} para enviar`,d:'Rascunho pronto pela IA. O ponto focal revisa e envia ao cliente.',act:'data-act="go" data-p="reports"',lab:'Revisar'});
+  if(!S.p43ok) out.push({sev:'info',t:'Plano da Sprint 43 aguardando aprovação',d:'A distribuição por pessoa e stack já foi proposta pelos critérios.',act:'data-act="ov-plan"',lab:'Ver plano'});
+  const ord={bad:0,warn:1,info:2};
+  return out.sort((a,b)=>ord[a.sev]-ord[b.sev]);
+}
 function pgOverview(){
-  const m=S.month, mc=monthCalc(m), pv=m>0?monthCalc(m-1):null, al=alerts(m);
+  const m=S.month, S6=MS.map((_,k)=>ovSeries(k)), cur=S6[m], mc=cur.mc, pv=m>0?S6[m-1]:null;
   const sub=(v,p,good,fmt)=>pv?`${delta(v,p,good,fmt)}<span>vs ${MS[m-1]}</span>`:'<span>primeiro mês do histórico</span>';
+  const needs=ovNeeds(m);
   const typeBar=TYPES.map(t=>`<i style="width:${t[1]*100}%;background:var(${t[2]})"></i>`).join('');
   const tot=mc.ponto, parts=[['Clientes',mc.cli,'--c1'],['Interno (chamados internos)',mc.int,'--c3'],['Não registrado',mc.inv,'--c5']];
-  const pauta=al.slice(0,4).map(a=>`<li>${esc(a.t)}</li>`).join('')+`<li>Ocupação da equipe: ${pct(mc.occ)} ${mc.occ>0.85?'(acima do gatilho de contratação)':'(abaixo do gatilho de 85%)'}</li>`;
+  const used=sprintUsed(), useP=used/SPRINT_CAP, fc=forecast();
+  const queue=URGENT.filter(u=>qStatus(u).k==='free'), qCrit=queue.filter(u=>u.lv==='Crítica').length;
+  const outTot=OUT_SPR.reduce((s,x)=>s+x[1],0), outH=OUT_SPR.reduce((s,x)=>s+x[2],0);
   return `
-  <div class="page-head"><div><h1>Visão geral</h1><p>Como a operação fechou em ${MONTHS[m].toLowerCase()}. Todos os números vêm do GLPI, do ponto do RH e do valor dos contratos.</p></div>
+  <div class="page-head"><div><h1>Visão geral</h1><p>Como a operação fechou em ${MONTHS[m].toLowerCase()} e o que precisa de você nesta semana. Números do GLPI, do ponto do RH e do valor dos contratos.</p></div>
   <div class="head-actions"><span class="ex-tag">dados fictícios</span></div></div>
 
   <div class="grid g-kpi6">
-    ${kpi('Ocupação da equipe',pct(mc.occ),sub(mc.occ,pv&&pv.occ,'down')+'<span>· faixa saudável 70–80%</span>','users')}
-    ${kpi('Consumo do pool',pct(mc.H/mc.pool),`<span class="num">${hh(mc.H)} de ${hh(mc.pool)}</span>`,'kanban')}
-    ${kpi('Margem da operação',pct(mc.margin),sub(mc.margin,pv&&pv.margin,'up')+`<span>· receita ${brlk(mc.rev)}</span>`,'trend')}
-    ${kpi('SLA cumprido',pct1(SLA[m]),sub(SLA[m],m>0?SLA[m-1]:0,'up'),'check')}
-    ${kpi('Satisfação',nf1.format(SAT[m])+'<span class="muted" style="font-size:15px"> / 5</span>',sub(SAT[m],m>0?SAT[m-1]:0,'up',v=>nf1.format(v)),'spark')}
-    ${kpi('Confiabilidade do dado',CONF[m]+'<span class="muted" style="font-size:15px"> / 100</span>',sub(CONF[m],m>0?CONF[m-1]:0,'up',v=>nf0.format(v)+' pts')+'<span>· campos preenchidos e horas no prazo</span>','info')}
+    ${ovCard('Ocupação da equipe','occ',pct,-1,0.02,sub(cur.occ,pv&&pv.occ,'down')+'<span>· gatilho de contratação: 85%</span>','users',m,S6,0.1)}
+    ${ovCard('Consumo do pool','pool',pct,-1,0.02,`<span class="num">${hh(mc.H)} de ${hh(mc.pool)}</span>`,'kanban',m,S6,0.1)}
+    ${ovCard('Margem da operação','margin',pct,1,0.02,sub(cur.margin,pv&&pv.margin,'up')+`<span>· receita ${brlk(mc.rev)}</span>`,'trend',m,S6,0.1)}
+    ${ovCard('SLA cumprido','sla',pct1,1,0.005,sub(cur.sla,pv&&pv.sla,'up'),'check',m,S6,0.03)}
+    ${ovCard('Satisfação','sat',v=>nf1.format(v)+' / 5',1,0.1,sub(cur.sat,pv&&pv.sat,'up',v=>nf1.format(v))+'<span>· média dos clientes</span>','spark',m,S6,0.5)}
+    ${ovCard('Confiabilidade do dado','conf',v=>nf0.format(v)+' / 100',1,3,sub(cur.conf,pv&&pv.conf,'up',v=>nf0.format(v)+' pts')+'<span>· campos e horas no prazo</span>','info',m,S6,20)}
   </div>
 
   <div class="grid g-2">
     <div class="card">
-      <div class="card-h"><div><h3>Horas consumidas × pool contratado</h3><p>Últimos 6 meses. Barras: horas apontadas em chamados de clientes. Linha: soma dos pools.</p></div></div>
-      <div class="card-b">${chartHours(m)}<div class="legend" style="margin-top:6px"><span><i style="background:var(--c1)"></i>Horas consumidas</span><span><i style="background:var(--fg);height:2px"></i>Pool contratado</span></div></div>
+      <div class="card-h"><div><h3>Precisa de você</h3><p>${needs.length} ${needs.length===1?'ponto':'pontos'}, do mais grave ao mais simples. Alertas do mês e pendências das outras páginas.</p></div></div>
+      <div class="card-b alert-list">${needs.map(a=>`<div class="alert">${ic(a.sev==='info'?'info':'alert','sev-'+a.sev)}<div><div class="t">${esc(a.t)}</div><div class="d">${esc(a.d)}</div></div><button type="button" class="btn sm" ${a.act}>${a.lab} ${ic('right')}</button></div>`).join('')||'<div class="empty">Nada pendente.</div>'}</div>
     </div>
     <div class="card">
-      <div class="card-h"><div><h3>Alertas do mês</h3><p>${al.length} itens. Clique para abrir.</p></div></div>
-      <div class="card-b alert-list">${al.map(a=>`<div class="alert">${ic(a.sev==='bad'?'alert':a.sev==='warn'?'alert':'info','sev-'+a.sev)}<div><div class="t">${esc(a.t)}</div><div class="d">${esc(a.d)}</div></div><button type="button" class="btn sm ghost" data-act="${a.act.k==='client'?'client':'go'}" data-id="${a.act.id||''}" data-p="${a.act.p||''}" aria-label="Abrir">${ic('right')}</button></div>`).join('')||'<div class="empty">Nenhum alerta neste mês.</div>'}</div>
+      <div class="card-h"><div><h3>Esta semana</h3><p>Sprint 42 · 13 a 17 de outubro.</p></div><button type="button" class="btn sm ghost" data-act="go" data-p="sprint">Sprint ${ic('right')}</button></div>
+      <div class="card-b" style="display:flex;flex-direction:column;gap:14px">
+        <div><div class="kv" style="border:0;padding-bottom:4px"><span>Capacidade utilizada</span><b class="num" style="${useP>1?'color:var(--bad)':''}">${pct(useP)}</b></div>
+          <div class="bar ${useP>1?'bad':useP>0.9?'warn':'c1'}"><i style="width:${Math.min(100,useP*100)}%"></i></div>
+          <div class="cell-sub num" style="margin-top:4px">${used} h de ${SPRINT_CAP} h · ${S.doneN} de ${S.spN} tasks concluídas</div></div>
+        <div>
+          <div class="kv"><span>Fila sem dono</span><span class="num">${queue.length}${qCrit?` · <b style="color:var(--bad)">${qCrit} crítico${qCrit>1?'s':''}</b>`:''}</span></div>
+          <div class="kv"><span>Sprint 43 prevista</span><span class="num">${fc.total} h · ${S.p43ok?'<span style="color:var(--ok)">aprovada</span>':'a aprovar'}</span></div>
+        </div>
+        <div><div style="font-weight:550;margin-bottom:2px">Quem mais traz chamado fora da sprint</div>
+          <div class="cell-sub" style="margin-bottom:4px">Últimas 4 sprints: ${outTot} chamados, ${outH} h que tiraram tempo do planejado.</div>
+          ${OUT_SPR.map(([n,q,h],i)=>{const c=CLIENTS.find(x=>x.n===n);return `<div class="kv"><span>${c?`<button type="button" class="ov-link" data-act="client" data-id="${c.id}">${esc(n)}</button>`:esc(n)}</span><span class="num">${q} chamados · ${h} h · ${pct(h/outH)}</span></div>`;}).join('')}
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="grid g-2e">
-    <div class="card">
-      <div class="card-h"><div><h3>Para onde foi o tempo</h3><p>Horas de ponto da equipe (${hh(tot)}) e tipo de trabalho nos chamados.</p></div></div>
-      <div class="card-b" style="display:flex;flex-direction:column;gap:16px">
+  <div class="card">
+    <div class="card-h"><div><h3>Para onde foi o tempo</h3><p>Horas de ponto da equipe em ${MONTHS[m].toLowerCase()} (${hh(tot)}) e tipo de trabalho nos chamados.</p></div></div>
+    <div class="card-b"><div class="grid g-2e">
+      <div style="display:flex;flex-direction:column;gap:10px">
         <div class="stack">${parts.map(p=>`<i style="width:${p[1]/tot*100}%;background:var(${p[2]})"></i>`).join('')}</div>
         <div>${parts.map(p=>`<div class="kv"><span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var(${p[2]});margin-right:8px"></i>${p[0]}</span><span class="num">${hh(p[1])} · ${pct(p[1]/tot)}</span></div>`).join('')}</div>
-        <div class="stack">${typeBar}</div>
-        <div class="legend">${TYPES.map(t=>`<span><i style="background:var(${t[2]})"></i>${t[0]} ${pct(t[1])}</span>`).join('')}</div>
       </div>
-    </div>
-    <div class="card">
-      <div class="card-h"><div><h3>Pauta da revisão mensal</h3><p>Gerada a partir dos alertas. Gestor e diretoria, 1 hora.</p></div></div>
-      <div class="card-b"><ol class="pauta">${pauta}</ol></div>
-    </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="stack">${typeBar}</div>
+        <div>${TYPES.map(t=>`<div class="kv"><span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:var(${t[2]});margin-right:8px"></i>${t[0]}</span><span class="num">${pct(t[1])} dos chamados</span></div>`).join('')}</div>
+      </div>
+    </div></div>
   </div>`;
 }
 
@@ -2742,6 +2799,7 @@ document.addEventListener('click',e=>{
   }
   if(a==='send-rep'){const c=CLIENTS.find(x=>x.id===id);S.monthly[id]='Enviado';S.sentAt[id]=true;log(`Relatório de ${MONTHS[S.month].toLowerCase()} enviado`,`${c.n} · aprovado pelo ponto focal`,'');render();toast('Relatório aprovado e enviado ao cliente.');return;}
   if(a==='msheet'){closeLayers();S.msheet=id;if(S.monthly[id]==='Rascunho gerado')S.monthly[id]='Em revisão';render();return;}
+  if(a==='ov-plan'){S.page='sprint';S.stab='plano';closeLayers();render();window.scrollTo(0,0);return;}
   if(a==='stab'){S.stab=el.dataset.t;render();window.scrollTo(0,0);return;}
   if(a==='p43open'){if(e.target.closest('select'))return;S.p43open=S.p43open===el.dataset.p?null:el.dataset.p;render();return;}
   if(a==='p43ok'){const pl=plan43();S.p43ok=now();
