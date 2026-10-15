@@ -1340,7 +1340,7 @@ function hoursByClient(p,m){ // distribuição das horas da pessoa por cliente, 
 function reallocEvents(p,m){ // horas que saíram do planejado da sprint para outro projeto
   const rows=hoursByClient(p,m), up=rows.filter(r=>r.h>r.plan), down=rows.filter(r=>r.h<r.plan), i=pIdx(p), ev=[];
   up.slice(0,3).forEach((r,k)=>{const from=down[k%Math.max(1,down.length)];ev.push({id:48100+i*37+m*11+k*3,to:r.c.n,from:from?from.c.n:'Planejado da sprint',h:r.h-r.plan,why:k===0?'Urgência':'Apoio ao cliente'});});
-  if(m===5) S.tasks.filter(t=>t.urg&&t.p===p.id).forEach(t=>ev.unshift({id:t.id,to:t.cli,from:'Buffer da sprint',h:t.h,why:'Urgência atribuída agora',live:true}));
+  if(m===5) S.tasks.filter(t=>t.urg&&(t.ps||[t.p]).includes(p.id)).forEach(t=>{const n=(t.ps||[t.p]).length;ev.unshift({id:t.id,to:t.cli,from:'Buffer da sprint',h:Math.round(t.h/n),why:n>1?`Urgência atribuída agora, dividida com mais ${n-1}`:'Urgência atribuída agora',live:true});});
   return ev;
 }
 const realloc=(p,m)=>reallocEvents(p,m).reduce((s,e)=>s+e.h,0);
