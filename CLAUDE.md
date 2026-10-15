@@ -145,7 +145,8 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 | Cálculos | `directedH`, `monthCalc(m)` (núcleo: receita, custo, margem por cliente), `avgCost`, `focal`, `quadOf`, `QUAD`, `negStreak`, `coverage`, `alerts` |
 | Gráficos | `chartHours`, `chartQuadrant` (mapa da carteira com zoom), `quadList`, `sparkMargin`, `chartUrg` |
 | Componentes | `kpi`, `delta`, `qBadge`, `marginBadge`, `useBar` |
-| Páginas | `PAGES` + `pgOverview`, Kanban (`KST`, `kanbanItems`, `kanbanHTML`), `pgClients`, `clientTable`, `score`, `pgSprint`, `pgTeam` + `teamTable`, `teamMatrix`, `teamRisks`, `teamOff` |
+| Clientes | `PROJ` (segmento, projeto, ano de início por cliente), `cliInfo`, `satM`, `rwM`, `rowOf`, `cSeries`, `CTABS` + `pgClients` (sub-abas), `tabRent`, `clientTable` (ordenável, `S.csort`), `pgClient` (página completa, `S.client`, abas `S.cpt`) + `cResumo`, `cSignals`, `cTimeline`, `cFin` (+ `chartFin`, `simCalc`/`simOut`), `cCham` (+ `chartTickets`), `cSpr`, `cPess`. `monthCalc` tem memória por mês e preço (`MCC`). Dica flutuante `#tip` via `data-tip` |
+| Páginas | `PAGES` + `pgOverview`, Kanban (`KST`, `kanbanItems`, `kanbanHTML`), `score`, `pgSprint`, `pgTeam` + `teamTable`, `teamMatrix`, `teamRisks`, `teamOff` |
 | Pessoas: ficha individual | `TL` (tech lead), `DEVX` (RH e 1:1), `LVP` (referência por nível), `STORY` (situações plantadas), `devMonth(p,m)`, `hoursByClient`, `reallocEvents`, `ownDelta` (compara com a média dos 3 meses anteriores da pessoa), `pgPerson`, `pgTechLead`, `modalPauta` |
 | Camadas | `reportDraft` (relatório mensal), `sheetClient` (ficha do cliente) |
 | Relatórios | `AI` (textos simulados), `makeReport`, `checks` (cada item com chave `k`), `monthTasks(c,m)` (relatórios de task fictícios que compõem o mensal; id `v:cid:m:k`), `getR`, `taskTable`/`tabTask`, `tabMonthly`, `tabQuality`, `pipeline`, `pgReports`, `isGeneric`, `aiMerge`, `modalReport` (aceita id numérico ou virtual), `modalAdd`, `sheetMonthly`, `cliSla`, `cliRework` |
@@ -187,13 +188,16 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 
 **Visão geral** — 6 indicadores do mês (ocupação, consumo do pool, margem, SLA, satisfação, confiabilidade do dado), horas × pool em 6 meses, alertas do mês, para onde foi o tempo, pauta da revisão mensal. *Ainda não revisada com o usuário.*
 
-**Clientes** — revisada e aprovada:
-- 4 indicadores: Receita do mês, **Custo de atender**, Margem média, Clientes com margem < 15%. Seletor de preço da hora (premissa).
-- **Mapa da carteira** (gráfico margem × consumo do pool): **escala fixa** (0–200% de pool, −60% a 75% de margem), **bolinhas pequenas**, tamanho = margem em R$; quem passa do limite fica preso na borda com o valor escrito.
-- **Clicar numa área dá zoom dentro do mesmo card**, na mesma escala, com **só uma seta de voltar no canto superior esquerdo** (sem botão "Ver todos").
-- **Lista à direita** com a **mesma altura do gráfico e rolagem**: sem zoom mostra o resumo dos 4 quadrantes; com zoom mostra os clientes do quadrante em ordem de prioridade. Passar o mouse destaca a bolinha.
-- Abas: **"Ações em andamento"** (Kanban: Em alerta → Na pauta da revisão → Em negociação → Resolvido; cards **arrastáveis**; entram sozinhos os clientes com margem < 15%) e **"Todos os clientes"** (tabela com busca, filtro por quadrante, satisfação).
-- **Ficha do cliente** (enxuta, como o usuário quer): receita, custo, margem, pool, margem dos últimos meses, quem atende (com nível na stack), relatório mensal com status, botões "Levar à revisão mensal" e "Aprovar e enviar relatório". **Não** colocar custo direto/total, valor mínimo ou ponto focal na ficha.
+**Clientes** — reformulada em 15/10 a pedido do usuário:
+- 4 indicadores: Receita do mês, **Custo de atender**, Margem média, Satisfação média. Seletor de preço da hora (premissa).
+- **Sub-abas:** Mapa da carteira · Rentabilidade · Ações em andamento · Todos os clientes.
+- **Mapa da carteira**: **escala fixa 50–150% de pool e −20% a 80% de margem** (era 0–200% / −60–75%; mudada para tirar o aperto), tamanho = margem em R$, tracejado = margem negativa, quem passa do limite fica preso na borda com o valor escrito (Vale Verde). Linhas de referência rotuladas, contagem por quadrante, dica flutuante ao passar o mouse. **Clicar numa área dá zoom** no mesmo card, com só uma seta de voltar. Lista à direita com resumo dos quadrantes ou os clientes do quadrante em ordem.
+- **Rentabilidade**: barras de margem em R$ por cliente (direita = resultado, esquerda = prejuízo), acumulado da margem positiva, ordenar por R$ ou %.
+- **Ações em andamento**: Kanban (Em alerta → Na pauta da revisão → Em negociação → Resolvido; arrastável; entram sozinhos os clientes com margem < 15%).
+- **Todos os clientes**: busca (nome, stack, segmento), filtro por stack e quadrante, colunas ordenáveis, tendência da margem (sparkline), SLA, satisfação.
+- **Dentro de Clientes, clicar num cliente abre a página completa** (`pgClient`): cabeçalho (segmento, projeto, stack, criticidade, desde, pool, ponto focal) e abas Resumo (6 indicadores com sparkline, sobre o projeto, sinais do mês sem nota composta, linha do tempo), Financeiro (receita × custo, de onde vem a margem linha a linha, preço × custo por hora, contrato mínimo para 15%, **simulador de renegociação**), Chamados (volume por tipo, lista que abre o relatório da task), Sprints e entregas (itens da Sprint 42, planejado × realizado, previsão), Pessoas e conhecimento (quem atende, cobertura da stack).
+- **Ficha lateral do cliente** (enxuta) continua igual quando aberta da Visão geral ou da Equipe, com botão "Ver tudo sobre o cliente". Na ficha enxuta, **não** colocar custo direto/total, valor mínimo ou ponto focal (isso fica só na página completa).
+- Segmento, descrição do projeto, ano de início, tempo de resolução e histórico por sprint são **fictícios**: conferir que nada lembra cliente real.
 
 **Sprint e alocação** — capacidade (350 h), planejado (300 h), buffer, alocado; urgência com 3 sugestões de pessoa (score aberto); quando o buffer acaba, sugere adiar item de baixa prioridade; tabela de itens com botão **"Encerrar task"** (gera o relatório da task).
 

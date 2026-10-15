@@ -232,10 +232,10 @@ tr.tl-row td{background:color-mix(in srgb,var(--primary) 5%,transparent)}
 .matrix tfoot tr:first-child td{border-top:1px solid var(--border)}
 .matrix tfoot tr:last-child td{border-bottom:0}
 .sub-h{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted-fg);margin-bottom:2px}
-.rk{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
-.rk:last-of-type{border-bottom:0}
-.rk.click{cursor:pointer;margin:0 -8px;padding:10px 8px;border-radius:8px}
-.rk.click:hover{background:var(--hover)}
+.rrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.rrow:last-of-type{border-bottom:0}
+.rrow.click{cursor:pointer;margin:0 -8px;padding:10px 8px;border-radius:8px}
+.rrow.click:hover{background:var(--hover)}
 .kpi-inline{font-size:24px;font-weight:650;letter-spacing:-.02em}
 .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
 
@@ -295,6 +295,61 @@ tr.tl-row td{background:color-mix(in srgb,var(--primary) 5%,transparent)}
 table.mini{font-size:13px;margin-top:4px}
 table.mini td{padding:6px 8px 6px 0}
 .scroll-list{max-height:300px;overflow-y:auto;margin:0 -8px;padding:0 8px}
+
+/* Clientes */
+.page-tabs{align-self:flex-start;max-width:100%;overflow-x:auto}
+.page-tabs button{white-space:nowrap}
+.qmap text{font-size:12.5px}
+.qmap .ql{font:700 12px/1 var(--mono);letter-spacing:.07em;cursor:pointer}
+.qmap .pl{fill:var(--fg);font-family:var(--font);font-size:12.5px;font-weight:550;paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.qmap .thr{stroke:var(--muted-fg);stroke-dasharray:5 4;opacity:.8}
+.qmap .thr-t{font-size:11.5px;font-family:var(--font)}
+.qmap .ax{font-family:var(--font);font-size:12.5px;font-weight:500}
+.qmap .qa{cursor:zoom-in;transition:opacity .15s}
+.qmap .qa:hover{opacity:.13}
+.qmap circle.pt{cursor:pointer;transition:stroke-width .12s}
+.qmap circle.pt:hover,.qmap circle.pt.hl{stroke:var(--fg);stroke-width:2.6;fill-opacity:.95}
+.map-leg{padding:0 18px 14px;margin-top:-6px}
+.map-leg svg{width:13px;height:13px}
+#tip{position:fixed;left:0;top:0;z-index:80;pointer-events:none;opacity:0;transition:opacity .12s;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);padding:10px 12px;display:flex;flex-direction:column;gap:2px;font-size:12.5px;max-width:280px}
+#tip.on{opacity:1}
+#tip b{font-size:13.5px;margin-bottom:2px}
+#tip span{color:var(--muted-fg)}
+#tip em{font-style:normal;color:var(--primary);margin-top:4px;font-size:12px}
+.seg-s{display:inline-grid;grid-auto-flow:column;background:var(--muted);border-radius:8px;padding:3px;gap:2px;flex:none}
+.seg-s button{border:0;background:transparent;border-radius:6px;padding:5px 10px;cursor:pointer;color:var(--muted-fg);font-weight:500;font-size:12.5px}
+.seg-s button.on{background:var(--card);color:var(--primary);box-shadow:var(--shadow)}
+.rb{display:grid;grid-template-columns:minmax(150px,1.2fr) minmax(0,2fr) 84px 52px 74px;gap:12px;align-items:center;padding:7px 8px;border-bottom:1px solid var(--border);font-size:13px}
+.rb.click{cursor:pointer;border-radius:6px}
+.rb.click:hover,.rb.hl{background:var(--hover)}
+.rb-h{font-size:12px;color:var(--muted-fg);font-weight:500;border-bottom:1px solid var(--border)}
+.rb .r{text-align:right}
+.rb-n{min-width:0;display:flex;flex-direction:column}
+.rb-n b{font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb-n span{font-size:11.5px;color:var(--muted-fg)}
+.rb-bar{position:relative;height:14px}
+.rb-bar i{position:absolute;top:0;bottom:0;border-radius:3px}
+.rb-bar i.z{width:1px;background:var(--muted-fg);top:-4px;bottom:-4px;opacity:.6}
+@media (max-width:700px){.rb{grid-template-columns:minmax(0,1fr) 90px 70px}.rb-bar,.rb>span:nth-child(5),.rb-h>span:nth-child(2),.rb-h>span:nth-child(5){display:none}}
+td.num{white-space:nowrap}
+th.sortable{cursor:pointer;user-select:none}
+th.sortable:hover{color:var(--fg)}
+th .sa{margin-left:4px;font-size:11px;opacity:.6}
+.chip-s.plain{padding:0 10px}
+.sig{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.sig:last-child{border-bottom:0}
+.sig svg{margin-top:2px}
+.sig b{display:block;font-weight:550;font-size:13.5px}
+.sig span{font-size:12.5px;color:var(--muted-fg)}
+.sev-ok{color:var(--ok)}
+.tline li.bad::before{border-color:var(--bad);background:var(--bad)}
+.tline li.warn::before{border-color:var(--warn);background:var(--warn)}
+.tline li.live::before{border-color:var(--primary);background:var(--primary);box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 18%,transparent)}
+.kv small{font-size:12px}
+.check-l{display:flex;gap:8px;align-items:center;font-size:13.5px;cursor:pointer}
+.check-l input{accent-color:var(--primary);width:16px;height:16px}
+.range-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.range-row input[type=range]{flex:1 1 160px;accent-color:var(--primary)}
 
 /* Sheet & modal */
 .scrim{position:fixed;inset:0;background:var(--overlay);z-index:50}
@@ -828,7 +883,8 @@ const SPRINT0={n:46,doneN:17,doneH:118};        // itens da sprint 42 e o que j�
 const S={page:'overview',month:5,view:'gestor',price:85,q:'',quad:'Todos',pageN:0,sheet:null,modal:null,
   load:Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint])),
   urgIdx:0, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
-  quadSel:null, ctab:'acoes', rtab:'task', kstage:{}, monthly:{}, msheet:null, add:false, addSel:null,
+  quadSel:null, ctab:'mapa', rtab:'task',
+  client:null, cpt:'resumo', cty:'all', cst:'all', csort:{k:'margin',d:1}, rsort:'mr', sim:{adj:0,fat:false}, kstage:{}, monthly:{}, msheet:null, add:false, addSel:null,
   rf:'all', ra:'all', rq:'', mf:'all', sentAt:{},
   // relatórios das 17 tasks já encerradas na Sprint 42 (somam 118 h). done/apr = dia de outubro; fix = como o analista aprovou
   reports:[
@@ -881,7 +937,9 @@ const SPRINT_CAP=350;                           // 10 pessoas × 35 h disponíve
 function directedH(c,m){ // tempo interno com "cliente relacionado": estudo de Oracle APEX da Carla vai para o Vale Verde
   if(c.i!==0||c.h[m]===0) return 0; return Math.max(0,pInt(P.carla,m)-6);
 }
+const MCC={}; // memória do cálculo por mês e preço da hora (a página do cliente pede o mesmo mês muitas vezes)
 function monthCalc(m){
+  const key=m+'|'+S.price; if(MCC[key]) return MCC[key];
   const act=CLIENTS.filter(c=>c.h[m]>0);
   const directSum=act.reduce((s,c)=>s+c.h[m]*c.cph,0);
   const dedSum=act.reduce((s,c)=>s+directedH(c,m)*costHour('Pleno'),0);
@@ -901,7 +959,7 @@ function monthCalc(m){
   const ponto=PEOPLE.reduce((s,p)=>s+p.ponto,0);
   const cli=PEOPLE.reduce((s,p)=>s+pCli(p,m),0), int=PEOPLE.reduce((s,p)=>s+pInt(p,m),0);
   const leak=rows.reduce((s,r)=>s+r.excLeak,0);
-  return {m,rows,H,pool,rev,cost:OP_COST,margin:(rev-OP_COST)/rev,occ:cli/ponto,ponto,cli,int,inv:ponto-cli-int,factor,leak,leakR:leak*S.price*1.3};
+  return MCC[key]={m,rows,H,pool,rev,cost:OP_COST,margin:(rev-OP_COST)/rev,occ:cli/ponto,ponto,cli,int,inv:ponto-cli-int,factor,leak,leakR:leak*S.price*1.3};
 }
 function avgCost(c,m){const v=[];for(let k=Math.max(0,m-2);k<=m;k++){const r=monthCalc(k).rows.find(x=>x.c===c);if(r)v.push(r.cost);}return v.reduce((a,b)=>a+b,0)/v.length;}
 function focal(c){
@@ -964,42 +1022,44 @@ function chartHours(m){
   data.forEach((d,k)=>g+=`<circle cx="${L+bw*k+bw/2}" cy="${y(d.pool)}" r="${k===m?4.5:3}" fill="var(--bg)" stroke="var(--fg)" stroke-width="2"/>`);
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Horas consumidas por mês comparadas ao pool contratado">${g}</svg>`;
 }
-function stepFor(span){return [0.05,0.1,0.25,0.5,1].find(s=>span/s<=6)||1;}
+function stepFor(span){return [0.05,0.1,0.25,0.5,1].find(s=>span/s<=9)||1;}
 function chartQuadrant(rows){
-  const W=900,H=520,L=56,R=18,T=16,B=46,q=S.quadSel;
+  const W=900,H=580,L=64,R=24,T=22,B=58,q=S.quadSel;
   const pts=q?rows.filter(r=>r.quad===q):rows;
-  const WIN={'Proteger':[0,1,0.15,0.75],'Otimizar':[1,2,0.15,0.75],'Reprecificar':[1,2,-0.6,0.15],'Revisar escopo':[0,1,-0.6,0.15]};
-  const [x0,x1,y0,y1]=q?WIN[q]:[0,2,-0.6,0.75];   // escala fixa: zoom = recorte do mesmo plano
-  const X=v=>L+(W-L-R)*(Math.min(v,2)-x0)/(x1-x0), Y=v=>T+(H-T-B)*(y1-v)/(y1-y0);
-  const cx=v=>Math.max(L,Math.min(W-R,X(v))), cy=v=>Math.max(T,Math.min(H-B,Y(v)));
+  const WIN={'Proteger':[0.5,1,0.15,0.8],'Otimizar':[1,1.5,0.15,0.8],'Reprecificar':[1,1.5,-0.2,0.15],'Revisar escopo':[0.5,1,-0.2,0.15]};
+  const [x0,x1,y0,y1]=q?WIN[q]:[0.5,1.5,-0.2,0.8];   // escala fixa: zoom = recorte do mesmo plano; quem passa do limite fica na borda
+  const X=v=>L+(W-L-R)*(v-x0)/(x1-x0), Y=v=>T+(H-T-B)*(y1-v)/(y1-y0);
+  const clX=v=>Math.max(L+10,Math.min(W-R-10,X(v))), clY=v=>Math.max(T+10,Math.min(H-B-10,Y(v)));
+  const qx=Math.max(L,Math.min(W-R,X(1))), qy=Math.max(T,Math.min(H-B,Y(0.15)));
+  const areas=[['Proteger',L,T,qx,qy,'--ok'],['Otimizar',qx,T,W-R,qy,'--c3'],['Reprecificar',qx,qy,W-R,H-B,'--bad'],['Revisar escopo',L,qy,qx,H-B,'--warn']];
   let g='';
-  const qx=cx(1),qy=cy(0.15);
-  const bg=(xa,ya,xb,yb,col,qq)=>{const w=xb-xa,h=yb-ya;return w>0.5&&h>0.5?`<rect x="${xa}" y="${ya}" width="${w}" height="${h}" fill="var(${col})" opacity="${q&&q!==qq?0.02:0.07}" data-act="qsel" data-q="${qq}" style="cursor:pointer"><title>Ampliar ${qq}</title></rect>`:'';};
-  g+=bg(L,T,qx,qy,'--ok','Proteger')+bg(qx,T,W-R,qy,'--c3','Otimizar')+bg(qx,qy,W-R,H-B,'--bad','Reprecificar')+bg(L,qy,qx,H-B,'--warn','Revisar escopo');
-  const ys=stepFor(y1-y0);for(let v=Math.ceil(y0/ys)*ys;v<=y1+1e-9;v+=ys){g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${L-8}" y="${Y(v)+4}" text-anchor="end">${nf0.format(v*100)}%</text>`;}
-  const xs=stepFor(x1-x0);for(let v=Math.ceil(x0/xs)*xs;v<=x1+1e-9;v+=xs){g+=`<text x="${X(v)}" y="${H-B+16}" text-anchor="middle">${nf0.format(v*100)}%</text>`;}
-  if(x0<1&&x1>1) g+=`<line x1="${X(1)}" x2="${X(1)}" y1="${T}" y2="${H-B}" stroke="var(--muted-fg)"/>`;
-  if(y0<0.15&&y1>0.15) g+=`<line x1="${L}" x2="${W-R}" y1="${Y(0.15)}" y2="${Y(0.15)}" stroke="var(--muted-fg)"/>`;
-  if(!q){
-    g+=`<text x="${L+8}" y="${T+16}" style="fill:var(--ok);font-weight:600">PROTEGER</text>`;
-    g+=`<text x="${W-R-8}" y="${T+16}" text-anchor="end" style="fill:var(--c3);font-weight:600">OTIMIZAR</text>`;
-    g+=`<text x="${W-R-8}" y="${qy+18}" text-anchor="end" style="fill:var(--bad);font-weight:600">REPRECIFICAR</text>`;
-    g+=`<text x="${L+8}" y="${qy+18}" style="fill:var(--warn);font-weight:600">REVISAR ESCOPO</text>`;
-  }
-  g+=`<text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle">consumo do pool (horas usadas ÷ contratadas)</text>`;
+  areas.forEach(([k,xa,ya,xb,yb,col])=>{if(xb-xa>1&&yb-ya>1) g+=`<rect class="${q?'':'qa'}" x="${xa}" y="${ya}" width="${xb-xa}" height="${yb-ya}" fill="var(${col})" opacity=".07" ${q?'':`data-act="qsel" data-q="${k}"`}>${q?'':`<title>Ampliar ${k}</title>`}</rect>`;});
+  const ys=stepFor(y1-y0);for(let v=Math.ceil(y0/ys-1e-9)*ys;v<=y1+1e-9;v+=ys){g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}"/><text x="${L-10}" y="${Y(v)+4}" text-anchor="end">${nf0.format(Math.round(v*100)||0)}%</text>`;}
+  const xs=stepFor(x1-x0);for(let v=Math.ceil(x0/xs-1e-9)*xs;v<=x1+1e-9;v+=xs){g+=`<line class="grid-l" x1="${X(v)}" x2="${X(v)}" y1="${T}" y2="${H-B}" opacity=".5"/><text x="${X(v)}" y="${H-B+20}" text-anchor="middle">${nf0.format(v*100)}%</text>`;}
+  if(x0<1&&x1>1) g+=`<line class="thr" x1="${X(1)}" x2="${X(1)}" y1="${T}" y2="${H-B}"/><text class="thr-t" x="${X(1)+6}" y="${H-B-8}">100% do pool</text>`;
+  if(y0<0.15&&y1>0.15) g+=`<line class="thr" x1="${L}" x2="${W-R}" y1="${Y(0.15)}" y2="${Y(0.15)}"/><text class="thr-t" x="${W-R-6}" y="${Y(0.15)-7}" text-anchor="end">margem de 15%</text>`;
+  areas.forEach(([k,xa,ya,xb,yb,col])=>{
+    if(q&&q!==k) return; if(xb-xa<2||yb-ya<2) return;
+    const n=rows.filter(r=>r.quad===k).length, right=k==='Otimizar'||k==='Reprecificar';
+    g+=`<text class="ql" x="${right?xb-12:xa+12}" y="${k==='Proteger'&&!q?yb-14:ya+24}" text-anchor="${right?'end':'start'}" style="fill:var(${col})" ${q?'':`data-act="qsel" data-q="${k}"`}>${k.toUpperCase()} · ${n}</text>`;
+  });
+  g+=`<text class="ax" x="${(L+W-R)/2}" y="${H-12}" text-anchor="middle">Consumo do pool (horas usadas ÷ contratadas) →</text>`;
+  g+=`<text class="ax" transform="translate(18 ${(T+H-B)/2}) rotate(-90)" text-anchor="middle">Margem do mês →</text>`;
   const maxMr=Math.max(...rows.map(r=>r.mr));
-  const lab=q?(pts.length<=6?pts:pts.slice().sort((a,b)=>b.mr-a.mr).slice(0,6)):rows.filter(r=>r.margin<0);
+  const lab=new Set((q?pts.slice().sort((a,b)=>Math.abs(b.mr)-Math.abs(a.mr)).slice(0,12):pts.filter(r=>r.quad!=='Proteger')).map(r=>r.c.id));
   const placed=[];
   pts.slice().sort((a,b)=>b.mr-a.mr).forEach(r=>{
-    const col=QUAD[r.quad].col, rad=r.mr>0?3+7*Math.sqrt(r.mr/maxMr):4, xx=Math.min(W-R-8,X(r.use)), off=r.margin<y0, yy=off?H-B-8:Y(r.margin);
-    g+=`<circle data-act="client" data-id="${r.c.id}" data-hl="${r.c.id}" cx="${xx}" cy="${yy}" r="${rad}" fill="var(${col})" fill-opacity=".55" stroke="var(${col})" stroke-width="1.2" ${r.mr<0?'stroke-dasharray="3 2"':''} style="cursor:pointer"><title>${esc(r.c.n)} · margem ${pct(r.margin)} (${brl(r.mr)}) · pool ${pct(r.use)}</title></circle>`;
-    if(lab.includes(r)||off){
-      const txt=shortName(r.c.n)+(off?` (${pct(r.margin)} ↓)`:''), tw=txt.length*6.6;
-      let lx=xx+rad+4, ly=yy+4; if(lx+tw>W-R) lx=xx-rad-4-tw;
-      if(!placed.some(p=>Math.abs(p.y-ly)<13&&lx<p.x+p.w&&lx+tw>p.x)){placed.push({x:lx,y:ly,w:tw});g+=`<text x="${lx}" y="${ly}" style="fill:var(--fg)">${esc(txt)}</text>`;}
+    const col=QUAD[r.quad].col, rad=r.mr>0?5+10*Math.sqrt(r.mr/maxMr):6;
+    const off=r.use>x1||r.use<x0||r.margin<y0||r.margin>y1, xx=clX(r.use), yy=clY(r.margin);
+    const tip=`<b>${esc(r.c.n)}</b><span>${esc(r.c.st)} · ${r.quad}</span><span>Margem ${pct(r.margin)} · ${brl(r.mr)}</span><span>Pool ${pct(r.use)} · ${nf0.format(r.h)} de ${r.c.pool} h</span><span>Receita ${brl(r.rev)} · custo ${brl(r.cost)}</span><em>Clique para abrir o cliente</em>`;
+    g+=`<circle class="pt" data-act="cpage" data-id="${r.c.id}" data-hl="${r.c.id}" data-tip="${esc(tip)}" cx="${xx}" cy="${yy}" r="${rad}" fill="var(${col})" fill-opacity="${r.mr<0?.2:.72}" stroke="var(${col})" stroke-width="1.6" ${r.mr<0?'stroke-dasharray="3 2"':''}/>`;
+    if(lab.has(r.c.id)||off){
+      const txt=shortName(r.c.n)+(off?` · ${pct(r.margin)} · ${pct(r.use)} do pool`:''), tw=txt.length*7.1;
+      let lx=xx+rad+6, ly=yy+4; if(lx+tw>W-R) lx=xx-rad-6-tw;
+      if(!placed.some(p=>Math.abs(p.y-ly)<16&&lx<p.x+p.w&&lx+tw>p.x)){placed.push({x:lx,y:ly,w:tw});g+=`<text class="pl" x="${lx}" y="${ly}">${esc(txt)}</text>`;}
     }
   });
-  return `<svg class="chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mapa da carteira: margem por consumo do pool">${g}</svg>`;
+  return `<svg class="chart qmap" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mapa da carteira: margem por consumo do pool">${g}</svg>`;
 }
 const QSORT={
   'Proteger':{f:(a,b)=>b.mr-a.mr,d:'maior contribuição em R$ primeiro'},
@@ -1017,7 +1077,7 @@ function quadList(rows){
   }
   const list=rows.filter(r=>r.quad===q).sort(QSORT[q].f);
   return `<div class="card-h"><div><h3 style="display:flex;gap:8px;align-items:center">${qBadge(q)} <span class="muted num" style="font-size:13px;font-weight:500">${list.length}</span></h3><p>${QUAD[q].d}. Ordem: ${QSORT[q].d}.</p></div></div>
-  <div class="card-b list-b" style="padding-top:8px">${list.map((r,k)=>`<div class="qrow" data-act="client" data-id="${r.c.id}" data-hl="${r.c.id}"><span class="rk">${k+1}</span><div style="min-width:0"><div class="cell-main" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.c.n)}</div><div class="cell-sub">${esc(r.c.st)} · pool ${pct(r.use)}${r.exc?` · +${hh(r.exc)}`:''}</div></div><div style="text-align:right"><div class="num" style="font-size:13px;color:${r.mr<0?'var(--bad)':'var(--fg)'}">${brl(r.mr)}</div><div class="cell-sub num">${pct(r.margin)}</div></div></div>`).join('')||'<div class="empty">Nenhum cliente neste quadrante.</div>'}</div>`;
+  <div class="card-b list-b" style="padding-top:8px">${list.map((r,k)=>`<div class="qrow" data-act="cpage" data-id="${r.c.id}" data-hl="${r.c.id}"><span class="rk">${k+1}</span><div style="min-width:0"><div class="cell-main" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.c.n)}</div><div class="cell-sub">${esc(r.c.st)} · pool ${pct(r.use)}${r.exc?` · +${hh(r.exc)}`:''}</div></div><div style="text-align:right"><div class="num" style="font-size:13px;color:${r.mr<0?'var(--bad)':'var(--fg)'}">${brl(r.mr)}</div><div class="cell-sub num">${pct(r.margin)}</div></div></div>`).join('')||'<div class="empty">Nenhum cliente neste quadrante.</div>'}</div>`;
 }
 function sparkMargin(c){
   const W=260,H=64,P2=6;
@@ -1034,7 +1094,7 @@ function sparkMargin(c){
 const kpi=(lbl,val,sub,icon)=>`<div class="card kpi"><div class="lbl"><span>${lbl}</span>${icon?ic(icon,'muted'):''}</div><div class="val">${val}</div><div class="sub">${sub||''}</div></div>`;
 function delta(cur,prev,good='up',fmt=v=>pct1(v)){
   const d=cur-prev; if(Math.abs(d)<1e-9) return '<span class="delta muted">0</span>';
-  const up=d>0, cls=(up===(good==='up'))?'up':'down';
+  const up=d>0, cls=good==='none'?'muted':(up===(good==='up'))?'up':'down';
   return `<span class="delta ${cls}">${up?'▲':'▼'} ${fmt(Math.abs(d))}</span>`;
 }
 const qBadge=q=>`<span class="badge ${QUAD[q].cls}"><span class="dot"></span>${q}</span>`;
@@ -1102,61 +1162,351 @@ function kanbanItems(mc){return mc.rows.filter(r=>r.margin<0.15||S.kstage[r.c.id
 function kanbanHTML(items){
   return `<div class="kanban">${KST.map(([k,lab,sub],ix)=>{const its=items.filter(i=>i.st===k);
     return `<div class="kcol" data-stage="${k}"><div class="kcol-h"><b>${lab} <span class="num">${its.length}</span></b><span>${sub}</span></div>
-    ${its.map(({r})=>`<div class="kcard" draggable="true" data-act="client" data-id="${r.c.id}">
+    ${its.map(({r})=>`<div class="kcard" draggable="true" data-act="cpage" data-id="${r.c.id}">
       <div class="row"><b style="font-size:13.5px">${esc(r.c.n)}</b>${marginBadge(r.margin)}</div>
       <div class="row"><span class="cell-sub">${esc(r.c.st)} · contrato ${brl(r.contractV)} · mín. ${brl(avgCost(r.c,S.month)/0.85)}</span></div>
       <div class="row">${qBadge(r.quad)}${ix<3?`<button type="button" class="btn sm" data-act="kadv" data-id="${r.c.id}">${KST[ix+1][1].split(' ')[0]==='Na'?'Levar à pauta':KST[ix+1][1]} ${ic('right')}</button>`:''}</div>
     </div>`).join('')||'<div class="kempty">Nada aqui.</div>'}</div>`;}).join('')}</div>`;
 }
+/* ---------- Clientes: projeto de cada conta (fictício) ---------- */
+const PROJ={
+ 'Vale Verde Agro':['Agronegócio','Sustentação do sistema de apontamento de safra e produção por talhão, feito em Oracle APEX.',2026],
+ 'Ferro & Aço Industrial':['Indústria','Sustentação do portal de compras e da integração com o ERP: pedidos, notas fiscais e centros de custo.',2019],
+ 'Rede Saúde Mais':['Saúde suplementar','Sustentação do sistema de planos: tabela de preços, coparticipação e autorização de procedimentos.',2018],
+ 'Transportes Rio Doce':['Logística','Sustentação da emissão de CT-e e MDF-e e do controle de frota.',2017],
+ 'Conecta Telecom':['Telecom','Sustentação da plataforma de cobrança e da fila de mensagens com os assinantes.',2020],
+ 'Escola Horizonte':['Educação','Sustentação do sistema acadêmico: matrícula, cadastro de alunos e financeiro.',2021],
+ 'Mercado Bom Preço':['Varejo','Sustentação do e-commerce: busca, carrinho, cupons e checkout.',2021],
+ 'Clínica Viver':['Saúde','Sustentação do agendamento de consultas e dos lembretes aos pacientes.',2022],
+ 'Cooperativa Campo Forte':['Agronegócio','Sustentação do recebimento de grãos e do repasse aos cooperados.',2019],
+ 'Prefeitura de Serra Azul':['Setor público','Sustentação do portal de serviços ao cidadão: alvarás, certidões e protocolo.',2020],
+ 'Banco Arrecife Digital':['Financeiro','Sustentação da conciliação bancária, do PIX e dos relatórios regulatórios.',2018],
+ 'Logística Porto Seco':['Logística','Sustentação do rastreamento de cargas e da integração com transportadoras.',2023],
+ 'Construtora Pedra Alta':['Construção','Sustentação do controle de obras, medições e compras de material.',2022],
+ 'Ótica Visão Clara':['Varejo','Sustentação do app de vendas e do agendamento de exames.',2023],
+ 'Grupo Maré Alta':['Distribuição','Sustentação do painel de vendas e da tela de pedidos dos representantes.',2019],
+ 'Farmácia Bem Viver':['Varejo farmacêutico','Sustentação do controle de estoque por lote e validade.',2021],
+ 'Hotel Costa Verde':['Hotelaria','Sustentação do motor de reservas e das confirmações por e-mail.',2022],
+ 'Têxtil Aurora':['Indústria','Sustentação do sistema de produção e da emissão de notas fiscais.',2016],
+ 'Agência Ponto Criativo':['Serviços','Sustentação do portal de aprovação de peças com os clientes da agência.',2024],
+ 'Seguradora Âncora':['Seguros','Sustentação do portal do corretor, do cálculo de franquia e da emissão de apólices.',2018],
+ 'Laticínios Serrano':['Indústria alimentícia','Sustentação da integração com balanças e do controle de expedição.',2021],
+ 'Universidade Atlântica':['Educação','Sustentação do sistema de notas, diários de classe e exportações.',2019],
+ 'Distribuidora Litoral':['Distribuição','Sustentação do cálculo de comissões e do roteiro de entregas.',2022],
+ 'Mineração Serra do Ferro':['Mineração','Sustentação do controle de produção da mina e da integração com a balança ferroviária.',2020],
+ 'Associação Comercial Norte':['Associação','Sustentação do portal de associados e da emissão de boletos.',2024],
+ 'Clube Atlético Praia':['Esporte e lazer','Sustentação do portal do sócio e do controle de acesso.',2023],
+ 'Imobiliária Lar Novo':['Imobiliário','Sustentação do site de imóveis e da área do inquilino.',2023],
+ 'Energia Solar Sul':['Energia','Sustentação do monitoramento de usinas e das propostas comerciais.',2022],
+ 'Rede Café Montanha':['Alimentação','Sustentação do app de pedidos e do programa de fidelidade.',2024],
+ 'Gráfica Impressa':['Indústria gráfica','Sustentação do orçamento online e do controle de produção.',2017]
+};
+const MESES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const cliInfo=c=>{const p=PROJ[c.n]||['—','Sustentação '+c.st,2020];return {seg:p[0],proj:p[1],since:p[2],renov:c.i===0?'jul/2027':MESES[(c.i*5+3)%12]+'/2027',resp:{Alta:'4 h úteis',Média:'8 h úteis',Baixa:'16 h úteis'}[c.crit]};};
+const satM=(c,m)=>m===5?c.sat:Math.max(3,Math.min(5,Math.round((c.sat+((((c.i*3+m*5)%5)-2)*0.07))*10)/10));
+const rwM=(c,m)=>Math.max(.01,cliRework(c)*(1+((((c.i+m*3)%5)-2)*0.15)));
+const rowOf=(c,k)=>monthCalc(k).rows.find(x=>x.c===c);
+function cSeries(c,f){const ks=MS.map((_,k)=>k).filter(k=>c.h[k]>0);return {vals:ks.map(k=>f(k)),idx:ks.indexOf(S.month),ks};}
+const cDelta=(s,good,fmt)=>s.idx>0?`${delta(s.vals[s.idx],s.vals[s.idx-1],good,fmt)}<span class="muted">vs ${MS[s.ks[s.idx-1]]}</span>`:'<span class="muted">primeiro mês do contrato</span>';
+const qCol=r=>r?QUAD[r.quad].col:'--muted-fg';
+
+/* ---------- Clientes: página ---------- */
+const CTABS=[['mapa','Mapa da carteira'],['rent','Rentabilidade'],['acoes','Ações em andamento'],['todos','Todos os clientes']];
 function pgClients(){
-  const m=S.month, mc=monthCalc(m);
-  const rows=mc.rows.slice().sort((a,b)=>a.margin-b.margin);
-  const counts=Object.fromEntries(Object.keys(QUAD).map(q=>[q,rows.filter(r=>r.quad===q).length]));
-  const kb=kanbanItems(mc);
-  const satAvg=mean(rows.map(r=>r.c.sat)), satLow=rows.filter(r=>r.c.sat<4).length;
+  if(S.client) return pgClient(S.client);
+  const m=S.month, mc=monthCalc(m), rows=mc.rows;
+  const kb=kanbanItems(mc), satAvg=mean(rows.map(r=>r.c.sat)), satLow=rows.filter(r=>r.c.sat<4).length;
+  const cnt={acoes:kb.length,todos:rows.length};
+  let body='';
+  if(S.ctab==='mapa') body=`<div class="g-q">
+    <div class="card">
+      <div class="card-h"><div class="back">${S.quadSel?`<button type="button" class="icon-btn" data-act="qsel" data-q="" aria-label="Voltar ao mapa completo" title="Voltar">${ic('left')}</button>`:''}<div><h3>Mapa da carteira${S.quadSel?' · '+S.quadSel:''}</h3><p>Cada ponto é um cliente. ${S.quadSel?'Mesma escala, só este quadrante.':'Clique numa área para ampliar ou num ponto para abrir o cliente.'}</p></div></div></div>
+      <div class="card-b chart-b">${chartQuadrant(rows)}</div>
+      <div class="legend map-leg"><span><i style="border-radius:50%;background:var(--primary)"></i>tamanho = margem em R$</span><span><i style="border-radius:50%;border:1.5px dashed var(--bad);background:transparent"></i>margem negativa</span><span>${ic('info')} passe o mouse num ponto para ver os números</span></div>
+    </div>
+    <div class="card">${quadList(rows)}</div>
+  </div>`;
+  if(S.ctab==='rent') body=tabRent(mc);
+  if(S.ctab==='acoes') body=`<div class="card"><div class="toolbar"><span class="muted" style="font-size:13px">Clientes com margem abaixo de 15% entram sozinhos em "Em alerta". Arraste o card para mudar de etapa. O resto do caminho é decisão de pessoas.</span></div>${kanbanHTML(kb)}</div>`;
+  if(S.ctab==='todos') body=`<div class="card">
+    <div class="toolbar">
+      <div class="search">${ic('search')}<input id="q" type="search" placeholder="Buscar cliente, stack ou segmento" value="${esc(S.q)}" autocomplete="off"></div>
+      <select class="select" id="cst" aria-label="Stack"><option value="all">Todas as stacks</option>${STACKS.filter(s=>clientsByStack(s).length).map(s=>`<option ${S.cst===s?'selected':''}>${s}</option>`).join('')}</select>
+      ${['Todos',...Object.keys(QUAD)].map(q=>`<button type="button" class="chip ${S.quad===q?'on':''}" data-act="quad" data-q="${q}">${q}${q!=='Todos'?` <span class="muted num">${rows.filter(r=>r.quad===q).length}</span>`:''}</button>`).join('')}
+    </div>
+    <div id="ctable">${clientTable()}</div></div>`;
   return `
   <div class="page-head"><div><h1>Clientes</h1><p>Quanto cada contrato paga, quanto custa atender e o que fazer com ele. Horas do GLPI, custo do RH e valor do contrato do comercial.</p></div>
   <div class="head-actions"><label class="muted" for="price-c" style="font-size:13px">Preço médio da hora (premissa)</label><select class="select" id="price-c">${[60,70,85,100,120,150].map(v=>`<option value="${v}" ${v===S.price?'selected':''}>R$ ${v}/h</option>`).join('')}</select></div></div>
 
   <div class="grid g-kpi">
-    ${kpi('Receita do mês',brlk(mc.rev),`<span>${mc.rows.length} contratos ativos</span>`,'trend')}
+    ${kpi('Receita do mês',brlk(mc.rev),`<span>${rows.length} contratos ativos</span>`,'trend')}
     ${kpi('Custo de atender',brlk(mc.cost),`<span class="num">≈ ${brl(mc.cost/mc.H)}/h com rateio</span>`,'users')}
     ${kpi('Margem média',pct(mc.margin),`<span>com preço da hora de R$ ${S.price}</span>`,'spark')}
     ${kpi('Satisfação média',nf1.format(satAvg)+'<span class="muted" style="font-size:15px"> / 5</span>',`<span>${satLow} cliente${satLow===1?'':'s'} abaixo de 4</span>`,'spark')}
   </div>
 
-  <div class="g-q">
-    <div class="card">
-      <div class="card-h"><div class="back">${S.quadSel?`<button type="button" class="icon-btn" data-act="qsel" data-q="" aria-label="Voltar ao mapa completo" title="Voltar">${ic('left')}</button>`:''}<div><h3>Mapa da carteira${S.quadSel?' · '+S.quadSel:''}</h3><p>Tamanho do ponto = margem em R$ no mês. ${S.quadSel?'Mesma escala, só este quadrante.':'Clique numa área para ampliar.'}</p></div></div></div>
-      <div class="card-b chart-b">${chartQuadrant(mc.rows)}</div>
-    </div>
-    <div class="card">${quadList(mc.rows)}</div>
-  </div>
-
-  <div class="card">
-    <div class="toolbar">
-      <div class="tabs" role="tablist"><button type="button" role="tab" class="${S.ctab==='acoes'?'on':''}" data-act="ctab" data-t="acoes">Ações em andamento <span class="num muted">${kb.length}</span></button><button type="button" role="tab" class="${S.ctab==='todos'?'on':''}" data-act="ctab" data-t="todos">Todos os clientes <span class="num muted">${rows.length}</span></button></div>
-      ${S.ctab==='todos'?`<div class="search">${ic('search')}<input id="q" type="search" placeholder="Buscar cliente ou stack" value="${esc(S.q)}" autocomplete="off"></div>
-      ${['Todos',...Object.keys(QUAD)].map(q=>`<button type="button" class="chip ${S.quad===q?'on':''}" data-act="quad" data-q="${q}">${q}${q!=='Todos'?` <span class="muted num">${counts[q]}</span>`:''}</button>`).join('')}`:'<span class="muted" style="font-size:13px">Clientes com margem abaixo de 15% entram sozinhos em "Em alerta". O resto do caminho é decisão de pessoas.</span>'}
-    </div>
-    ${S.ctab==='acoes'?kanbanHTML(kb):`<div id="ctable">${clientTable(rows)}</div>`}
-  </div>`;
+  <div class="tabs page-tabs" role="tablist">${CTABS.map(([k,l])=>`<button type="button" role="tab" class="${S.ctab===k?'on':''}" data-act="ctab" data-t="${k}">${l}${cnt[k]!==undefined?` <span class="num muted">${cnt[k]}</span>`:''}</button>`).join('')}</div>
+  ${body}`;
 }
-function clientTable(all){
-  const q=S.q.trim().toLowerCase();
-  let rows=all.filter(r=>(S.quad==='Todos'||r.quad===S.quad)&&(!q||r.c.n.toLowerCase().includes(q)||r.c.st.toLowerCase().includes(q)));
+function tabRent(mc){
+  const by=S.rsort==='pct'?(a,b)=>b.margin-a.margin:(a,b)=>b.mr-a.mr;
+  const rows=mc.rows.slice().sort(by), pos=rows.filter(r=>r.mr>0).reduce((s,r)=>s+r.mr,0), neg=rows.filter(r=>r.mr<0);
+  const negV=neg.reduce((s,r)=>s+r.mr,0), top=mc.rows.slice().sort((a,b)=>b.mr-a.mr).slice(0,5), topV=top.reduce((s,r)=>s+r.mr,0);
+  const mn=Math.min(0,...rows.map(r=>r.mr)), mx=Math.max(...rows.map(r=>r.mr)), span=mx-mn, z=-mn/span*100, low=rows.filter(r=>r.margin<.15).length;
+  let acc=0;
+  return `<div class="card">
+    <div class="card-h"><div><h3>Quem sustenta a carteira</h3><p>Margem em R$ de cada cliente no mês. Barras para a direita geram resultado; para a esquerda, custam mais do que pagam.</p></div>
+      <div class="seg-s" role="group" aria-label="Ordenar"><button type="button" class="${S.rsort!=='pct'?'on':''}" data-act="rsortc" data-v="mr">Ordenar por R$</button><button type="button" class="${S.rsort==='pct'?'on':''}" data-act="rsortc" data-v="pct">por %</button></div></div>
+    <div class="card-b" style="display:flex;flex-direction:column;gap:16px">
+      <div class="qgrid q4">
+        <div><span>Margem total da carteira</span><b>${brl(pos+negV)}</b><small class="muted">no mês, com o preço da hora de R$ ${S.price}</small></div>
+        <div><span>5 maiores geram</span><b>${pct(topV/pos)}</b><small class="muted">da margem positiva · ${top.map(r=>shortName(r.c.n)).slice(0,3).join(', ')}…</small></div>
+        <div><span>Custam mais do que pagam</span><b style="color:${neg.length?'var(--bad)':'var(--fg)'}">${neg.length}</b><small class="muted">${neg.length?brl(negV)+' no mês':'nenhum cliente'}</small></div>
+        <div><span>Abaixo de 15% de margem</span><b>${low}</b><small class="muted">entram sozinhos em "Ações em andamento"</small></div>
+      </div>
+      <div>
+        <div class="rb rb-h"><span>Cliente</span><span>Margem em R$</span><span class="r">R$</span><span class="r">%</span><span class="r">Acumulado</span></div>
+        ${rows.map(r=>{if(r.mr>0)acc+=r.mr;const w=Math.abs(r.mr)/span*100,left=r.mr>=0?z:z-w;
+          return `<div class="rb click" data-act="cpage" data-id="${r.c.id}" data-hl="${r.c.id}">
+            <div class="rb-n"><b>${esc(r.c.n)}</b><span>${esc(r.c.st)} · ${r.quad}</span></div>
+            <div class="rb-bar"><i class="z" style="left:${z}%"></i><i class="v" style="left:${left}%;width:${Math.max(.6,w)}%;background:var(${QUAD[r.quad].col})"></i></div>
+            <b class="num r" style="${r.mr<0?'color:var(--bad)':''}">${brl(r.mr)}</b><span class="num r muted">${pct(r.margin)}</span><span class="num r muted">${r.mr>0&&S.rsort!=='pct'?pct(acc/pos):'—'}</span></div>`;}).join('')}
+      </div>
+      <p class="note" style="margin:0">${ic('info')}<span>A coluna "Acumulado" mostra quanto da margem positiva os clientes acima já somam. Cor = quadrante do mapa.</span></p>
+    </div></div>`;
+}
+const CSORT={n:r=>r.c.n,use:r=>r.use,rev:r=>r.rev,cost:r=>r.cost,margin:r=>r.margin,sla:r=>cliSla(r.c,S.month),sat:r=>r.c.sat};
+function clientTable(){
+  const m=S.month, q=S.q.trim().toLowerCase(), {k,d}=S.csort, f=CSORT[k];
+  const rows=monthCalc(m).rows.filter(r=>(S.quad==='Todos'||r.quad===S.quad)&&(S.cst==='all'||r.c.st===S.cst)&&(!q||`${r.c.n} ${r.c.st} ${cliInfo(r.c).seg}`.toLowerCase().includes(q)))
+    .sort((a,b)=>{const x=f(a),y=f(b);return (typeof x==='string'?x.localeCompare(y):x-y)*d;});
   const per=10,pages=Math.max(1,Math.ceil(rows.length/per));
   if(S.pageN>=pages) S.pageN=pages-1;
   const slice=rows.slice(S.pageN*per,S.pageN*per+per);
-  const satB=v=>`<span class="badge ${v<4?'b-warn':'b-mute'} num">${nf1.format(v)}</span>`;
+  const th=(key,label,cls)=>`<th class="sortable ${cls||''}" data-act="csort" data-k="${key}" aria-sort="${k===key?(d>0?'ascending':'descending'):'none'}">${label}<span class="sa">${k===key?(d>0?'↑':'↓'):'↕'}</span></th>`;
   return `<div class="tbl-wrap"><table>
-    <thead><tr><th>Cliente</th><th style="min-width:150px">Pool usado</th><th class="r">Receita</th><th class="r">Custo</th><th class="r">Margem</th><th class="r">Satisfação</th><th>Ação sugerida</th></tr></thead>
-    <tbody>${slice.map(r=>`<tr class="click" data-act="client" data-id="${r.c.id}">
-      <td><div class="cell-main">${esc(r.c.n)}</div><div class="cell-sub">${esc(r.c.st)} · criticidade ${r.c.crit.toLowerCase()} · ${hh(r.h)}${r.exc?` · <span style="color:var(--bad)">+${hh(r.exc)}${r.excLeak?' não faturado':''}</span>`:''}</div></td>
-      <td>${useBar(r.use)}</td>
+    <thead><tr>${th('n','Cliente')}${th('use','Pool usado')}${th('rev','Receita','r')}${th('cost','Custo','r')}${th('margin','Margem','r')}<th>Tendência</th>${th('sla','SLA','r')}${th('sat','Satisfação','r')}<th>Ação sugerida</th><th></th></tr></thead>
+    <tbody>${slice.map(r=>{const s=cSeries(r.c,k2=>rowOf(r.c,k2).margin),sla=cliSla(r.c,m);return `<tr class="click" data-act="cpage" data-id="${r.c.id}">
+      <td><div class="cell-main">${esc(r.c.n)}</div><div class="cell-sub">${esc(r.c.st)} · ${esc(cliInfo(r.c).seg)} · ${hh(r.h)}${r.exc?` · <span style="color:var(--bad)">+${hh(r.exc)}${r.excLeak?' não faturado':''}</span>`:''}</div></td>
+      <td style="min-width:140px">${useBar(r.use)}</td>
       <td class="r num">${brl(r.rev)}</td><td class="r num">${brl(r.cost)}</td>
-      <td class="r">${marginBadge(r.margin)}</td><td class="r">${satB(r.c.sat)}</td><td>${qBadge(r.quad)}</td></tr>`).join('')||`<tr><td colspan="7"><div class="empty">Nenhum cliente encontrado.</div></td></tr>`}</tbody></table></div>
-    <div class="pager"><span>${rows.length} clientes · página ${S.pageN+1} de ${pages}</span><div style="display:flex;gap:6px"><button type="button" class="btn sm" data-act="pg" data-d="-1" ${S.pageN===0?'disabled':''}>${ic('left')} Anterior</button><button type="button" class="btn sm" data-act="pg" data-d="1" ${S.pageN>=pages-1?'disabled':''}>Próxima ${ic('right')}</button></div></div>`;
+      <td class="r">${marginBadge(r.margin)}</td>
+      <td>${spark(s.vals,s.idx,r.margin<0?'--bad':r.margin<.15?'--warn':'--ok')}</td>
+      <td class="r num" style="${sla<.95?'color:var(--warn)':''}">${pct(sla)}</td>
+      <td class="r"><span class="badge ${r.c.sat<4?'b-warn':'b-mute'} num">${nf1.format(r.c.sat)}</span></td>
+      <td>${qBadge(r.quad)}</td><td class="r">${ic('right','muted')}</td></tr>`;}).join('')||`<tr><td colspan="10"><div class="empty">Nenhum cliente encontrado.</div></td></tr>`}</tbody></table></div>
+    <div class="pager"><span>${rows.length} clientes · página ${S.pageN+1} de ${pages} · clique no cabeçalho para ordenar</span><div style="display:flex;gap:6px"><button type="button" class="btn sm" data-act="pg" data-d="-1" ${S.pageN===0?'disabled':''}>${ic('left')} Anterior</button><button type="button" class="btn sm" data-act="pg" data-d="1" ${S.pageN>=pages-1?'disabled':''}>Próxima ${ic('right')}</button></div></div>`;
+}
+
+/* ---------- Clientes: página completa de um cliente ---------- */
+const CPT=[['resumo','Resumo'],['fin','Financeiro'],['cham','Chamados'],['spr','Sprints e entregas'],['pess','Pessoas e conhecimento']];
+function pgClient(id){
+  const c=CLIENTS.find(x=>x.id===id), m=S.month, r=rowOf(c,m), info=cliInfo(c), fo=focal(c);
+  const st=r?(S.kstage[id]||(r.margin<0.15?'alerta':null)):null, stLab=st?KST.find(k=>k[0]===st)[1]:null, col=qCol(r);
+  const head=`<button type="button" class="btn sm ghost back" data-act="cpage-back">${ic('left')} Clientes</button>
+  <div class="card ph">
+    <div class="pav big" style="background:color-mix(in srgb,var(${col}) 16%,transparent);color:var(${col})">${initials(c.n.replace(/&/g,''))}</div>
+    <div style="min-width:0"><div class="ph-t"><h1>${esc(c.n)}</h1>${r?qBadge(r.quad):''}${stLab?`<span class="badge b-out">${stLab}</span>`:''}</div>
+      <div class="ph-r">${esc(info.seg)} · ${esc(info.proj)}</div>
+      <div class="ph-chips"><span class="chip-s plain"><b>${esc(c.st)}</b></span><span class="chip-s plain">Criticidade ${c.crit.toLowerCase()}</span><span class="chip-s plain">Cliente desde ${info.since}</span><span class="chip-s plain">Pool de ${c.pool} h/mês</span><span class="chip-s plain">Ponto focal ${esc(fullOf(fo.tit))}</span></div></div>
+    <div class="ph-side">
+      ${r?`<button type="button" class="btn pri" data-act="msheet" data-id="${c.id}">${ic('file')} Relatório de ${MONTHS[m].toLowerCase()}</button>`:''}
+      ${st==='alerta'?`<button type="button" class="btn" data-act="kadv" data-id="${c.id}">Levar à revisão mensal</button>`:''}
+    </div>
+  </div>`;
+  if(!r) return head+`<div class="card"><div class="empty">Contrato ainda não estava ativo em ${MONTHS[m].toLowerCase()}. Começou em julho de 2026.</div></div>`;
+  const body={resumo:cResumo,fin:cFin,cham:cCham,spr:cSpr,pess:cPess}[S.cpt](c,r,m,info);
+  return `${head}<div class="tabs page-tabs" role="tablist">${CPT.map(([k,l])=>`<button type="button" role="tab" class="${S.cpt===k?'on':''}" data-act="cpt" data-t="${k}">${l}</button>`).join('')}</div>${body}`;
+}
+function cResumo(c,r,m,info){
+  const fo=focal(c);
+  const mg=cSeries(c,k=>rowOf(c,k).margin), us=cSeries(c,k=>rowOf(c,k).use), sl=cSeries(c,k=>cliSla(c,k)), sa=cSeries(c,k=>satM(c,k)), rw=cSeries(c,k=>rwM(c,k)), ch=cSeries(c,k=>monthTasks(c,k).length);
+  const v=s=>s.vals[s.idx], n=v(ch);
+  return `<div class="grid g-kpi6">
+    ${mtile('Margem',pct(r.margin),cDelta(mg,'up',pp),spark(mg.vals,mg.idx,r.margin<0?'--bad':'--primary'),`${brl(r.mr)} no mês`,'trend')}
+    ${mtile('Consumo do pool',pct(r.use),cDelta(us,'down',pp),spark(us.vals,us.idx,r.use>1?'--bad':'--primary'),`${nf0.format(r.h)} de ${c.pool} h`,'kanban')}
+    ${mtile('SLA cumprido',pct(v(sl)),cDelta(sl,'up',pp),spark(sl.vals,sl.idx),'meta ≥ 95%','check')}
+    ${mtile('Satisfação',nf1.format(v(sa))+'<span class="muted" style="font-size:15px"> / 5</span>',cDelta(sa,'up',x=>nf1.format(x)),spark(sa.vals,sa.idx),'pesquisa após o chamado','spark')}
+    ${mtile('Retrabalho',pct1(v(rw)),cDelta(rw,'down',pp),spark(rw.vals,rw.idx,'--warn'),'reabertos em 30 dias','repeat')}
+    ${mtile('Chamados',String(n),cDelta(ch,'none',x=>nf0.format(x)),spark(ch.vals,ch.idx),`${nf1.format(r.h/n)} h por chamado`,'file')}
+  </div>
+  <div class="grid g-3">
+    <div class="card"><div class="card-h"><div><h3>Sobre o projeto</h3><p>${esc(info.seg)}</p></div></div>
+      <div class="card-b" style="padding-top:10px"><p style="margin:0 0 10px;line-height:1.55">${esc(info.proj)}</p>
+        <div class="kv"><span>Contrato</span><span>Sustentação mensal · pool de ${c.pool} h</span></div>
+        <div class="kv"><span>Horas excedentes</span><span>${c.fat?'faturadas a 1,3× a hora':'<span style="color:var(--bad)">não faturadas</span>'}</span></div>
+        <div class="kv"><span>Prazo de atendimento</span><span>${info.resp} · criticidade ${c.crit.toLowerCase()}</span></div>
+        <div class="kv"><span>Stack</span><span>${esc(c.st)}</span></div>
+        <div class="kv"><span>Cliente desde</span><span class="num">${info.since}</span></div>
+        <div class="kv"><span>Próximo reajuste</span><span class="num">${info.renov}</span></div>
+        <div class="kv"><span>Ponto focal · reserva</span><span>${esc(fo.tit.n)} · ${fo.res?esc(fo.res.n):'<span style="color:var(--warn)">sem reserva</span>'}</span></div>
+      </div></div>
+    <div class="card"><div class="card-h"><div><h3>Sinais do mês</h3><p>Cada sinal sozinho, sem nota composta.</p></div></div>
+      <div class="card-b" style="padding-top:6px">${cSignals(c,r,m).map(([sv,t,d])=>`<div class="sig">${ic(sv==='ok'?'check':sv==='info'?'info':'alert','sev-'+(sv==='ok'?'ok':sv))}<div><b>${t}</b><span>${d}</span></div></div>`).join('')}</div></div>
+    <div class="card"><div class="card-h"><div><h3>Linha do tempo da conta</h3><p>O que aconteceu com este cliente, do mais recente ao mais antigo.</p></div></div>
+      <div class="card-b" style="padding-top:10px"><ol class="tline">${cTimeline(c,r,m,info).map(([d,t,x,cls])=>`<li class="on ${cls}"><b>${esc(t)}</b><span>${d} · ${esc(x)}</span></li>`).join('')}</ol></div></div>
+  </div>`;
+}
+function cSignals(c,r,m){
+  const out=[], sla=cliSla(c,m), cov=coverage(c.st), solo=Object.keys(c.att).length===1, neg=negStreak(c,m), ms=S.monthly[c.id];
+  out.push(r.margin<0?['bad','Margem negativa',`${pct(r.margin)} no mês${neg>=2?` · ${neg} meses seguidos: entra na pauta de reprecificação`:''}`]:r.margin<.15?['warn','Margem abaixo de 15%',`${pct(r.margin)} · contrato mínimo para 15%: ${brl(avgCost(c,m)/0.85)}`]:['ok','Margem saudável',`${pct(r.margin)} · ${brl(r.mr)} no mês`]);
+  out.push(r.use>1?['bad','Pool estourado',`${pct(r.use)} · ${hh(r.exc)} acima do contratado`]:r.use>.9?['warn','Pool perto do limite',`${pct(r.use)} usado`]:['ok','Pool sob controle',`${pct(r.use)} usado`]);
+  if(r.excLeak>0) out.push(['bad','Excedente não faturado',`${hh(r.excLeak)} sem cobrança · ${brl(r.excLeak*S.price*1.3)} deixados na mesa`]);
+  out.push(sla>=.95?['ok','SLA dentro do acordado',pct(sla)]:['warn','SLA abaixo de 95%',pct(sla)]);
+  out.push(c.sat>=4?['ok','Cliente satisfeito',nf1.format(c.sat)+' de 5']:['warn','Satisfação abaixo de 4',nf1.format(c.sat)+' de 5']);
+  out.push(cov===0?['bad',`Ninguém domina ${c.st}`,'cada chamado depende de estudo e custa mais']:solo?['warn','Depende de uma pessoa só',`só ${fullOf(P[Object.keys(c.att)[0]])} atende`]:cov===1?['warn',`Só 1 pessoa nível 3+ em ${c.st}`,'sem reserva técnica']:['ok','Conhecimento distribuído',`${cov} pessoas nível 3+ em ${c.st}`]);
+  out.push(ms==='Enviado'?['ok','Relatório mensal enviado',MONTHS[m]]:['info',`Relatório mensal: ${ms.toLowerCase()}`,'aguarda o ponto focal']);
+  return out;
+}
+function cTimeline(c,r,m,info){
+  const ev=[], ms=S.monthly[c.id], o=c.i%3;
+  S.log.filter(l=>(l.d||'').includes(c.n)).slice(-3).reverse().forEach(l=>ev.push(['hoje',l.t,l.d.replace(c.n+' · ',''),'live']));
+  URGENT.filter(u=>u.cli===c.n).forEach(u=>ev.push(['15/10',`Urgência ${u.lv.toLowerCase()} aberta`,`#${u.id} · ${u.t}`,u.lv==='Crítica'?'bad':'warn']));
+  S.reports.filter(x=>x.cli===c.n).forEach(x=>ev.push([dt(x.done),`Task #${x.tid} encerrada`,x.t,'']));
+  ev.push(ms==='Enviado'?[S.sentAt[c.id]?'hoje':`0${5+o}/10`,`Relatório de ${MONTHS[m].toLowerCase()} enviado`,'aprovado pelo ponto focal','']:['01/10',`Relatório de ${MONTHS[m].toLowerCase()} gerado pela IA`,ms.toLowerCase(),'warn']);
+  if(negStreak(c,m)>=2) ev.push(['01/10','Entrou na pauta da revisão mensal','margem negativa por 2 meses seguidos','bad']);
+  if(c.i===0) ev.push(['ago/2026','Capacitação em Oracle APEX iniciada','estudo da Carla vai como custo deste cliente','warn'],['jul/2026','Contrato iniciado','Oracle APEX · ninguém da equipe com nível 3','']);
+  else ev.push(['jul/2026','Revisão de conta trimestral','pauta padrão com o cliente',''],[`${info.since}`,'Início do contrato',`sustentação ${c.st}`,'']);
+  return ev.slice(0,7);
+}
+function chartFin(c){
+  const ks=MS.map((_,k)=>k).filter(k=>c.h[k]>0), rs=ks.map(k=>rowOf(c,k));
+  const W=640,H=250,L=56,R=12,T=26,B=28, mx=niceMax(Math.max(...rs.map(r=>Math.max(r.rev,r.cost)))*1.08);
+  const y=v=>T+(H-T-B)*(1-v/mx), bw=(W-L-R)/ks.length;
+  let g='';
+  for(let i=0;i<=4;i++){const v=mx*i/4;g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${nf0.format(v/1000)}k</text>`;}
+  rs.forEach((r,i)=>{const x=L+bw*i, w=bw*0.3, sel=ks[i]===S.month;
+    g+=`<rect x="${x+bw*0.18}" y="${y(r.rev)}" width="${w}" height="${y(0)-y(r.rev)}" rx="3" fill="var(--c1)" opacity="${sel?1:.55}"><title>Receita ${brl(r.rev)}</title></rect>`;
+    g+=`<rect x="${x+bw*0.18+w+3}" y="${y(r.cost)}" width="${w}" height="${y(0)-y(r.cost)}" rx="3" fill="var(--muted-fg)" opacity="${sel?.8:.4}"><title>Custo ${brl(r.cost)}</title></rect>`;
+    g+=`<text x="${x+bw/2}" y="${Math.min(y(r.rev),y(r.cost))-8}" text-anchor="middle" style="fill:${r.margin<0?'var(--bad)':'var(--fg)'};font-weight:600">${pct(r.margin)}</text>`;
+    g+=`<text x="${x+bw/2}" y="${H-8}" text-anchor="middle" style="${sel?'fill:var(--fg);font-weight:600':''}">${MS[ks[i]]}</text>`;});
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Receita e custo por mês">${g}</svg>`;
+}
+function simCalc(c,r){
+  const adj=S.sim.adj/100, fat=S.sim.fat&&!c.fat, exc=c.fat?r.rev-r.contractV:0;
+  const rev=r.contractV*(1+adj)+exc+(fat?r.exc*S.price*1.3:0), mr=rev-r.cost, mg=mr/rev;
+  return {rev,mr,mg,quad:quadOf(mg,r.use)};
+}
+function simOut(c,r){
+  const s=simCalc(c,r), d=s.mr-r.mr;
+  return `<div class="ro" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div>Receita simulada<b class="num">${brl(s.rev)}</b></div><div>Margem<b class="num" style="color:${s.mg<0?'var(--bad)':s.mg<.15?'var(--warn)':'var(--ok)'}">${pct(s.mg)}</b></div><div>Efeito por ano<b class="num" style="color:${d<0?'var(--bad)':'var(--fg)'}">${d>=0?'+':''}${brl(d*12)}</b></div></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:13px"><span class="muted">Com isso o cliente vai para</span>${qBadge(s.quad)}</div>`;
+}
+function cFin(c,r,m){
+  const ph=S.price*c.f, cph=r.cost/r.h, eq=avgCost(c,m)/0.85, rv=cSeries(c,k=>rowOf(c,k).rev), co=cSeries(c,k=>rowOf(c,k).cost);
+  const line=(l,v,cls,sub)=>`<div class="kv ${cls||''}"><span>${l}${sub?`<small class="muted"> · ${sub}</small>`:''}</span><span class="num">${v}</span></div>`;
+  return `<div class="grid g-kpi6">
+    ${mtile('Receita do mês',brl(r.rev),cDelta(rv,'up',x=>brl(x)),spark(rv.vals,rv.idx),'contrato + excedente faturado','trend')}
+    ${mtile('Custo de atender',brl(r.cost),cDelta(co,'down',x=>brl(x)),spark(co.vals,co.idx,'--warn'),'horas da equipe + rateio','users')}
+    ${mtile('Margem',brl(r.mr),`<span class="muted">${pct(r.margin)} da receita</span>`,'',`${r.quad}`,'spark')}
+    ${mtile('Preço da hora',brl(ph),`<span class="muted">premissa R$ ${S.price} × fator ${nf1.format(c.f)}</span>`,'','o preço real fica com o comercial','target')}
+    ${mtile('Custo por hora entregue',brl(cph),`<span class="muted">${cph>ph?'acima':'abaixo'} do preço da hora</span>`,'',cph>ph?'<span style="color:var(--bad)">cada hora entregue dá prejuízo</span>':'cada hora entregue dá resultado','clock')}
+    ${mtile('Contrato mínimo',brl(eq),`<span class="muted">para margem de 15%</span>`,'',r.contractV<eq?`<span style="color:var(--bad)">contrato atual ${brl(r.contractV)}: faltam ${brl(eq-r.contractV)}/mês</span>`:`contrato atual ${brl(r.contractV)} cobre`,'zap')}
+  </div>
+  <div class="grid g-2">
+    <div class="card"><div class="card-h"><div><h3>Receita × custo por mês</h3><p>Número em cima: margem do mês.</p></div></div>
+      <div class="card-b">${chartFin(c)}<div class="legend" style="margin-top:6px"><span><i style="background:var(--c1)"></i>Receita</span><span><i style="background:var(--muted-fg)"></i>Custo de atender</span></div></div></div>
+    <div class="card"><div class="card-h"><div><h3>De onde vem a margem</h3><p>${MONTHS[m]} · como o número é montado</p></div></div>
+      <div class="card-b" style="padding-top:8px">
+        ${line('Contrato',brl(r.contractV),'',c.i===0?'valor fixo':`${c.pool} h × ${brl(ph)}`)}
+        ${line('Excedente faturado',brl(r.rev-r.contractV),'',!r.exc?'sem excedente':c.fat?`${hh(r.exc)} × 1,3`:`${hh(r.exc)} não cobradas`)}
+        ${line('Receita',brl(r.rev),'tot')}
+        ${line('Horas da equipe',`− ${brl(r.work)}`,'',`${nf0.format(r.h)} h × custo-hora do nível`)}
+        ${r.ded?line('Tempo interno dedicado',`− ${brl(r.ded)}`,'',`${hh(r.dedH)} de estudo/apoio`):''}
+        ${line('Rateio do tempo sem dono',`− ${brl(r.rateio)}`,'','reuniões, gestão, documentação')}
+        ${line('Custo total',`− ${brl(r.cost)}`,'tot')}
+        ${line('Margem',`${brl(r.mr)} · ${pct(r.margin)}`,'tot')}
+        ${r.excLeak?`<div class="warnbox" style="margin-top:10px">${ic('alert')}<div>${hh(r.excLeak)} acima do pool não foram faturadas: ${brl(r.excLeak*S.price*1.3)} no mês.</div></div>`:''}
+      </div></div>
+  </div>
+  <div class="card"><div class="card-h"><div><h3>Simular renegociação</h3><p>Teste um reajuste antes de levar à revisão mensal. Nada é gravado.</p></div></div>
+    <div class="card-b grid g-2e" style="align-items:start">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="range-row"><label for="sim-adj" class="muted" style="font-size:13px;min-width:130px">Reajuste do contrato</label><input id="sim-adj" type="range" min="-10" max="60" step="5" value="${S.sim.adj}"><b class="num" id="sim-v" style="min-width:48px;text-align:right">${S.sim.adj>0?'+':''}${S.sim.adj}%</b></div>
+        ${!c.fat&&r.exc>0?`<label class="check-l"><input type="checkbox" id="sim-fat" ${S.sim.fat?'checked':''}> Passar a faturar o excedente (${hh(r.exc)} × 1,3)</label>`:''}
+        <p class="note" style="margin:0">${ic('info')}<span>O custo fica igual: mesma equipe e mesmas horas. Só muda o que o cliente paga.</span></p>
+      </div>
+      <div id="sim-out">${simOut(c,r)}</div>
+    </div></div>`;
+}
+function chartTickets(c){
+  const ks=MS.map((_,k)=>k).filter(k=>c.h[k]>0), data=ks.map(k=>{const ts=monthTasks(c,k);return TYPES.map(t=>ts.filter(x=>x.ty===t[0]).length);});
+  const W=620,H=210,L=34,R=10,T=14,B=26, mx=niceMax(Math.max(...data.map(d=>d.reduce((a,b)=>a+b,0)))*1.1), y=v=>T+(H-T-B)*(1-v/mx), bw=(W-L-R)/ks.length;
+  let g='';
+  for(let i=0;i<=4;i++){const v=mx*i/4;g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${nf0.format(v)}</text>`;}
+  data.forEach((d,i)=>{let acc=0;const x=L+bw*i+bw*.25,w=bw*.5,sel=ks[i]===S.month;
+    d.forEach((v,j)=>{if(!v)return;g+=`<rect x="${x}" y="${y(acc+v)}" width="${w}" height="${y(acc)-y(acc+v)}" fill="var(${TYPES[j][2]})" opacity="${sel?1:.55}"><title>${TYPES[j][0]}: ${v}</title></rect>`;acc+=v;});
+    g+=`<text x="${x+w/2}" y="${y(acc)-6}" text-anchor="middle" style="fill:var(--fg)">${acc}</text><text x="${x+w/2}" y="${H-8}" text-anchor="middle" style="${sel?'fill:var(--fg);font-weight:600':''}">${MS[ks[i]]}</text>`;});
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Chamados por mês e tipo">${g}</svg>`;
+}
+function cCham(c,r,m){
+  const ts=monthTasks(c,m), list=S.cty==='all'?ts:ts.filter(t=>t.ty===S.cty), rw=rwM(c,m), sla=cliSla(c,m);
+  const hiRes={Alta:4.2,Média:7.5,Baixa:13}[c.crit]*(1+((c.i%5)-2)/20);
+  return `<div class="card"><div class="card-b"><div class="qgrid q4">
+      <div><span>Chamados em ${MONTHS[m].toLowerCase()}</span><b>${ts.length}</b><small class="muted">${hh(r.h)} apontadas no GLPI</small></div>
+      <div><span>Horas por chamado</span><b>${nf1.format(r.h/ts.length)} h</b><small class="muted">média do mês</small></div>
+      <div><span>Tempo médio de resolução</span><b>${nf1.format(hiRes)} h úteis</b><small class="muted">prazo acordado: ${cliInfo(c).resp}</small></div>
+      <div><span>Reabertos em 30 dias</span><b>${Math.round(ts.length*rw)}</b><small class="muted">${pct1(rw)} · SLA ${pct(sla)}</small></div>
+    </div></div></div>
+  <div class="grid g-2">
+    <div class="card"><div class="toolbar">
+        <button type="button" class="chip ${S.cty==='all'?'on':''}" data-act="cty" data-v="all">Todos <span class="num muted">${ts.length}</span></button>
+        ${TYPES.map(t=>`<button type="button" class="chip ${S.cty===t[0]?'on':''}" data-act="cty" data-v="${t[0]}">${tyTag(t[0])} <span class="num muted">${ts.filter(x=>x.ty===t[0]).length}</span></button>`).join('')}
+        <span class="muted" style="font-size:12.5px;margin-left:auto">Clique para abrir o relatório da task</span></div>
+      <div class="tbl-wrap" style="max-height:440px;overflow-y:auto"><table>
+        <thead><tr><th>Chamado</th><th>Tipo</th><th>Analista</th><th class="r">Horas</th><th>Data</th><th>Relatório</th><th></th></tr></thead>
+        <tbody>${list.map(t=>`<tr class="click" data-act="ropen-v" data-id="${t.id}"><td><div class="cell-main">${esc(t.t)}</div><div class="cell-sub mono">#${t.tid}</div></td><td>${tyTag(t.ty)}</td><td>${esc(P[t.p].n)}</td><td class="r num">${t.h} h</td><td class="num">${dt(t.done,t.mo)}</td><td><span class="badge b-ok">Aprovado</span></td><td class="r">${ic('right','muted')}</td></tr>`).join('')||'<tr><td colspan="7"><div class="empty">Nenhum chamado deste tipo.</div></td></tr>'}</tbody></table></div></div>
+    <div class="card"><div class="card-h"><div><h3>Chamados por mês</h3><p>Por tipo de trabalho, desde o início do histórico.</p></div></div>
+      <div class="card-b">${chartTickets(c)}<div class="legend" style="margin-top:6px">${TYPES.map(t=>`<span><i style="background:var(${t[2]})"></i>${t[0]}</span>`).join('')}</div>
+        <p class="note" style="margin:12px 0 0">${ic('info')}<span>Muito incidente repetido é sinal de problema de raiz: vale propor uma melhoria ao cliente em vez de só apagar incêndio.</span></p></div></div>
+  </div>`;
+}
+function cSpr(c,r,m){
+  const base=c.h[5]/4.3;
+  const hist=[37,38,39,40,41].map((s,k)=>{const plan=Math.max(1,Math.round(base*(0.9+((c.i+k*7)%5)/20))), real=Math.round(plan*(0.85+((c.i*3+k*11)%7)/20)), urg=Math.round(real*(((c.i+k)%4===0)?0.22:0.06));return {s,plan,real,urg};});
+  const avg=Math.round(mean(hist.map(h=>h.real)));
+  const items=[...S.tasks.filter(t=>t.cli===c.n).map(t=>({id:t.id,t:t.t,p:t.p,h:t.h,st:t.urg?'Urgência · '+t.s:t.s})),
+    ...S.reports.filter(x=>x.cli===c.n&&!S.tasks.some(t=>t.id===x.tid)).map(x=>({id:x.tid,t:x.t,p:x.p,h:x.h,st:'Concluído'})),
+    ...URGENT.filter(u=>u.cli===c.n&&!S.tasks.some(t=>t.id===u.id)).map(u=>({id:u.id,t:u.t,p:null,h:null,st:'Urgência '+u.lv.toLowerCase()}))];
+  const W=620,H=220,L=34,R=10,T=18,B=26, mx=niceMax(Math.max(...hist.map(h=>Math.max(h.plan,h.real)))*1.15), y=v=>T+(H-T-B)*(1-v/mx), bw=(W-L-R)/hist.length;
+  let g='';
+  for(let i=0;i<=4;i++){const v=mx*i/4;g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${nf0.format(v)}</text>`;}
+  hist.forEach((h,i)=>{const x=L+bw*i+bw*.2,w=bw*.28;
+    g+=`<rect x="${x}" y="${y(h.plan)}" width="${w}" height="${y(0)-y(h.plan)}" rx="3" fill="var(--primary)" opacity=".25"><title>Planejado ${h.plan} h</title></rect>`;
+    g+=`<rect x="${x+w+3}" y="${y(h.real)}" width="${w}" height="${y(0)-y(h.real)}" rx="3" fill="var(--primary)"><title>Realizado ${h.real} h</title></rect>`;
+    if(h.urg) g+=`<rect x="${x+w+3}" y="${y(h.real)}" width="${w}" height="${y(0)-y(h.urg)}" rx="3" fill="var(--warn)"><title>Urgências ${h.urg} h</title></rect>`;
+    g+=`<text x="${x+w+1.5}" y="${H-8}" text-anchor="middle">S${h.s}</text>`;});
+  const stc=s=>/Urg/.test(s)?'b-bad':s==='Concluído'?'b-ok':s==='Validação'?'b-info':s==='Em andamento'?'b-warn':'b-mute';
+  return `<div class="grid g-2">
+    <div class="card"><div class="card-h"><div><h3>Sprint ${SPRINT_N} · itens desta conta</h3><p>Do planejamento semanal, das urgências e do que já foi entregue.</p></div></div>
+      <div class="card-b" style="padding:8px 6px 6px">${items.length?`<div class="tbl-wrap"><table><thead><tr><th>Item</th><th>Responsável</th><th class="r">Horas</th><th>Status</th></tr></thead><tbody>
+        ${items.map(t=>`<tr><td><div class="cell-main">${esc(t.t)}</div><div class="cell-sub mono">#${t.id}</div></td><td>${t.p?esc(P[t.p].n):'<span class="muted">a definir</span>'}</td><td class="r num">${t.h?t.h+' h':'—'}</td><td><span class="badge ${stc(t.st)}">${t.st}</span></td></tr>`).join('')}</tbody></table></div>`
+        :`<div class="empty">Nenhum item desta conta na Sprint ${SPRINT_N} até agora.</div>`}</div></div>
+    <div class="card"><div class="card-h"><div><h3>Horas por sprint</h3><p>Planejado × realizado nas últimas 5 sprints. Em amarelo, urgências.</p></div></div>
+      <div class="card-b">${`<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Horas por sprint">${g}</svg>`}
+        <div class="legend" style="margin-top:6px"><span><i style="background:color-mix(in srgb,var(--primary) 25%,transparent)"></i>Planejado</span><span><i style="background:var(--primary)"></i>Realizado</span><span><i style="background:var(--warn)"></i>Urgências</span></div>
+        <div class="kv" style="margin-top:10px"><span>Previsão para a Sprint ${SPRINT_N+1}</span><span class="num">≈ ${avg} h</span></div>
+        <div class="kv"><span>Pool do mês ÷ 4,3 semanas</span><span class="num">${nf1.format(c.pool/4.3)} h por sprint</span></div>
+        <p class="note" style="margin:10px 0 0">${ic('info')}<span>A estimativa de cada item vem da especificação do agente de IA no Azure DevOps; o realizado, das horas apontadas no GLPI.</span></p></div></div>
+  </div>`;
+}
+function cPess(c,r,m){
+  const att=Object.entries(c.att).sort((a,b)=>b[1]-a[1]), fo=focal(c), cov=coverage(c.st);
+  const others=PEOPLE.filter(p=>!c.att[p.id]&&(p.sk[c.st]||0)>0).sort((a,b)=>b.sk[c.st]-a.sk[c.st]||byName(a,b));
+  const role=p=>p===fo.tit?'<span class="badge b-info">Ponto focal</span>':p===fo.res?'<span class="badge b-out">Reserva</span>':'';
+  return `<div class="grid g-2">
+    <div class="card"><div class="card-h"><div><h3>Quem atende</h3><p>Divisão das horas de ${MONTHS[m].toLowerCase()} e nível de cada um em ${esc(c.st)}. Clique para abrir a ficha.</p></div></div>
+      <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table><thead><tr><th>Pessoa</th><th>Nível em ${esc(c.st)}</th><th style="min-width:140px">Parte das horas</th><th class="r">Horas</th><th>Papel</th><th></th></tr></thead><tbody>
+        ${att.map(([pid,sh])=>{const p=P[pid],l=p.sk[c.st]||0;return `<tr class="click" data-act="person" data-id="${pid}"><td><div class="who">${avatarHTML(p)}<div><div class="cell-main">${esc(fullOf(p))}</div><div class="cell-sub">${p.lv}</div></div></div></td><td><div class="lv lv${l}" style="margin:0">${l||'·'}</div></td><td><div style="display:flex;align-items:center;gap:8px"><div class="bar c1" style="flex:1"><i style="width:${sh*100}%"></i></div><span class="num" style="font-size:12px">${pct(sh)}</span></div></td><td class="r num">${hh(r.h*sh)}</td><td>${role(p)}</td><td class="r">${ic('right','muted')}</td></tr>`;}).join('')}
+      </tbody></table></div></div></div>
+    <div class="card"><div class="card-h"><div><h3>Cobertura de ${esc(c.st)}</h3><p>Quem mais conhece a stack e poderia assumir ou ajudar.</p></div></div>
+      <div class="card-b" style="padding-top:10px">
+        <div class="sig">${ic(cov>=2?'check':'alert','sev-'+(cov===0?'bad':cov===1?'warn':'ok'))}<div><b>${cov===0?'Ninguém da equipe tem nível 3 ou 4':cov===1?'Só 1 pessoa com nível 3 ou 4':cov+' pessoas com nível 3 ou 4'}</b><span>${cov<2?'Se essa conta crescer ou alguém sair, o atendimento trava.':'Há reserva técnica para esta stack.'}</span></div></div>
+        ${others.length?`<div class="sub-h" style="margin:12px 0 4px">Também conhecem ${esc(c.st)}</div>${others.map(p=>`<div class="rrow click" data-act="person" data-id="${p.id}"><div class="who">${avatarHTML(p)}<div><div class="cell-main">${esc(fullOf(p))}</div><div class="cell-sub">${p.lv} · ${(p.sk[c.st]||0)>=3?'pode assumir':'precisa de apoio'}</div></div></div><div class="lv lv${p.sk[c.st]}" style="margin:0">${p.sk[c.st]}</div></div>`).join('')}`:`<p class="muted" style="font-size:13px;margin:12px 0 0">Ninguém fora de quem já atende conhece ${esc(c.st)}.</p>`}
+        ${cov<2?`<p class="note" style="margin:12px 0 0">${ic('info')}<span>Sugestão: plano de capacitação em ${esc(c.st)} para ${others[0]?esc(others[0].n):'uma segunda pessoa'}, com pareamento nos chamados desta conta.</span></p>`:''}
+      </div></div>
+  </div>`;
 }
 
 function score(p,u){
@@ -1328,10 +1678,10 @@ function teamMatrix(used,risks){
 }
 function teamRisks(risks,solo){
   const st=risks.map(s=>{const cov=coverage(s),n=clientsByStack(s).length,who=PEOPLE.filter(p=>p.sk[s]).sort((a,b)=>b.sk[s]-a.sk[s]);
-    return `<div class="rk"><div><div class="cell-main">${s}</div><div class="cell-sub">${n} cliente${n>1?'s':''} · ${who.length?who.map(p=>`${p.n} (${p.sk[s]})`).join(', '):'ninguém conhece'}</div></div>
+    return `<div class="rrow"><div><div class="cell-main">${s}</div><div class="cell-sub">${n} cliente${n>1?'s':''} · ${who.length?who.map(p=>`${p.n} (${p.sk[s]})`).join(', '):'ninguém conhece'}</div></div>
       <span class="badge ${cov===0?'b-bad':'b-warn'}">${cov===0?'Ninguém nível 3+':'Só 1 pessoa nível 3+'}</span></div>`;}).join('');
   const cl=solo.map(c=>{const p=P[Object.keys(c.att)[0]];
-    return `<div class="rk click" data-act="client" data-id="${c.id}"><div><div class="cell-main">${esc(c.n)}</div><div class="cell-sub">${c.st} · só ${esc(fullOf(p))} atende</div></div>${ic('right','muted')}</div>`;}).join('');
+    return `<div class="rrow click" data-act="client" data-id="${c.id}"><div><div class="cell-main">${esc(c.n)}</div><div class="cell-sub">${c.st} · só ${esc(fullOf(p))} atende</div></div>${ic('right','muted')}</div>`;}).join('');
   return `<div class="card">
     <div class="card-h"><div><h3>Riscos de cobertura</h3><p>Onde a saída ou a sobrecarga de uma pessoa trava o atendimento.</p></div></div>
     <div class="card-b" style="padding-top:10px">
@@ -1675,6 +2025,7 @@ function sheetClient(id){
         <p class="note" style="margin:8px 0 0">${ic('info')}<span>Montado pela IA a partir dos relatórios de task aprovados no mês. O ponto focal revisa e aprova antes de enviar.</span></p></div>
     </div>
     <div class="sheet-f">
+      <button type="button" class="btn" data-act="cpage" data-id="${id}">Ver tudo sobre o cliente ${ic('right')}</button>
       ${st==='alerta'?`<button type="button" class="btn" data-act="kadv" data-id="${id}">Levar à revisão mensal</button>`:''}
       <button type="button" class="btn pri" data-act="send-rep" data-id="${id}" ${ms==='Enviado'?'disabled':''}>${ms==='Enviado'?ic('check')+' Relatório enviado':ic('send')+' Aprovar e enviar relatório'}</button>
     </div>
@@ -1976,7 +2327,7 @@ function sheetMonthly(id){
         <div><div class="doc-l">Próximos passos</div><p>${nx}</p></div>
       </div>
       <div class="box"><h4>Composição · ${ts.length} relatórios de task aprovados</h4><div class="cell-sub" style="margin-bottom:6px">Clique para abrir o relatório de cada task.</div>
-        <div class="scroll-list">${ts.map(t=>`<div class="rk click" data-act="ropen-v" data-id="${t.id}"><div><div class="cell-main">${esc(t.t)}</div><div class="cell-sub">#${t.tid} · ${t.ty} · ${esc(P[t.p].n)} · ${t.h} h · ${dt(t.done,t.mo)}</div></div>${ic('right','muted')}</div>`).join('')}</div></div>
+        <div class="scroll-list">${ts.map(t=>`<div class="rrow click" data-act="ropen-v" data-id="${t.id}"><div><div class="cell-main">${esc(t.t)}</div><div class="cell-sub">#${t.tid} · ${t.ty} · ${esc(P[t.p].n)} · ${t.h} h · ${dt(t.done,t.mo)}</div></div>${ic('right','muted')}</div>`).join('')}</div></div>
       <p class="note" style="margin:0">${ic('info')}<span>A IA só junta o que já foi aprovado task a task. Nada é enviado ao cliente sem a aprovação do ponto focal.</span></p>
     </div>
     <div class="sheet-f"><button type="button" class="btn" data-act="close-layer">Fechar</button><button type="button" class="btn pri" data-act="send-rep" data-id="${id}" ${ms==='Enviado'?'disabled':''}>${ms==='Enviado'?ic('check')+' Enviado':ic('send')+' Aprovar e enviar'}</button></div>
@@ -1989,7 +2340,7 @@ function visiblePages(){return Object.entries(PAGES).filter(([k,v])=>S.view==='g
 function renderNav(){
   const groups={};visiblePages().forEach(([k,v])=>{(groups[v.group]=groups[v.group]||[]).push([k,v]);});
   document.getElementById('nav').innerHTML=Object.entries(groups).map(([g,items])=>`<div class="nav-label">${g}</div>${items.map(([k,v])=>`<a data-act="go" data-p="${k}" class="${S.page===k?'active':''}" href="#${k}">${ic(v.icon)}<span>${v.label}</span></a>`).join('')}`).join('');
-  document.getElementById('crumb').textContent=PAGES[S.page].label+(S.page==='team'&&S.person?' / '+(S.person==='tl'?TL.full:fullOf(P[S.person])):'');
+  document.getElementById('crumb').textContent=PAGES[S.page].label+(S.page==='team'&&S.person?' / '+(S.person==='tl'?TL.full:fullOf(P[S.person])):'')+(S.page==='clients'&&S.client?' / '+CLIENTS.find(x=>x.id===S.client).n:'');
   document.getElementById('vw-gestor').classList.toggle('on',S.view==='gestor');
   document.getElementById('vw-diretoria').classList.toggle('on',S.view==='diretoria');
 }
@@ -2045,7 +2396,13 @@ document.addEventListener('click',e=>{
   if(a==='person-back'){S.person=null;render();window.scrollTo(0,0);return;}
   if(a==='pauta'){closeLayers();S.pauta=id;renderLayer();return;}
   if(a==='pauta-save'){log('Pauta do 1:1 salva',`${fullOf(P[id])} · revisada pelo tech lead`,'');closeLayers();renderLayer();toast('Pauta salva no histórico do 1:1.');return;}
-  if(a==='go'){e.preventDefault();S.page=el.dataset.p;S.person=null;closeLayers();document.body.classList.remove('nav-open');render();window.scrollTo(0,0);return;}
+  if(a==='cpage'){closeLayers();S.page='clients';S.client=id;S.cpt='resumo';S.cty='all';S.sim={adj:0,fat:false};hideTip();render();window.scrollTo(0,0);return;}
+  if(a==='cpage-back'){S.client=null;render();window.scrollTo(0,0);return;}
+  if(a==='cpt'){S.cpt=el.dataset.t;render();return;}
+  if(a==='cty'){S.cty=el.dataset.v;render();return;}
+  if(a==='rsortc'){S.rsort=el.dataset.v;render();return;}
+  if(a==='csort'){const k=el.dataset.k;S.csort=S.csort.k===k?{k,d:-S.csort.d}:{k,d:k==='n'||k==='margin'||k==='sat'||k==='sla'?1:-1};S.pageN=0;document.getElementById('ctable').innerHTML=clientTable();return;}
+  if(a==='go'){e.preventDefault();S.page=el.dataset.p;S.person=null;S.client=null;closeLayers();document.body.classList.remove('nav-open');render();window.scrollTo(0,0);return;}
   if(a==='open-nav'){document.body.classList.add('nav-open');return;}
   if(a==='close-nav'){document.body.classList.remove('nav-open');return;}
   if(a==='view'){S.view=el.dataset.v;render();return;}
@@ -2060,7 +2417,7 @@ document.addEventListener('click',e=>{
   if(a==='rstage'){S.rtab=el.dataset.t;if(S.rtab==='task')S.rf=el.dataset.v;else S.mf=el.dataset.v;render();return;}
   if(a==='ropen-v'){S.modal=id;S.editing=null;renderLayer();return;}
   if(a==='quad'){S.quad=el.dataset.q;S.pageN=0;render();return;}
-  if(a==='pg'){S.pageN+=+el.dataset.d;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));return;}
+  if(a==='pg'){S.pageN+=+el.dataset.d;document.getElementById('ctable').innerHTML=clientTable();return;}
   if(a==='kadv'){
     const c=CLIENTS.find(x=>x.id===id), cur=S.kstage[id]||'alerta', ix=KST.findIndex(k=>k[0]===cur);
     if(ix>=KST.length-1) return;
@@ -2118,16 +2475,26 @@ function doAssign(pids,over){
   S.urgIdx++;S.pick=null;render();toast(`#${u.id} atribuído a ${names}.`);
 }
 document.addEventListener('input',e=>{
-  if(e.target.id==='q'){S.q=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));}
+  if(e.target.id==='q'){S.q=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable();}
+  if(e.target.id==='sim-adj'){S.sim.adj=+e.target.value;simRefresh();}
   if(e.target.id==='rq'){S.rq=e.target.value;document.getElementById('rtable').innerHTML=taskTable();}});
 document.addEventListener('change',e=>{
   if(e.target.id==='ra'){S.ra=e.target.value;document.getElementById('rtable').innerHTML=taskTable();}
   if(e.target.id==='price-c'){S.price=+e.target.value;render();}
+  if(e.target.id==='cst'){S.cst=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable();}
+  if(e.target.id==='sim-fat'){S.sim.fat=e.target.checked;simRefresh();}
   if(e.target.id==='f-task'){S.addSel=+e.target.value||null;renderLayer();}
 });
 function hl(id,on){document.querySelectorAll(`[data-hl="${id}"]`).forEach(n=>n.classList.toggle('hl',on));}
 document.addEventListener('mouseover',e=>{const n=e.target.closest&&e.target.closest('[data-hl]');if(n)hl(n.dataset.hl,true);});
 document.addEventListener('mouseout',e=>{const n=e.target.closest&&e.target.closest('[data-hl]');if(n)hl(n.dataset.hl,false);});
+function simRefresh(){const c=CLIENTS.find(x=>x.id===S.client),r=c&&rowOf(c,S.month),v=document.getElementById('sim-v'),o=document.getElementById('sim-out');if(!r||!o)return;v.textContent=(S.sim.adj>0?'+':'')+S.sim.adj+'%';o.innerHTML=simOut(c,r);}
+// dica flutuante dos pontos do mapa
+const tipEl=document.createElement('div');tipEl.id='tip';tipEl.setAttribute('role','tooltip');document.body.appendChild(tipEl);
+function hideTip(){tipEl.classList.remove('on');}
+document.addEventListener('mouseover',e=>{const n=e.target.closest&&e.target.closest('[data-tip]');if(!n)return;tipEl.innerHTML=n.dataset.tip;tipEl.classList.add('on');});
+document.addEventListener('mousemove',e=>{if(!tipEl.classList.contains('on'))return;const w=tipEl.offsetWidth,h=tipEl.offsetHeight;let x=e.clientX+16,y=e.clientY+16;if(x+w>innerWidth-8)x=e.clientX-w-16;if(y+h>innerHeight-8)y=e.clientY-h-16;tipEl.style.transform=`translate(${x}px,${y}px)`;});
+document.addEventListener('mouseout',e=>{const n=e.target.closest&&e.target.closest('[data-tip]');if(n&&!n.contains(e.relatedTarget))hideTip();});
 function setStage(id,stage){
   const c=CLIENTS.find(x=>x.id===id),cur=S.kstage[id]||'alerta'; if(cur===stage) return;
   S.kstage[id]=stage; const lab=KST.find(k=>k[0]===stage)[1];
