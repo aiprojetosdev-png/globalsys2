@@ -129,7 +129,7 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 
 ### 8.1 Técnico
 
-- **Um único arquivo HTML**, sem build, sem framework. CSS + JavaScript puro. Fonte Geist (Google Fonts). Gráficos em SVG desenhados à mão.
+- **Um único arquivo HTML**, sem build, sem framework. CSS + JavaScript puro. Fontes Inter, Space Grotesk e JetBrains Mono (Google Fonts). Login de demonstração com globo de pontos em canvas (qualquer e-mail válido e senha entram; sessão no navegador). Gráficos em SVG desenhados à mão.
 - Visual inspirado no admin template do shadcn: barra lateral, cards, tabelas com selos, tema claro/escuro (tokens CSS em `:root`, com blocos para `prefers-color-scheme` e `[data-theme]`).
 - **Dados fictícios**, coerentes com o caso. Nomes de pessoas e clientes inventados (conferir que nenhum coincide com cliente real).
 - Também publicado como artifact no claude.ai ("Pulso da Operação"). Para republicar, alguém precisa colar o arquivo lá; o Claude Code não publica artifact.
@@ -146,6 +146,7 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 | Gráficos | `chartHours`, `chartQuadrant` (mapa da carteira com zoom), `quadList`, `sparkMargin`, `chartUrg`, `chartPayback` |
 | Componentes | `kpi`, `delta`, `qBadge`, `marginBadge`, `useBar` |
 | Páginas | `PAGES` + `pgOverview`, Kanban (`KST`, `kanbanItems`, `kanbanHTML`), `pgClients`, `clientTable`, `score`, `pgSprint`, `pgTeam`, `pgGov`, `roiCalc`, `pgRoi` |
+| Pessoas: ficha individual | `TL` (tech lead), `DEVX` (RH e 1:1), `LVP` (referência por nível), `STORY` (situações plantadas), `devMonth(p,m)`, `hoursByClient`, `reallocEvents`, `ownDelta` (compara com a média dos 3 meses anteriores da pessoa), `pgPerson`, `pgTechLead`, `modalPauta`, `teamRoster` |
 | Camadas | `reportDraft` (relatório mensal), `sheetClient` (ficha do cliente) |
 | Relatórios | `AI` (textos simulados), `makeReport`, `checks`, `pgReports`, `isGeneric`, `aiMerge`, `modalReport`, `modalAdd`, `sheetMonthly` |
 | Render | `render()` redesenha a página; `renderLayer()` só as camadas (ficha, modal); `toast()` usa `#toastbox` separado (não apaga o que está digitado) |
@@ -199,7 +200,11 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 **Relatórios** — fluxo: task encerrada → IA gera relatório → **analista confere e aprova** → IA junta no relatório mensal → **ponto focal aprova e envia**. Abas "Por task" e "Mensal por cliente". Botão "Adicionar relatório" (escolhe a task; chamado, cliente e projeto vêm junto).
 - **Relatório da task abre como documento pronto.** Embaixo, campo **"Faltou algo?"**. Botões: **Aprovar depois**, **Corrigir com IA**, **Aprovar relatório**. Link "Editar manualmente". "Corrigir com IA" compara o texto digitado com o relatório: se já estava, avisa e não muda; se é novo, incorpora e destaca. Único aviso automático mantido: horas apontadas maiores que o tempo do chamado aberto (dado do GLPI).
 
-**Equipe** — matriz de competências (pessoa × stack, nível 1–4, cobertura por stack), carga do mês, trabalho fora de chamado, custo por nível.
+**Equipe** — card "Time" (tech lead + 10 pessoas), matriz de competências (pessoa × stack, nível 1–4, cobertura por stack), carga do mês, trabalho fora de chamado, custo por nível. Clicar numa pessoa abre a **ficha individual** (`S.person`):
+- Dev: ocupação, entregas (por complexidade), tempo médio de entrega, precisão de estimativa, retrabalho (reaberto em 30 dias), aprovação de PR de primeira; qualidade de código (Azure DevOps: ciclos de revisão, comentários por PR, tempo até merge, bugs após entrega), SLA, satisfação dos clientes; horas por projeto (planejado × realizado); horas realocadas (inclui urgências atribuídas na Sprint); competências; clientes; plano de desenvolvimento e notas de 1:1; botão **Pauta do 1:1** (rascunho da IA, tech lead revisa).
+- Tech lead (Rafael Monteiro, sênior, pessoa nova): PRs revisados, tempo até a 1ª revisão, aprovação de primeira e retrabalho do time, mentoria, incidentes; time sob liderança; tempo por atividade; ADRs; riscos técnicos. **Fica fora da capacidade e do custo** (o caso é 10 pessoas e R$ 1 mi/ano).
+- Regras: cada número comparado só com o histórico da própria pessoa; sem ranking, nota ou custo individual; tabelas em ordem alfabética.
+- Situações plantadas: Ana (>90% e retrabalho subindo), Carla (retrabalho dobrou desde julho com APEX no Vale Verde), Heitor (retrabalho caiu pela metade com mentoria desde junho), Diego (única pessoa em Go, estimativas estourando).
 
 **Governança** — ritos (semanal, mensal, trimestral) escritos como "Toda [frequência], [quem] abre [tela], olha [indicador], e se [condição], faz [ação]"; o que é automático / sugere + 1 clique / só humano; comunicação com o cliente; registro das decisões tomadas na sessão.
 
@@ -211,7 +216,7 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 
 **Equipe** (entendimento já confirmado em parte; confirmar antes de implementar):
 - Remover a coluna "Interno" da tabela.
-- Clicar numa pessoa abre a ficha dela, só com o útil: horas do mês por cliente/projeto, tasks do mês e relatórios (aprovados/pendentes), stacks e nível, clientes em que é referência, ocupação dos últimos 6 meses. Sem custo individual, sem comparação com colegas.
+- ~~Clicar numa pessoa abre a ficha dela~~ feito em 15/10 (ver 8.5). Ainda não entraram na ficha: lista de tasks do mês e relatórios aprovados/pendentes.
 - Cards sugeridos: Ocupação média, Pessoas acima de 90%, Stacks em risco, **Clientes que dependem de uma pessoa só**, **Horas sem registro**. O usuário quer pensar em mais métricas: propor só as úteis.
 
 **Sprint** (aguardando confirmação do usuário):
