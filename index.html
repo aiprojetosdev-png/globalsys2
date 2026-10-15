@@ -56,12 +56,26 @@ button,input,select,textarea{font:inherit;color:inherit}
 svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 /* Shell */
-.app{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100%}
+.app{display:grid;grid-template-columns:252px minmax(0,1fr);min-height:100%;transition:grid-template-columns .28s cubic-bezier(.2,.8,.2,1)}
 /* Sidebar sempre em navy da marca, nos dois temas */
 .sidebar{--s-fg:#e9edff;--s-mut:rgba(196,206,255,.58);--s-line:rgba(140,160,255,.14);position:sticky;top:0;height:100vh;color:var(--s-fg);background:linear-gradient(180deg,#060c4a 0%,#0a1270 100%);border-right:1px solid var(--s-line);display:flex;flex-direction:column;padding:16px 12px;padding-left:max(12px,env(safe-area-inset-left,0px));gap:4px;overflow-y:auto;overflow-x:hidden}
 .sidebar>*{position:relative}
-.brand{display:flex;flex-direction:column;gap:6px;padding:6px 8px 14px;margin-bottom:6px;border-bottom:1px solid var(--s-line);color:#fff}
-.brand svg{width:132px;height:23px;display:block}
+.brand{display:flex;flex-direction:column;gap:6px;padding:6px 8px 14px;margin-bottom:6px;border:0;border-bottom:1px solid var(--s-line);color:#fff;background:transparent;text-align:left;font:inherit;cursor:pointer;border-radius:8px 8px 0 0;transition:background .18s}
+.brand:hover{background:rgba(255,255,255,.05)}
+.brand:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.brand svg.full{width:132px;height:23px;display:block}
+.brand svg.mark{width:30px;height:30px;display:none}
+/* barra lateral recolhida: só os ícones; o conteúdo ocupa o espaço (só no computador) */
+@media (min-width:901px){
+  body.side-mini .app{grid-template-columns:72px minmax(0,1fr)}
+  body.side-mini .brand{align-items:center;padding:6px 0 14px}
+  body.side-mini .brand svg.full,body.side-mini .brand span,body.side-mini .nav-label,body.side-mini .nav a span,body.side-mini .side-note,body.side-mini .me>div:not(.av){display:none}
+  body.side-mini .brand svg.mark{display:block}
+  body.side-mini .nav{padding-top:10px}
+  body.side-mini .nav a{justify-content:center;padding:11px 0}
+  body.side-mini .nav a.active::before{left:-12px}
+  body.side-mini .me{grid-template-columns:1fr;justify-items:center;padding:6px 0;background:transparent;border:0}
+}
 .brand span{font-size:11px;color:var(--s-mut);letter-spacing:.14em;text-transform:uppercase;font-family:var(--mono);display:flex;align-items:center;gap:6px}
 .brand span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
 @keyframes blink{50%{opacity:.35}}
@@ -825,10 +839,11 @@ svg.spark{width:104px;height:30px;display:block}
 
 <div class="app">
   <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <svg role="img" aria-label="Globalsys"><use href="#gs-logo"/></svg>
+    <button type="button" class="brand" data-act="toggle-side" id="brand" aria-label="Recolher menu" title="Recolher menu">
+      <svg class="full" role="img" aria-label="Globalsys"><use href="#gs-logo"/></svg>
+      <svg class="mark" aria-hidden="true"><use href="#gs-mark"/></svg>
       <span>Gestão da operação</span>
-    </div>
+    </button>
     <nav class="nav" id="nav"></nav>
     <div class="side-foot">
       <p class="side-note">Protótipo com dados fictícios. A implantação real seria um painel dentro do GLPI.</p>
@@ -2632,7 +2647,7 @@ let lastPage=null,enterT;
 function visiblePages(){return Object.entries(PAGES);}
 function renderNav(){
   const groups={};visiblePages().forEach(([k,v])=>{(groups[v.group]=groups[v.group]||[]).push([k,v]);});
-  document.getElementById('nav').innerHTML=Object.entries(groups).map(([g,items])=>`<div class="nav-label">${g}</div>${items.map(([k,v])=>`<a data-act="go" data-p="${k}" class="${S.page===k?'active':''}" href="#${k}">${ic(v.icon)}<span>${v.label}</span></a>`).join('')}`).join('');
+  document.getElementById('nav').innerHTML=Object.entries(groups).map(([g,items])=>`<div class="nav-label">${g}</div>${items.map(([k,v])=>`<a data-act="go" data-p="${k}" class="${S.page===k?'active':''}" href="#${k}" title="${v.label}">${ic(v.icon)}<span>${v.label}</span></a>`).join('')}`).join('');
   document.getElementById('crumb').textContent=PAGES[S.page].label+(S.page==='team'&&S.person?' / '+(S.person==='tl'?TL.full:fullOf(P[S.person])):'')+(S.page==='clients'&&S.client?' / '+CLIENTS.find(x=>x.id===S.client).n:'');
 }
 function render(){
@@ -2670,6 +2685,15 @@ function applyTheme(t){
 }
 let theme=getTheme();applyTheme(theme);
 
+/* ---------- Barra lateral recolhida (clique no logo) ---------- */
+function setSideMini(on){
+  document.body.classList.toggle('side-mini',on);
+  const b=document.getElementById('brand'), t=on?'Expandir menu':'Recolher menu';
+  if(b){b.setAttribute('aria-label',t);b.title=t;b.setAttribute('aria-expanded',String(!on));}
+  try{localStorage.setItem('gs-side',on?'mini':'');}catch(e){}
+}
+try{if(localStorage.getItem('gs-side')==='mini')setSideMini(true);}catch(e){}
+
 /* ---------- Eventos ---------- */
 const monthSel=document.getElementById('month');
 monthSel.innerHTML=MONTHS.map((n,k)=>`<option value="${k}" ${k===S.month?'selected':''}>${n} 2026</option>`).join('');
@@ -2694,6 +2718,7 @@ document.addEventListener('click',e=>{
   if(a==='rsortc'){S.rsort=el.dataset.v;render();return;}
   if(a==='csort'){const k=el.dataset.k;S.csort=S.csort.k===k?{k,d:-S.csort.d}:{k,d:k==='n'||k==='margin'||k==='sat'||k==='sla'?1:-1};S.pageN=0;document.getElementById('ctable').innerHTML=clientTable();return;}
   if(a==='go'){e.preventDefault();S.page=el.dataset.p;S.person=null;S.client=null;closeLayers();document.body.classList.remove('nav-open');render();window.scrollTo(0,0);return;}
+  if(a==='toggle-side'){if(innerWidth<=900){document.body.classList.remove('nav-open');return;}setSideMini(!document.body.classList.contains('side-mini'));return;}
   if(a==='open-nav'){document.body.classList.add('nav-open');return;}
   if(a==='close-nav'){document.body.classList.remove('nav-open');return;}
   if(a==='theme'){theme=theme==='system'?'dark':theme==='dark'?'light':'system';try{localStorage.setItem('gs-theme',theme);}catch(err){}applyTheme(theme);return;}
