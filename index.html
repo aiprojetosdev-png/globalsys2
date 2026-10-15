@@ -74,9 +74,6 @@ svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke
 .nav a .tag{margin-left:auto;font-size:10.5px;color:var(--s-mut);border:1px solid var(--s-line);border-radius:999px;padding:1px 7px}
 .side-foot{margin-top:auto;border-top:1px solid var(--s-line);padding-top:12px;display:flex;flex-direction:column;gap:10px}
 .side-foot .nav-label{padding-left:4px}
-.view-switch{display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.07);border-radius:9px;padding:3px;gap:2px}
-.view-switch button{border:0;background:transparent;border-radius:7px;padding:6px 8px;font-size:13px;cursor:pointer;color:var(--s-mut);transition:background .18s,color .18s}
-.view-switch button.on{background:#fff;color:#060c4a;font-weight:600;box-shadow:0 4px 14px -4px rgba(0,0,0,.5)}
 .side-note{font-size:11.5px;color:var(--s-mut);padding:0 4px;line-height:1.45}
 .me{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--s-line)}
 .me .av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:600;font-size:13px;color:#fff;background:var(--grad-btn);box-shadow:0 0 0 2px rgba(168,178,255,.35)}
@@ -359,6 +356,83 @@ th .sa{margin-left:4px;font-size:11px;opacity:.6}
 .range-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .range-row input[type=range]{flex:1 1 160px;accent-color:var(--primary)}
 
+/* Sprint: fila de chamados e recomendação */
+.tri{display:grid;grid-template-columns:minmax(290px,360px) minmax(0,1fr);overflow:hidden;min-height:620px}
+.tri-l{border-right:1px solid var(--border);display:flex;flex-direction:column;min-width:0;background:color-mix(in srgb,var(--muted) 40%,var(--card))}
+.tri-lh{padding:16px 16px 8px}
+.tri-lh h3{margin:0;font-size:15px;font-weight:600;font-family:var(--display)}
+.tri-lh p{margin:2px 0 0;font-size:12.5px;color:var(--muted-fg)}
+.tri-f{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px}
+.tri-f .chip{height:28px;font-size:12.5px}
+.tri-s{margin:0 16px 10px;max-width:none;flex:none}
+.tri-list{flex:1;overflow-y:auto;max-height:660px;padding:2px 10px 12px;display:flex;flex-direction:column;gap:4px}
+.tq{position:relative;border:1px solid transparent;background:transparent;text-align:left;padding:10px 12px 10px 16px;border-radius:10px;cursor:pointer;display:flex;flex-direction:column;gap:3px;font:inherit;color:inherit;transition:background .15s,border-color .15s,box-shadow .2s}
+.tq::before{content:"";position:absolute;left:5px;top:11px;bottom:11px;width:3px;border-radius:3px;background:var(--lv)}
+.tq:hover{background:var(--hover)}
+.tq.on{background:var(--card);border-color:color-mix(in srgb,var(--primary) 45%,var(--border));box-shadow:var(--shadow-lg)}
+.tq.done{opacity:.55}
+.tq.done.on{opacity:1}
+.tq-top{display:flex;gap:8px;align-items:center;font-size:11.5px}
+.tq-lv{font-weight:700;color:var(--lv);text-transform:uppercase;letter-spacing:.05em;font-size:10.5px}
+.tq-sla{margin-left:auto;display:inline-flex;gap:4px;align-items:center;color:var(--muted-fg)}
+.tq-sla svg{width:12px;height:12px}
+.tq b{font-size:13.5px;font-weight:550;line-height:1.3}
+.tq-sub{font-size:12px;color:var(--muted-fg)}
+.tri-d{min-width:0;padding:20px 22px;display:flex;flex-direction:column}
+.tri-in{display:flex;flex-direction:column;gap:18px}
+.tri-in.fade{animation:triIn .3s cubic-bezier(.2,.8,.2,1)}
+.tri-in.fade .rc-bar i{animation:grow .55s .08s cubic-bezier(.2,.8,.2,1) both}
+@keyframes triIn{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}}
+.tri-hl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px}
+.tri-h h2{margin:8px 0 4px;font:650 22px/1.2 var(--display);letter-spacing:-.02em}
+.tri-h p{margin:0;color:var(--muted-fg);font-size:13.5px;max-width:72ch;line-height:1.5}
+.tri-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.tri-chips .chip-s{gap:6px}
+.tri-chips .chip-s svg{width:13px;height:13px;color:var(--muted-fg)}
+.chip-s.link{cursor:pointer;background:var(--card);font:inherit;font-size:12.5px;color:inherit}
+.chip-s.link:hover{border-color:var(--primary)}
+.tri-ctx{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.tri-p{margin:6px 0 10px;font-size:13.5px;line-height:1.5}
+.tri-mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.tri-mini span{font-size:11.5px;color:var(--muted-fg);background:var(--muted);border-radius:8px;padding:6px 8px;display:flex;flex-direction:column;gap:1px}
+.tri-mini b{font-size:14px;color:var(--fg);font-weight:600}
+.tri-who{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;align-items:center;padding:6px;margin:2px -6px 0;border-radius:8px;cursor:pointer}
+.tri-who:hover{background:var(--hover)}
+.tri-who .pav{width:32px;height:32px;border-radius:10px;font-size:12px}
+.tri-who b{display:block;font-size:13px;font-weight:550}
+.tri-who span{font-size:12px;color:var(--muted-fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.tri-rec{display:flex;flex-direction:column;gap:8px}
+.tri-rh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.rc{display:grid;grid-template-columns:16px 40px minmax(0,1fr) 84px;gap:12px;align-items:center;padding:12px 14px;border:1px solid var(--border);border-radius:12px;cursor:pointer;background:var(--card);transition:border-color .15s,background .15s,transform .15s,box-shadow .2s}
+.rc:hover{border-color:color-mix(in srgb,var(--primary) 40%,var(--border));transform:translateY(-1px)}
+.rc.on{border-color:var(--primary);background:color-mix(in srgb,var(--primary) 6%,var(--card));box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 14%,transparent)}
+.rc[data-act=""]{cursor:default;transform:none}
+.rc-n{font:600 12px var(--mono);color:var(--muted-fg)}
+.rc-t{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12.5px}
+.rc-t b{font-size:14px;font-weight:600}
+.rc-why{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px}
+.why{font-size:11.5px;padding:2px 8px;border-radius:999px;background:var(--muted);color:var(--muted-fg);white-space:nowrap}
+.why.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.why.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 14%,transparent)}
+.why.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.rc-bar i.pen,.legend i.pen-l{background:repeating-linear-gradient(135deg,var(--bad) 0 3px,color-mix(in srgb,var(--bad) 25%,transparent) 3px 6px)}
+.rc-bar{display:flex;height:6px;border-radius:999px;overflow:hidden;background:var(--muted);gap:2px}
+.rc-bar i{display:block;height:100%;transform-origin:left}
+.rc-s{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.rc-s b{font:650 26px/1 var(--display);letter-spacing:-.02em}
+.rc-s span{font-size:11.5px;color:var(--muted-fg);display:inline-flex;gap:4px;align-items:center}
+.rc-s span svg{width:12px;height:12px}
+.rc.on .rc-s span{color:var(--primary);font-weight:600}
+.tri-rec .linkbtn{align-self:flex-start;margin-top:2px}
+.tri-act{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--border);font-size:13px}
+.tri-done{display:flex;gap:8px;align-items:center;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,var(--ok) 10%,transparent);font-size:13.5px}
+.tri-empty{margin:auto;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;color:var(--muted-fg);padding:40px;font-size:13px}
+.tri-empty svg{width:30px;height:30px}
+.tri-empty b{color:var(--fg);font-size:15px}
+@media (max-width:1000px){.tri{grid-template-columns:minmax(0,1fr)}.tri-l{border-right:0;border-bottom:1px solid var(--border)}.tri-list{max-height:300px}.tri-ctx{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.rc{grid-template-columns:40px minmax(0,1fr) 60px}.rc-n{display:none}.tri-mini{grid-template-columns:repeat(2,minmax(0,1fr))}.tri-d{padding:16px}}
+
 /* Sheet & modal */
 .scrim{position:fixed;inset:0;background:var(--overlay);z-index:50}
 .sheet{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--bg);border-left:1px solid var(--border);z-index:51;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px);animation:slide .22s ease-out}
@@ -425,6 +499,7 @@ circle.hl{stroke-width:3.5;fill-opacity:1}
 .kcard:hover{border-color:var(--ring)}
 .kcard .row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .kv span:last-child{white-space:nowrap}
+@media (max-width:560px){.kv span:last-child{white-space:normal;text-align:right}}
 .kempty{font-size:12.5px;color:var(--muted-fg);padding:8px 4px}
 .box{border:1px solid var(--border);border-radius:8px;padding:12px 14px}
 .box h4{margin:0 0 6px;font-size:13.5px}
@@ -738,11 +813,6 @@ svg.spark{width:104px;height:30px;display:block}
     </div>
     <nav class="nav" id="nav"></nav>
     <div class="side-foot">
-      <div class="nav-label" style="padding-top:0">Visão</div>
-      <div class="view-switch" role="group" aria-label="Visão">
-        <button type="button" data-act="view" data-v="gestor" id="vw-gestor">Gestor</button>
-        <button type="button" data-act="view" data-v="diretoria" id="vw-diretoria">Diretoria</button>
-      </div>
       <p class="side-note">Protótipo com dados fictícios. A implantação real seria um painel dentro do GLPI.</p>
       <div class="me">
         <div class="av" data-user="ini"></div>
@@ -888,10 +958,10 @@ const CLIENTS=RAW.map((r,i)=>{
 
 /* ---------- Estado ---------- */
 const SPRINT0={n:46,doneN:17,doneH:118};        // itens da sprint 42 e o que já foi concluído até agora
-const S={page:'overview',month:5,view:'gestor',price:85,q:'',quad:'Todos',pageN:0,sheet:null,modal:null,
+const S={page:'overview',month:5,price:85,q:'',quad:'Todos',pageN:0,sheet:null,modal:null,
   load:Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint])),
   stab:'atual', p43ovr:{}, p43open:null, p43ok:null,
-  urgIdx:0, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
+  qsel:null, qf:'all', qq:'', qall:false, qanim:false, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
   quadSel:null, ctab:'mapa', rtab:'task',
   client:null, cpt:'resumo', cty:'all', cst:'all', csort:{k:'margin',d:1}, rsort:'mr', sim:{adj:0,fat:false}, kstage:{}, monthly:{}, msheet:null, add:false, addSel:null,
   rf:'all', ra:'all', rq:'', mf:'all', sentAt:{},
@@ -928,13 +998,23 @@ const S={page:'overview',month:5,view:'gestor',price:85,q:'',quad:'Todos',pageN:
   ]
 };
 CLIENTS.forEach(c=>{S.monthly[c.id]=[0,3,6,8,11].includes(c.i)?'Rascunho gerado':[1,4,9].includes(c.i)?'Em revisão':c.i===2?'Aprovado':'Enviado';});
-// h = estimativa da IA (não aparece no card); o real vem das horas apontadas no GLPI
+// fila de chamados que chegaram e ainda não têm dono. h = estimativa da IA (não aparece na tela); o real vem das horas apontadas no GLPI
+// age = horas desde a abertura; sla = horas úteis até vencer o prazo
 const URGENT=[
- {id:48213,cli:'Ferro & Aço Industrial',t:'Integração com o ERP parou de enviar notas',st:'Java',h:6,lv:'Crítica'},
- {id:48216,cli:'Clínica Viver',t:'Agendamento duplicando consultas',st:'Python',h:10,lv:'Alta'},
- {id:48219,cli:'Seguradora Âncora',t:'Portal do corretor fora do ar',st:'.NET',h:8,lv:'Crítica'},
- {id:48222,cli:'Logística Porto Seco',t:'Rastreamento com atraso de algumas horas',st:'Go',h:14,lv:'Média'},
- {id:48225,cli:'Hotel Costa Verde',t:'Texto errado no e-mail de confirmação',st:'PHP',h:2,lv:'Baixa'}
+ {id:48213,cli:'Ferro & Aço Industrial',t:'Integração com o ERP parou de enviar notas',st:'Java',h:6,lv:'Crítica',age:1,sla:3,d:'Notas fiscais emitidas desde as 7h não chegaram ao ERP. Faturamento parado.'},
+ {id:48219,cli:'Seguradora Âncora',t:'Portal do corretor fora do ar',st:'.NET',h:8,lv:'Crítica',age:0.5,sla:3.5,d:'Corretores não conseguem emitir apólices desde a atualização de ontem.'},
+ {id:48226,cli:'Banco Arrecife Digital',t:'Arquivo de retorno do PIX rejeitado',st:'Java',h:5,lv:'Crítica',age:2,sla:2,d:'O banco rejeitou o arquivo de retorno das 10h. Conciliação do dia em risco.'},
+ {id:48216,cli:'Clínica Viver',t:'Agendamento duplicando consultas',st:'Python',h:10,lv:'Alta',age:3,sla:5,d:'Pacientes recebem dois horários para a mesma consulta.'},
+ {id:48227,cli:'Vale Verde Agro',t:'Relatório de safra sem os talhões novos',st:'Oracle APEX',h:7,lv:'Alta',age:4,sla:4,d:'Os talhões cadastrados nesta semana não aparecem no relatório de produção.'},
+ {id:48228,cli:'Conecta Telecom',t:'Boleto duplicado na segunda via',st:'Node.js',h:4,lv:'Alta',age:1,sla:7,d:'Assinantes que pedem segunda via recebem dois boletos com códigos diferentes.'},
+ {id:48230,cli:'Rede Saúde Mais',t:'Autorização de exame travada em pendente',st:'.NET',h:6,lv:'Alta',age:2,sla:6,d:'Pedidos de ressonância ficam pendentes mesmo com cobertura do plano.'},
+ {id:48234,cli:'Ótica Visão Clara',t:'App fecha ao anexar a receita',st:'Flutter',h:6,lv:'Alta',age:5,sla:3,d:'No Android, o app fecha quando o cliente fotografa a receita.'},
+ {id:48222,cli:'Logística Porto Seco',t:'Rastreamento com atraso de algumas horas',st:'Go',h:14,lv:'Média',age:6,sla:10,d:'Posição dos caminhões atualiza com até 3 horas de atraso.'},
+ {id:48229,cli:'Prefeitura de Serra Azul',t:'Certidão negativa com data errada',st:'PHP',h:3,lv:'Média',age:3,sla:13,d:'A data de validade da certidão sai com um dia a menos.'},
+ {id:48231,cli:'Têxtil Aurora',t:'Nota fiscal de exportação rejeitada',st:'Delphi',h:5,lv:'Média',age:2,sla:14,d:'A Sefaz rejeita notas de exportação com o código de país novo.'},
+ {id:48232,cli:'Universidade Atlântica',t:'Diário de classe não fecha o bimestre',st:'Python',h:4,lv:'Média',age:1,sla:15,d:'Professores de três cursos não conseguem fechar o 3º bimestre.'},
+ {id:48225,cli:'Hotel Costa Verde',t:'Texto errado no e-mail de confirmação',st:'PHP',h:2,lv:'Baixa',age:8,sla:32,d:'O e-mail de confirmação mostra o horário de check-in antigo.'},
+ {id:48233,cli:'Mercado Bom Preço',t:'Filtro de marca sumiu da busca',st:'React',h:3,lv:'Baixa',age:5,sla:35,d:'O filtro por marca não aparece na busca do celular.'}
 ];
 const LV={'Crítica':'b-bad','Alta':'b-warn','Média':'b-info','Baixa':'b-mute','Adiado':'b-out'};
 const LV_ORDER=['Alta','Média','Baixa','Adiado'];
@@ -1007,7 +1087,7 @@ function alerts(m){
   const one=STACKS.filter(st=>clientsByStack(st).length&&coverage(st)===1);
   if(zero.length) out.push({sev:'bad',t:`${zero.join(' e ')}: ninguém com nível 3 ou 4`,d:`${zero.reduce((s,st)=>s+clientsByStack(st).length,0)} clientes dependem de stacks que ninguém domina. Só 1 pessoa cobre ${one.join(', ')}.`,act:{k:'page',p:'team'}});
   const over=PEOPLE.filter(p=>pCli(p,m)/p.ponto>0.9);
-  if(over.length) out.push({sev:'warn',t:`${over.length} pessoa${over.length>1?'s':''} acima de 90% de ocupação`,d:S.view==='gestor'?`${over.map(p=>p.n).join(', ')}. Redistribuir na próxima sprint.`:'Detalhe disponível na visão do gestor.',act:{k:'page',p:'team'}});
+  if(over.length) out.push({sev:'warn',t:`${over.length} pessoa${over.length>1?'s':''} acima de 90% de ocupação`,d:`${over.map(p=>p.n).join(', ')}. Redistribuir na próxima sprint.`,act:{k:'page',p:'team'}});
   const order={bad:0,warn:1,info:2};
   return out.sort((a,b)=>order[a.sev]-order[b.sev]);
 }
@@ -1114,9 +1194,9 @@ function useBar(u){const c=u>1?'bad':u>=0.9?'warn':'ok';return `<div style="disp
 const PAGES={
  overview:{label:'Visão geral',icon:'grid',group:'Operação'},
  clients:{label:'Clientes',icon:'building',group:'Operação'},
- sprint:{label:'Sprint e alocação',icon:'kanban',group:'Operação',gestor:true},
- reports:{label:'Relatórios',icon:'file',group:'Operação',gestor:true},
- team:{label:'Equipe',icon:'users',group:'Operação',gestor:true}
+ sprint:{label:'Sprint e alocação',icon:'kanban',group:'Operação'},
+ reports:{label:'Relatórios',icon:'file',group:'Operação'},
+ team:{label:'Equipe',icon:'users',group:'Operação'}
 };
 
 function pgOverview(){
@@ -1371,7 +1451,7 @@ function cSignals(c,r,m){
 function cTimeline(c,r,m,info){
   const ev=[], ms=S.monthly[c.id], o=c.i%3;
   S.log.filter(l=>(l.d||'').includes(c.n)).slice(-3).reverse().forEach(l=>ev.push(['hoje',l.t,l.d.replace(c.n+' · ',''),'live']));
-  URGENT.filter(u=>u.cli===c.n).forEach(u=>ev.push(['15/10',`Urgência ${u.lv.toLowerCase()} aberta`,`#${u.id} · ${u.t}`,u.lv==='Crítica'?'bad':'warn']));
+  URGENT.filter(u=>u.cli===c.n).forEach(u=>ev.push(['15/10',`Chamado de prioridade ${u.lv.toLowerCase()} aberto`,`#${u.id} · ${u.t}`,u.lv==='Crítica'?'bad':u.lv==='Alta'?'warn':'']));
   S.reports.filter(x=>x.cli===c.n).forEach(x=>ev.push([dt(x.done),`Task #${x.tid} encerrada`,x.t,'']));
   ev.push(ms==='Enviado'?[S.sentAt[c.id]?'hoje':`0${5+o}/10`,`Relatório de ${MONTHS[m].toLowerCase()} enviado`,'aprovado pelo ponto focal','']:['01/10',`Relatório de ${MONTHS[m].toLowerCase()} gerado pela IA`,ms.toLowerCase(),'warn']);
   if(negStreak(c,m)>=2) ev.push(['01/10','Entrou na pauta da revisão mensal','margem negativa por 2 meses seguidos','bad']);
@@ -1477,7 +1557,7 @@ function cSpr(c,r,m){
   const avg=Math.round(mean(hist.map(h=>h.real)));
   const items=[...S.tasks.filter(t=>t.cli===c.n).map(t=>({id:t.id,t:t.t,p:t.p,h:t.h,st:t.urg?'Urgência · '+t.s:t.s})),
     ...S.reports.filter(x=>x.cli===c.n&&!S.tasks.some(t=>t.id===x.tid)).map(x=>({id:x.tid,t:x.t,p:x.p,h:x.h,st:'Concluído'})),
-    ...URGENT.filter(u=>u.cli===c.n&&!S.tasks.some(t=>t.id===u.id)).map(u=>({id:u.id,t:u.t,p:null,h:null,st:'Urgência '+u.lv.toLowerCase()}))];
+    ...URGENT.filter(u=>u.cli===c.n&&!S.tasks.some(t=>t.id===u.id)).map(u=>{const n=S.next.find(x=>x.id===u.id);return {id:u.id,t:u.t,p:n&&n.p||null,h:null,st:n?'Topo da Sprint 43':u.lv==='Crítica'?'Urgência crítica':'Na fila · '+u.lv.toLowerCase()};})];
   const W=620,H=220,L=34,R=10,T=18,B=26, mx=niceMax(Math.max(...hist.map(h=>Math.max(h.plan,h.real)))*1.15), y=v=>T+(H-T-B)*(1-v/mx), bw=(W-L-R)/hist.length;
   let g='';
   for(let i=0;i<=4;i++){const v=mx*i/4;g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${nf0.format(v)}</text>`;}
@@ -1518,14 +1598,111 @@ function cPess(c,r,m){
   </div>`;
 }
 
-function score(p,u){
-  const lvl=p.sk[u.st]||0;
-  const folgaMax=Math.max(...PEOPLE.map(x=>Math.max(0,35-S.load[x.id])));
-  const folga=Math.max(0,35-S.load[p.id]);
-  const cli=CLIENTS.find(c=>c.n===u.cli), share=cli&&cli.att[p.id]?cli.att[p.id]:0;
-  const a=lvl/4*50, b=folgaMax?folga/folgaMax*30:0, c=share?10+10*share:0;
-  return {p,lvl,folga,share,a,b,c,t:a+b+c};
+/* quem trabalhou no projeto do cliente: chamados de agosto e setembro no GLPI + tasks e relatórios da sprint atual */
+function projHist(c){
+  const ev=[];
+  S.reports.filter(r=>r.cli===c.n).forEach(r=>ev.push({p:r.p,k:100+r.done,d:dt(r.done),t:r.t}));
+  S.tasks.filter(t=>t.cli===c.n&&!t.urg).forEach(t=>ev.push({p:t.p,k:100+TODAY,d:'em andamento',t:t.t}));
+  [5,4].forEach(m=>monthTasks(c,m).forEach(t=>ev.push({p:t.p,k:(m-4)*31+t.done,d:dt(t.done,t.mo),t:t.t})));
+  const by={};
+  ev.forEach(e=>{const b=by[e.p]=by[e.p]||{p:P[e.p],n:0,k:-1,d:'',t:''};b.n++;if(e.k>b.k){b.k=e.k;b.d=e.d;b.t=e.t;}});
+  return Object.values(by).sort((a,b)=>b.k-a.k);
 }
+/* recomendação: stack (até 50) + folga na sprint (até 30) + histórico recente no projeto (até 20)
+   − carga alta: quem passa de 90% da sprint perde de 10 a 20 pontos (protege quem já está sobrecarregado) */
+function score(p,u){
+  const c=CLIENTS.find(x=>x.n===u.cli), lvl=p.sk[u.st]||0, hist=c?projHist(c):[], mx=Math.max(1,...hist.map(h=>h.n)), me=hist.find(h=>h.p===p);
+  const folgaMax=Math.max(...PEOPLE.map(x=>Math.max(0,35-S.load[x.id])));
+  const folga=Math.max(0,35-S.load[p.id]), occ=S.load[p.id]/35;
+  const a=lvl/4*50, b=folgaMax?folga/folgaMax*30:0, cc=me?6+14*me.n/mx:0, pen=occ>0.9?Math.min(20,10+(occ-0.9)*100):0;
+  return {p,lvl,folga,occ,hist:me,a,b,c:cc,pen,t:Math.max(0,a+b+cc-pen),share:!!me};
+}
+const rankFor=u=>PEOPLE.map(p=>score(p,u)).filter(x=>x.lvl>0).sort((a,b)=>b.t-a.t);
+function qStatus(u){
+  const t=S.tasks.find(x=>x.id===u.id); if(t) return {k:'task',who:(t.ps||[t.p]).map(id=>P[id].n).join(' + ')};
+  const n=S.next.find(x=>x.id===u.id); if(n) return {k:'next',who:n.p?P[n.p].n:null};
+  return {k:'free'};
+}
+const QF=[['all','Todos'],['free','Sem dono'],['Crítica','Crítica'],['Alta','Alta'],['Média','Média'],['Baixa','Baixa']];
+const LV_COL={'Crítica':'--bad','Alta':'--warn','Média':'--c3','Baixa':'--muted-fg'};
+function qList(){
+  const q=(S.qq||'').toLowerCase().trim();
+  return URGENT.filter(u=>(S.qf==='all'||(S.qf==='free'?qStatus(u).k==='free':u.lv===S.qf))&&(!q||`${u.t} ${u.cli} ${u.st} ${u.id}`.toLowerCase().includes(q)));
+}
+const slaTxt=u=>u.sla<=3?`<span style="color:var(--bad)">vence em ${nf1.format(u.sla)} h</span>`:`vence em ${nf0.format(u.sla)} h`;
+function triQueue(){
+  const list=qList();
+  return list.map(u=>{const s=qStatus(u),on=S.qsel===u.id;
+    return `<button type="button" class="tq${on?' on':''}${s.k!=='free'?' done':''}" data-act="tsel" data-id="${u.id}" style="--lv:var(${LV_COL[u.lv]})">
+      <div class="tq-top"><span class="tq-lv">${u.lv}</span><span class="mono muted">#${u.id}</span><span class="tq-sla">${s.k==='free'?slaTxt(u):s.k==='task'?`${ic('check')} ${esc(s.who)}`:`${ic('right')} Sprint 43`}</span></div>
+      <b>${esc(u.t)}</b>
+      <span class="tq-sub">${esc(u.cli)} · ${u.st}</span>
+    </button>`;}).join('')||'<div class="empty">Nenhum chamado com esse filtro.</div>';
+}
+function triDetail(){
+  const u=URGENT.find(x=>x.id===S.qsel);
+  if(!u) return `<div class="tri-empty">${ic('kanban')}<b>Selecione um chamado na fila</b><span>O projeto, quem já trabalhou nele e as recomendações aparecem aqui.</span></div>`;
+  const c=CLIENTS.find(x=>x.n===u.cli), r=rowOf(c,S.month), info=cliInfo(c), hist=projHist(c), s=qStatus(u);
+  const all=rankFor(u), shown=S.qall?all:all.slice(0,3), crit=u.lv==='Crítica', pick=S.pick||(all[0]?[all[0].p.id]:[]), cov=coverage(u.st);
+  const mxT=Math.max(1,...all.map(x=>x.a+x.b+x.c+x.pen));
+  const reasons=x=>{const occ=S.load[x.p.id]/35;return [
+    `<span class="why ${x.lvl>=3?'ok':'warn'}">${u.st} nível ${x.lvl}${x.lvl>=3?'':' · com apoio'}</span>`,
+    x.pen?`<span class="why bad">${pct(occ)} da sprint · carga alta −${nf0.format(x.pen)} pts</span>`:`<span class="why">${nf0.format(x.folga)} h livres</span>`,
+    x.hist?`<span class="why ok">atendeu este projeto ${x.hist.n}× · último ${x.hist.d}</span>`:'<span class="why">nunca atendeu este projeto</span>'].join('');};
+  const action=s.k==='task'?`<div class="tri-done">${ic('check','sev-ok')}<span>Atribuído a <b>${esc(s.who)}</b> na Sprint ${SPRINT_N}.</span></div>`
+    :s.k==='next'?`<div class="tri-done">${ic('right','sev-info')}<span>No topo da Sprint ${SPRINT_N+1}${s.who?`, sugerido para <b>${esc(s.who)}</b>`:''}.</span></div>`
+    :crit?(S.realloc?`<div class="realloc"><div style="display:flex;gap:8px">${ic('alert','sev-warn')}<div><b>A sprint passa de 100%.</b> Faltam ${S.realloc.need} h. Sugestão: mover <b>#${S.realloc.task.id} ${esc(S.realloc.task.t)}</b> (${esc(S.realloc.task.cli)}, prioridade baixa) para a Sprint ${SPRINT_N+1}.</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn sm pri" data-act="realloc-ok">${ic('move')} Aprovar realocação</button><button type="button" class="btn sm" data-act="realloc-no">Manter e estourar a sprint</button></div></div>`
+      :`<div class="tri-act"><span class="muted">${pick.length?`${pick.map(id=>P[id].n).join(' + ')}${pick.length>1?' · as horas se dividem':''}`:'Escolha ao menos uma pessoa'}</span><button type="button" class="btn pri" data-act="assign" ${pick.length?'':'disabled'}>${ic('check')} Atribuir na Sprint ${SPRINT_N}</button></div>`)
+    :`<div class="tri-act"><span class="muted">Prioridade ${u.lv.toLowerCase()} não mexe na sprint em andamento: vai para o topo da próxima${pick[0]?`, já com ${P[pick[0]].n} sugerido`:''}.</span><button type="button" class="btn pri" data-act="defer">${ic('right')} Enviar para a Sprint ${SPRINT_N+1}</button></div>`;
+  return `<div class="tri-in${S.qanim?' fade':''}">
+    <div class="tri-h">
+      <div class="tri-hl"><span class="badge ${LV[u.lv]}"><span class="dot"></span>${u.lv}</span><span class="mono muted">GLPI #${u.id} · aberto há ${u.age<1?'menos de 1 h':nf0.format(u.age)+' h'}</span></div>
+      <h2>${esc(u.t)}</h2>
+      <p>${esc(u.d)}</p>
+      <div class="tri-chips">
+        <button type="button" class="chip-s plain link" data-act="cpage" data-id="${c.id}">${ic('building')}<b>${esc(c.n)}</b></button>
+        <span class="chip-s plain">${ic('code')}${esc(u.st)}</span>
+        <span class="chip-s plain">${ic('clock')}${s.k==='free'?slaTxt(u):'prazo em dia'}</span>
+        <span class="chip-s plain">Vai para <b>${crit?'Sprint '+SPRINT_N+' (atual)':'topo da Sprint '+(SPRINT_N+1)}</b></span>
+      </div>
+    </div>
+    <div class="tri-ctx">
+      <div><div class="sub-h">Projeto</div><p class="tri-p">${esc(info.proj)}</p>
+        <div class="tri-mini"><span>Pool<b class="num" style="${r&&r.use>1?'color:var(--bad)':''}">${r?pct(r.use):'—'}</b></span><span>Margem<b class="num" style="${r&&r.margin<.15?'color:var(--warn)':''}">${r?pct(r.margin):'—'}</b></span><span>Criticidade<b>${c.crit}</b></span><span>Satisfação<b class="num">${nf1.format(c.sat)}</b></span></div></div>
+      <div><div class="sub-h">Quem trabalhou neste projeto</div>
+        ${hist.slice(0,4).map(h=>`<div class="tri-who" data-act="person" data-id="${h.p.id}">${avatarHTML(h.p)}<div><b>${esc(fullOf(h.p))}</b><span>${h.n} chamado${h.n>1?'s':''} · último ${h.d} · ${esc(h.t)}</span></div></div>`).join('')||'<p class="muted" style="font-size:13px">Sem histórico neste projeto.</p>'}</div>
+    </div>
+    <div class="tri-rec">
+      <div class="tri-rh"><div class="sub-h">Recomendados para este chamado</div><div class="legend"><span><i style="background:var(--c1)"></i>Stack</span><span><i style="background:var(--c3)"></i>Folga</span><span><i style="background:var(--c4)"></i>Histórico no projeto</span><span><i class="pen-l"></i>Carga alta (desconta)</span></div></div>
+      ${cov<2?`<div class="warnbox">${ic('alert')}<div>${cov===0?'Ninguém tem':'Só 1 pessoa tem'} nível 3 ou 4 em ${esc(u.st)}. A primeira sugestão é a melhor disponível, não a ideal.</div></div>`:''}
+      ${shown.map((x,k)=>{const on=pick.includes(x.p.id);return `<div class="rc${on?' on':''}" data-act="${s.k==='free'?'pick':''}" data-p="${x.p.id}">
+        <span class="rc-n">${k+1}</span>${avatarHTML(x.p)}
+        <div class="rc-b"><div class="rc-t"><b>${esc(fullOf(x.p))}</b><span class="muted">${x.p.lv}</span>${k===0?'<span class="badge b-info">Melhor encaixe</span>':''}</div>
+          <div class="rc-why">${reasons(x)}</div>
+          <div class="rc-bar" title="Stack ${nf0.format(x.a)} · Folga ${nf0.format(x.b)} · Histórico ${nf0.format(x.c)}${x.pen?` · Carga alta −${nf0.format(x.pen)}`:''}"><i style="width:${x.a/mxT*100}%;background:var(--c1)"></i><i style="width:${x.b/mxT*100}%;background:var(--c3)"></i><i style="width:${x.c/mxT*100}%;background:var(--c4)"></i>${x.pen?`<i class="pen" style="width:${x.pen/mxT*100}%"></i>`:''}</div></div>
+        <div class="rc-s"><b class="num">${nf0.format(x.t)}</b><span>${s.k==='free'?(on?ic('check')+' escolhido':'escolher'):''}</span></div>
+      </div>`;}).join('')}
+      ${all.length>3?`<button type="button" class="linkbtn" data-act="qall">${S.qall?'Mostrar só os 3 melhores':`Ver todos com ${esc(u.st)} (${all.length})`}</button>`:''}
+    </div>
+    ${action}
+  </div>`;
+}
+function triHTML(){
+  const free=URGENT.filter(u=>qStatus(u).k==='free'), crit=free.filter(u=>u.lv==='Crítica').length;
+  return `<div class="card tri" id="tri">
+    <div class="tri-l">
+      <div class="tri-lh"><div><h3>Fila de chamados</h3><p>${free.length} sem dono${crit?` · <b style="color:var(--bad)">${crit} crítico${crit>1?'s':''}</b>`:''} · use ↑ ↓ para navegar</p></div></div>
+      <div class="tri-f">${QF.map(([k,l])=>`<button type="button" class="chip ${S.qf===k?'on':''}" data-act="qf" data-v="${k}">${l}</button>`).join('')}</div>
+      <div class="search tri-s">${ic('search')}<input id="qq" placeholder="Buscar chamado, cliente ou stack" value="${esc(S.qq)}" aria-label="Buscar chamado"></div>
+      <div class="tri-list" id="tri-list">${triQueue()}</div>
+    </div>
+    <div class="tri-d" id="tri-d">${triDetail()}</div>
+  </div>`;
+}
+/* troca de chamado sem redesenhar a página: só a fila e o painel */
+function triRefresh(anim){S.qanim=!!anim;const l=document.getElementById('tri-list'),d=document.getElementById('tri-d');if(!l||!d){render();return;}l.innerHTML=triQueue();d.innerHTML=triDetail();S.qanim=false;}
+function triNext(){const nx=URGENT.find(u=>qStatus(u).k==='free'&&u.id!==S.qsel);S.qsel=nx?nx.id:S.qsel;S.pick=null;S.qall=false;}
 function sprintUsed(){return Math.round(PEOPLE.reduce((s,p)=>s+S.load[p.id],0));}
 function forecast(){
   const avg=Math.round(mean(PAST_H));
@@ -1645,45 +1822,15 @@ function sprintTabs(){return `<div class="tabs" role="tablist"><button type="but
 function pgSprint(){
   if(S.stab==='plano') return `<div class="page-head"><div><h1>Sprint e alocação</h1><p>Sprint 43 · 20 a 24 de outubro. A automação propõe quem atende cada stack seguindo critérios escritos; o gestor ajusta e aprova.</p></div></div>
   <div>${sprintTabs()}</div>${pgPlan()}`;
-  const u=URGENT[S.urgIdx]||null;
+  if(S.qsel===null){const f=URGENT.find(x=>qStatus(x).k==='free');S.qsel=f?f.id:URGENT[0].id;}
   const used=sprintUsed(), useP=used/SPRINT_CAP;
   const urgN=S.tasks.filter(t=>t.urg).length;
-  let urgent='';
-  if(u){
-    const ranked=PEOPLE.map(p=>score(p,u)).filter(x=>x.lvl>0).sort((a,b)=>b.t-a.t).slice(0,3);
-    const cov=coverage(u.st), crit=u.lv==='Crítica';
-    const pick=S.pick||[ranked[0].p.id];
-    urgent=`<div class="urgent${crit?'':' soft'}">
-      <div class="urgent-h"><div><span class="badge ${LV[u.lv]}"><span class="dot"></span>${u.lv}</span> <span class="muted mono" style="font-size:12px;margin-left:6px">GLPI #${u.id}</span>
-        <h3 style="margin:8px 0 2px;font-size:16px">${esc(u.t)}</h3><div class="muted" style="font-size:13px">${esc(u.cli)} · ${u.st}</div></div>
-        <div class="muted" style="font-size:13px;text-align:right">Vai para<br><b style="font-size:15px;color:var(--fg)">${crit?'Sprint 42 (atual)':'Topo da Sprint 43'}</b></div></div>
-      ${crit?`
-      ${cov<2?`<div class="warnbox">${ic('alert')}<div>${cov===0?'Ninguém tem':'Só 1 pessoa tem'} nível 3 ou 4 em ${u.st}. A sugestão abaixo é a melhor disponível, não a ideal. Isso também aparece na página Equipe.</div></div>`:''}
-      <div class="muted" style="font-size:13px">Escolha uma ou mais pessoas. Com mais de uma, as horas se dividem entre elas.</div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-      ${ranked.map(r=>{const on=pick.includes(r.p.id);return `<div class="reco ${on?'on':''}">
-        <div class="avatar">${initials(r.p.n)}</div>
-        <div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><b>${r.p.n}</b><span class="muted" style="font-size:12px">${r.p.lv} · ${u.st} nível ${r.lvl} · folga ${nf0.format(r.folga)} h${r.share?' · já atende o cliente':''}</span></div>
-          <div class="score-bars" title="Stack ${nf0.format(r.a)} · Folga ${nf0.format(r.b)} · Relação ${nf0.format(r.c)}"><i style="width:${r.a}%;background:var(--c1)"></i><i style="width:${r.b}%;background:var(--c3)"></i><i style="width:${r.c}%;background:var(--c4)"></i></div></div>
-        <div style="display:flex;align-items:center;gap:10px"><span class="score">${nf0.format(r.t)}</span><button type="button" class="btn sm ${on?'pri':''}" data-act="pick" data-p="${r.p.id}" aria-pressed="${on}">${on?ic('check')+' Escolhido':'Escolher'}</button></div>
-      </div>`;}).join('')}
-      </div>
-      <div class="legend"><span><i style="background:var(--c1)"></i>Stack (até 50)</span><span><i style="background:var(--c3)"></i>Folga na sprint (até 30)</span><span><i style="background:var(--c4)"></i>Já atende o cliente (até 20)</span></div>
-      ${S.realloc?`<div class="realloc"><div style="display:flex;gap:8px">${ic('alert','sev-warn')}<div><b>A sprint passa de 100%.</b> Faltam ${S.realloc.need} h. Sugestão: mover <b>#${S.realloc.task.id} ${esc(S.realloc.task.t)}</b> (${esc(S.realloc.task.cli)}, prioridade baixa) para a Sprint 43.</div></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn sm pri" data-act="realloc-ok">${ic('move')} Aprovar realocação</button><button type="button" class="btn sm" data-act="realloc-no">Manter e estourar a sprint</button></div></div>`
-      :`<div><button type="button" class="btn pri" data-act="assign" ${pick.length?'':'disabled'}>Atribuir a ${pick.length} pessoa${pick.length===1?'':'s'}</button></div>`}`
-      :`<div class="note" style="margin:0">${ic('info')}<span>Prioridade ${u.lv.toLowerCase()} não mexe na sprint em andamento. Entra no topo da Sprint 43, na ordem Alta, Média, Baixa. Sugestão de quem atende: <b>${ranked[0].p.n}</b> (${u.st} nível ${ranked[0].lvl}).</span></div>
-      <div><button type="button" class="btn pri" data-act="defer">${ic('right')} Enviar para o topo da Sprint 43</button></div>`}
-    </div>`;
-  } else {
-    urgent=`<div class="card"><div class="empty">Sem urgências na fila. <button type="button" class="btn sm" data-act="reset-urg" style="margin-left:8px">Reiniciar simulação</button></div></div>`;
-  }
   const fc=forecast(), fcP=fc.total/SPRINT_CAP;
   const queue=S.next.slice().sort((a,b)=>LV_ORDER.indexOf(a.lv)-LV_ORDER.indexOf(b.lv));
   const st=s=>({'A fazer':'b-mute','Em andamento':'b-info','Validação':'b-warn','Concluído':'b-ok'}[s]);
   return `
-  <div class="page-head"><div><h1>Sprint e alocação</h1><p>Sprint 42 · 13 a 17 de outubro. Urgência crítica entra na sprint atual; as demais vão para o topo da próxima.</p></div>
-  <div class="head-actions"><button type="button" class="btn" data-act="next-urg" ${!u?'disabled':''}>${ic('zap')} Simular nova urgência</button></div></div>
+  <div class="page-head"><div><h1>Sprint e alocação</h1><p>Sprint 42 · 13 a 17 de outubro. Escolha um chamado da fila: o painel mostra o projeto, quem já trabalhou nele e quem encaixa melhor. Crítico entra na sprint atual; o resto vai para o topo da próxima.</p></div>
+  <div class="head-actions"><button type="button" class="btn ghost" data-act="reset-urg">${ic('repeat')} Reiniciar demonstração</button></div></div>
   <div>${sprintTabs()}</div>
 
   <div class="card"><div class="card-b"><div class="cap-row">
@@ -1693,8 +1840,19 @@ function pgSprint(){
     <div class="cap"><div class="l">Tasks concluídas</div><div class="v num">${S.doneN} de ${S.spN}</div><div class="cell-sub num">${nf0.format(S.doneH)} de ${used} h</div></div>
   </div></div></div>
 
-  <div class="grid g-2">
-    ${urgent}
+  ${triHTML()}
+
+  <div class="grid" style="grid-template-columns:minmax(0,1fr)">
+    <div class="card">
+    <div class="card-h"><div><h3>Itens da sprint</h3><p>Amostra de ${S.tasks.length} itens. Ao encerrar uma task, a IA gera o relatório dela e o próprio analista aprova.</p></div></div>
+    <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
+      <thead><tr><th>Chamado</th><th>Cliente</th><th>Stack</th><th>Responsável</th><th class="r">Horas</th><th>Status</th><th></th></tr></thead>
+      <tbody>${S.tasks.map(t=>`<tr>
+        <td><div class="cell-main">${esc(t.t)}</div><div class="cell-sub mono">#${t.id}${t.urg?' · crítica':''}${t.moved?' · movido para S43':''}</div></td>
+        <td>${esc(t.cli)}</td><td><span class="badge b-out">${t.st}</span></td><td>${(t.ps||[t.p]).map(id=>P[id].n).join(' + ')}</td><td class="r num">${t.h}</td>
+        <td><span class="badge ${st(t.s)}"><span class="dot"></span>${t.s}</span></td>
+        <td class="r">${(t.s==='Em andamento'||t.s==='Validação')&&!t.moved?`<button type="button" class="btn sm" data-act="close" data-id="${t.id}">Encerrar task</button>`:''}</td></tr>`).join('')}</tbody></table></div></div>
+  </div>
     <div class="card">
       <div class="card-h"><div><h3>Previsão da Sprint 43</h3><p>A automação calcula toda sexta. O gestor ajusta no planejamento.</p></div><button type="button" class="btn sm" data-act="stab" data-t="plano">Ver distribuição ${ic('right')}</button></div>
       <div class="card-b" style="display:flex;flex-direction:column;gap:12px">
@@ -1712,17 +1870,6 @@ function pgSprint(){
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="card-h"><div><h3>Itens da sprint</h3><p>Amostra de ${S.tasks.length} itens. Ao encerrar uma task, a IA gera o relatório dela e o próprio analista aprova.</p></div></div>
-    <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
-      <thead><tr><th>Chamado</th><th>Cliente</th><th>Stack</th><th>Responsável</th><th class="r">Horas</th><th>Status</th><th></th></tr></thead>
-      <tbody>${S.tasks.map(t=>`<tr>
-        <td><div class="cell-main">${esc(t.t)}</div><div class="cell-sub mono">#${t.id}${t.urg?' · crítica':''}${t.moved?' · movido para S43':''}</div></td>
-        <td>${esc(t.cli)}</td><td><span class="badge b-out">${t.st}</span></td><td>${(t.ps||[t.p]).map(id=>P[id].n).join(' + ')}</td><td class="r num">${t.h}</td>
-        <td><span class="badge ${st(t.s)}"><span class="dot"></span>${t.s}</span></td>
-        <td class="r">${(t.s==='Em andamento'||t.s==='Validação')&&!t.moved?`<button type="button" class="btn sm" data-act="close" data-id="${t.id}">Encerrar task</button>`:''}</td></tr>`).join('')}</tbody></table></div></div>
   </div>`;
 }
 
@@ -2455,13 +2602,11 @@ function sheetMonthly(id){
 
 /* ---------- Render ---------- */
 let lastPage=null,enterT;
-function visiblePages(){return Object.entries(PAGES).filter(([k,v])=>S.view==='gestor'||!v.gestor);}
+function visiblePages(){return Object.entries(PAGES);}
 function renderNav(){
   const groups={};visiblePages().forEach(([k,v])=>{(groups[v.group]=groups[v.group]||[]).push([k,v]);});
   document.getElementById('nav').innerHTML=Object.entries(groups).map(([g,items])=>`<div class="nav-label">${g}</div>${items.map(([k,v])=>`<a data-act="go" data-p="${k}" class="${S.page===k?'active':''}" href="#${k}">${ic(v.icon)}<span>${v.label}</span></a>`).join('')}`).join('');
   document.getElementById('crumb').textContent=PAGES[S.page].label+(S.page==='team'&&S.person?' / '+(S.person==='tl'?TL.full:fullOf(P[S.person])):'')+(S.page==='clients'&&S.client?' / '+CLIENTS.find(x=>x.id===S.client).n:'');
-  document.getElementById('vw-gestor').classList.toggle('on',S.view==='gestor');
-  document.getElementById('vw-diretoria').classList.toggle('on',S.view==='diretoria');
 }
 function render(){
   if(!visiblePages().some(([k])=>k===S.page)) S.page='overview';
@@ -2524,7 +2669,6 @@ document.addEventListener('click',e=>{
   if(a==='go'){e.preventDefault();S.page=el.dataset.p;S.person=null;S.client=null;closeLayers();document.body.classList.remove('nav-open');render();window.scrollTo(0,0);return;}
   if(a==='open-nav'){document.body.classList.add('nav-open');return;}
   if(a==='close-nav'){document.body.classList.remove('nav-open');return;}
-  if(a==='view'){S.view=el.dataset.v;render();return;}
   if(a==='theme'){theme=theme==='system'?'dark':theme==='dark'?'light':'system';try{localStorage.setItem('gs-theme',theme);}catch(err){}applyTheme(theme);return;}
   if(a==='client'){closeLayers();S.sheet=id;renderLayer();return;}
   if(a==='close-layer'){closeTop();return;}
@@ -2551,15 +2695,18 @@ document.addEventListener('click',e=>{
   if(a==='p43ok'){const pl=plan43();S.p43ok=now();
     log('Plano da Sprint 43 aprovado',`${pl.tot} h distribuídas entre 10 pessoas${Object.keys(S.p43ovr).length?` · ${Object.keys(S.p43ovr).length} troca(s) do gestor`:''}`,'');
     render();toast('Plano da Sprint 43 aprovado.');return;}
-  if(a==='next-urg'){if(S.realloc)return;S.urgIdx++;S.pick=null;render();return;}
-  if(a==='reset-urg'){S.urgIdx=0;S.pick=null;S.next=[];S.realloc=null;S.spN=SPRINT0.n;S.doneN=SPRINT0.doneN;S.doneH=SPRINT0.doneH;S.load=Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint]));S.tasks=S.tasks.filter(t=>!t.urg).map(t=>({...t,moved:false}));render();return;}
+  if(a==='tsel'){const nid=+id;if(nid!==S.qsel){S.qsel=nid;S.pick=null;S.qall=false;S.realloc=null;triRefresh(true);}return;}
+  if(a==='qf'){S.qf=el.dataset.v;document.querySelectorAll('[data-act="qf"]').forEach(b=>b.classList.toggle('on',b.dataset.v===S.qf));triRefresh();return;}
+  if(a==='qall'){S.qall=!S.qall;triRefresh();return;}
+  if(a==='reset-urg'){S.qsel=null;S.pick=null;S.qall=false;S.next=[];S.realloc=null;S.spN=SPRINT0.n;S.doneN=SPRINT0.doneN;S.doneH=SPRINT0.doneH;S.load=Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint]));S.tasks=S.tasks.filter(t=>!t.urg).map(t=>({...t,moved:false}));render();return;}
   if(a==='pick'){
-    const u=URGENT[S.urgIdx],pid=el.dataset.p;
-    const cur=S.pick||[PEOPLE.map(p=>score(p,u)).filter(x=>x.lvl>0).sort((x,y)=>y.t-x.t)[0].p.id];
-    S.pick=cur.includes(pid)?cur.filter(x=>x!==pid):[...cur,pid];render();return;
+    const u=URGENT.find(x=>x.id===S.qsel),pid=el.dataset.p; if(!u) return;
+    const cur=S.pick||[rankFor(u)[0].p.id];
+    S.pick=u.lv==='Crítica'?(cur.includes(pid)?cur.filter(x=>x!==pid):[...cur,pid]):[pid];triRefresh();return;
   }
   if(a==='assign'){
-    const u=URGENT[S.urgIdx],pids=S.pick||[PEOPLE.map(p=>score(p,u)).filter(x=>x.lvl>0).sort((x,y)=>y.t-x.t)[0].p.id];
+    const u=URGENT.find(x=>x.id===S.qsel); if(!u) return;
+    const pids=S.pick||[rankFor(u)[0].p.id];
     if(!pids.length) return;
     const need=sprintUsed()+u.h-SPRINT_CAP;
     if(need>0){
@@ -2570,7 +2717,9 @@ document.addEventListener('click',e=>{
   }
   if(a==='realloc-ok'){const t=S.realloc.task;t.moved=true;S.load[t.p]-=t.h;S.spN--;S.next.push({id:t.id,cli:t.cli,t:t.t,st:t.st,h:t.h,lv:'Adiado'});log('Item adiado para a Sprint 43',`#${t.id} ${t.cli} · abre espaço para urgência crítica`,'');const pids=S.realloc.pids;S.realloc=null;doAssign(pids);return;}
   if(a==='realloc-no'){const pids=S.realloc.pids;S.realloc=null;doAssign(pids,true);return;}
-  if(a==='defer'){const u=URGENT[S.urgIdx];S.next.push({id:u.id,cli:u.cli,t:u.t,st:u.st,h:u.h,lv:u.lv});log('Urgência para o topo da Sprint 43',`#${u.id} ${u.cli} · prioridade ${u.lv.toLowerCase()}`,'');S.urgIdx++;S.pick=null;render();toast(`#${u.id} vai para o topo da Sprint 43.`);return;}
+  if(a==='defer'){const u=URGENT.find(x=>x.id===S.qsel);if(!u)return;const pid=(S.pick||[rankFor(u)[0].p.id])[0];
+    S.next.push({id:u.id,cli:u.cli,t:u.t,st:u.st,h:u.h,lv:u.lv,p:pid});log('Chamado para o topo da Sprint 43',`#${u.id} ${u.cli} · prioridade ${u.lv.toLowerCase()} · sugerido para ${P[pid].n}`,'');
+    triNext();render();toast(`#${u.id} vai para o topo da Sprint 43, sugerido para ${P[pid].n}.`);return;}
   if(a==='close'){const t=S.tasks.find(x=>x.id===+id);t.s='Concluído';S.doneN++;S.doneH+=t.h;const r=makeReport(t,'auto','Pendente');closeLayers();S.modal=r.id;render();return;}
   if(a==='ropen'){closeLayers();S.modal=+id;renderLayer();return;}
   if(a==='redit'){S.editing=S.modal;renderLayer();return;}
@@ -2592,16 +2741,17 @@ document.addEventListener('click',e=>{
   if(a==='add-go'){const t=S.tasks.find(x=>x.id===S.addSel);if(!t)return;const r=makeReport(t,'manual','Rascunho');S.add=false;S.modal=r.id;render();return;}
 });
 function doAssign(pids,over){
-  const u=URGENT[S.urgIdx], per=Math.round(u.h/pids.length*10)/10, names=pids.map(id=>P[id].n).join(' + ');
+  const u=URGENT.find(x=>x.id===S.qsel), per=Math.round(u.h/pids.length*10)/10, names=pids.map(id=>P[id].n).join(' + ');
   pids.forEach(id=>S.load[id]+=per);S.spN++;
   S.tasks.unshift({id:u.id,cli:u.cli,t:u.t,st:u.st,p:pids[0],ps:pids,h:u.h,open:u.h+2,s:'Em andamento',urg:true});
   log('Urgência crítica atribuída',`#${u.id} ${u.cli} → ${names}${over?' · sprint estourada':''}`,'');
-  S.urgIdx++;S.pick=null;render();toast(`#${u.id} atribuído a ${names}.`);
+  triNext();render();toast(`#${u.id} atribuído a ${names}. Próximo chamado sem dono aberto.`);
 }
 document.addEventListener('input',e=>{
   if(e.target.id==='q'){S.q=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable();}
   if(e.target.id==='sim-adj'){S.sim.adj=+e.target.value;simRefresh();}
-  if(e.target.id==='rq'){S.rq=e.target.value;document.getElementById('rtable').innerHTML=taskTable();}});
+  if(e.target.id==='rq'){S.rq=e.target.value;document.getElementById('rtable').innerHTML=taskTable();}
+  if(e.target.id==='qq'){S.qq=e.target.value;document.getElementById('tri-list').innerHTML=triQueue();}});
 document.addEventListener('change',e=>{
   if(e.target.id==='ra'){S.ra=e.target.value;document.getElementById('rtable').innerHTML=taskTable();}
   if(e.target.id==='price-c'){S.price=+e.target.value;render();}
@@ -2631,6 +2781,16 @@ document.addEventListener('dragend',e=>{document.querySelectorAll('.kcard.draggi
 document.addEventListener('dragover',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(n=>n!==col&&n.classList.remove('over'));col.classList.add('over');});
 document.addEventListener('drop',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();const id=dragId;dragId=null;setStage(id,col.dataset.stage);});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.sheet||S.modal||S.msheet||S.add||S.pauta))closeTop();});
+// ↑ ↓ percorrem a fila de chamados da Sprint, sem tirar o foco de um campo de texto
+document.addEventListener('keydown',e=>{
+  if((e.key!=='ArrowDown'&&e.key!=='ArrowUp')||S.page!=='sprint'||S.stab!=='atual'||S.modal||S.sheet||S.msheet) return;
+  if(/INPUT|TEXTAREA|SELECT/.test((e.target.tagName||''))) return;
+  const list=qList(); if(!list.length) return;
+  const ix=list.findIndex(u=>u.id===S.qsel), nx=list[Math.max(0,Math.min(list.length-1,ix+(e.key==='ArrowDown'?1:-1)))];
+  e.preventDefault(); if(!nx||nx.id===S.qsel) return;
+  S.qsel=nx.id;S.pick=null;S.qall=false;S.realloc=null;triRefresh(true);
+  const b=document.querySelector(`.tq[data-id="${nx.id}"]`); if(b) b.scrollIntoView({block:'nearest',behavior:'smooth'});
+});
 
 const h0=(location.hash||'').slice(1);if(PAGES[h0]) S.page=h0;
 render();

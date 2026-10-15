@@ -116,7 +116,7 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 | Trabalho fora de chamado | Chamados internos recorrentes + chamado "Atendimentos avulsos" por cliente; campo "cliente relacionado" |
 | Metas | Só de equipe e de cliente. Nada de ranking ou meta individual |
 | IA | Pré-preenche, resume, compara e sinaliza. **Sempre com aprovação humana.** Cálculo simples sem IA |
-| Visões | Gestor (completa) e Diretoria (enxuta) |
+| Visões | Só a do gestor. O seletor Gestor/Diretoria foi removido em 15/10 a pedido do usuário |
 | Histórico | Filtro de mês em todas as telas, não página separada |
 
 **Descartado:** sistema novo de chamados; guardar salário; ponto dentro do GLPI; cronômetro por tarefa; monitorar tela/teclado; ranking individual; relatório semanal para todos os clientes; índice composto de "saúde da conta" (difícil de defender).
@@ -181,7 +181,7 @@ A reunião interna da equipe está em `contexto/conversas/reuniao-interna-equipe
 - **Regra de pauta:** margem negativa 2 meses seguidos → pauta de reprecificação.
 - **Ocupação** = horas em clientes ÷ horas de ponto (≈ 83%). Atenção: depende da jornada; dizer na banca que vem do ponto do RH.
 - **Buffer de urgência** = média das horas urgentes das últimas 8 sprints + 1 desvio-padrão (≈ 35 h).
-- **Score de alocação** = stack (nível/4 × 50) + folga na sprint (até 30) + já atende o cliente (até 20).
+- **Score de alocação** (15/10) = stack (nível/4 × 50) + folga na sprint (até 30) + histórico recente no projeto (6 a 20, pelos chamados de ago/set e da sprint atual, `projHist`) − carga alta (quem passa de 90% da sprint perde de 10 a 20 pontos). Na tela de Sprint: fila de 14 chamados (`URGENT`) à esquerda, painel do chamado selecionado à direita (`triHTML`, `triDetail`, `triRefresh`), setas ↑ ↓ navegam, depois de atribuir abre o próximo sem dono.
 - **Retorno (conservador):** relatório 1,5 h/cliente × 30 × 70% + triagem 5% × 50% + retrabalho 3% × 50% ≈ 88 h/mês liberadas; implantação 170 h; manutenção 20 h/mês + R$ 60 de gateway; payback ≈ 2,6 meses após 3 meses de implantação.
 
 ### 8.5 Páginas atuais (estado em 14/10, 22h)
