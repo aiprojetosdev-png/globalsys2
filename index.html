@@ -369,6 +369,73 @@ body.intro .topbar{animation:topIn .7s .1s cubic-bezier(.2,.8,.2,1) both}
 @keyframes sideIn{from{transform:translateX(-30px);opacity:0}to{transform:none;opacity:1}}
 @keyframes topIn{from{transform:translateY(-16px);opacity:0}to{transform:none;opacity:1}}
 
+/* ---------- Ficha individual ---------- */
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.pc{display:grid;grid-template-columns:40px minmax(0,1fr) 16px;gap:12px;align-items:center;text-align:left;padding:12px;border:1px solid var(--border);border-radius:11px;background:var(--card);cursor:pointer;transition:border-color .18s,box-shadow .2s,transform .18s}
+.pc:hover{border-color:color-mix(in srgb,var(--primary) 40%,var(--border));box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.pc.tl{border-color:color-mix(in srgb,var(--primary) 35%,var(--border));background:color-mix(in srgb,var(--primary) 5%,var(--card))}
+.pc-b{min-width:0;display:flex;flex-direction:column;gap:2px}
+.pc-b b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-b>span{font-size:12px;color:var(--muted-fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc-m{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12px}
+.pav{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;font:600 14px/1 var(--display);color:var(--primary);background:color-mix(in srgb,var(--primary) 12%,transparent)}
+.pav.tl{color:#fff;background:var(--primary)}
+.pav.big{width:72px;height:72px;border-radius:20px;font-size:26px}
+.back{align-self:flex-start;margin-bottom:-8px}
+.ph{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:20px;align-items:center;padding:22px}
+.ph-t{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ph-t h1{margin:0;font-family:var(--display);font-size:26px;font-weight:650;letter-spacing:-.03em}
+.ph-r{color:var(--muted-fg);font-size:13.5px;margin-top:4px}
+.ph-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.chip-s{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 4px 0 10px;border:1px solid var(--border);border-radius:999px;font-size:12.5px}
+.chip-s b{font-weight:550}
+.chip-s i{font-style:normal;font:600 11px/1 var(--mono);width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--primary) 12%,transparent);color:var(--primary)}
+.ph-side{display:flex;flex-direction:column;gap:8px;align-items:stretch;min-width:170px}
+.ph-kv{display:flex;justify-content:space-between;gap:16px;font-size:13px}
+.ph-kv span{color:var(--muted-fg)}
+@media (max-width:760px){.ph{grid-template-columns:56px minmax(0,1fr)}.pav.big{width:56px;height:56px;font-size:20px;border-radius:16px}.ph-side{grid-column:1/-1}}
+.mt{padding:16px 18px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+.mt-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted-fg);font-weight:500;gap:8px}
+.mt-h svg{width:28px;height:28px;padding:6px;border-radius:8px;color:var(--primary);background:color-mix(in srgb,var(--primary) 10%,transparent)}
+.mt-v{font-family:var(--display);font-size:26px;font-weight:650;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.mt-s{font-size:12px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.mt-sp{margin-top:4px}
+.mt-hint{font-size:11.5px;color:var(--muted-fg);line-height:1.4;margin-top:2px}
+svg.spark{width:104px;height:30px;display:block}
+.src{font:500 11px/1 var(--mono);color:var(--muted-fg);border:1px solid var(--border);border-radius:6px;padding:4px 7px;white-space:nowrap}
+.qgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.qgrid>div{border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.qgrid span{font-size:12px;color:var(--muted-fg)}
+.qgrid b{font-family:var(--display);font-size:20px;font-weight:650;font-variant-numeric:tabular-nums}
+.qgrid small{font-size:11px;display:flex;gap:4px;flex-wrap:wrap}
+@media (max-width:640px){.qgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pbar{position:relative;height:8px;border-radius:999px;background:var(--muted)}
+.pbar i{position:absolute;left:0;top:0;bottom:0;border-radius:999px}
+.pbar .pl{background:color-mix(in srgb,var(--primary) 22%,transparent)}
+.pbar .re{background:var(--primary);top:2px;bottom:2px}
+.ra-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.tl-list{display:flex;flex-direction:column}
+.tl-i{display:grid;grid-template-columns:14px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.tl-i:last-child{border-bottom:0}
+.tl-i>i{width:9px;height:9px;border-radius:50%;margin-top:5px;background:var(--warn)}
+.tl-i.live>i{background:var(--bad);box-shadow:0 0 0 4px color-mix(in srgb,var(--bad) 18%,transparent)}
+.skr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+.skr:last-of-type{border-bottom:0}
+.skb{display:flex;gap:3px}
+.skb i{width:18px;height:6px;border-radius:3px;background:var(--muted)}
+.skb i.on{background:var(--primary)}
+.cl-r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 8px;margin:0 -8px;border-radius:8px;cursor:pointer;font-size:13.5px}
+.cl-r:hover{background:var(--hover)}
+.cl-r b{font-weight:550}
+.pl-r{display:flex;flex-direction:column;gap:6px;padding:8px 0}
+.pl-t{font-size:13px;line-height:1.45}
+.pl-b{display:flex;align-items:center;gap:10px;font-size:12px}
+.note-r{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.note-r:last-child{border-bottom:0}
+.note-r>span{color:var(--muted-fg);font-size:12px;padding-top:1px}
+.note-r p{margin:0;line-height:1.5}
+.pauta-l{margin:6px 0 4px;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.5}
+
 /* ---------- Login ---------- */
 /* Paleta do login: #020420 · #060c4a · #0a1270 · #1626d9 · #2536ff · #4d5cff · #a8b2ff */
 .auth{--l0:#020420;--l1:#060c4a;--l2:#0a1270;--l3:#1626d9;--l4:#2536ff;--l5:#4d5cff;--l6:#a8b2ff;
@@ -606,7 +673,10 @@ const IC={
  left:'<path d="m15 18-6-6 6-6"/>', right:'<path d="m9 18 6-6-6-6"/>',
  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>',
  send:'<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
- move:'<path d="M5 12h14M13 6l6 6-6 6"/>'
+ move:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+ target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+ repeat:'<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
+ code:'<path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/>'
 };
 const ic=(n,cls)=>`<svg class="i ${cls||''}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]}</svg>`;
 
@@ -1143,6 +1213,7 @@ function pgSprint(){
 }
 
 function pgTeam(){
+  if(S.person) return S.person==='tl'?pgTechLead():pgPerson(S.person);
   const m=S.month, mc=monthCalc(m);
   const used=new Set(CLIENTS.map(c=>c.st));
   const risks=STACKS.filter(s=>used.has(s)&&coverage(s)<2);
@@ -1158,11 +1229,13 @@ function pgTeam(){
     ${kpi('Horas fora de chamado de cliente',hh(mc.int+mc.inv),`<span>${hh(mc.int)} em chamados internos · ${hh(mc.inv)} sem registro</span>`,'file')}
   </div>
 
+  ${teamRoster(m)}
+
   <div class="card">
     <div class="card-h"><div><h3>Matriz de competências</h3><p>Nível de 1 a 4 por stack, autodeclarado e validado no rito trimestral. A última linha conta quantas pessoas têm nível 3 ou 4.</p></div></div>
     <div class="card-b" style="padding-top:8px"><div class="tbl-wrap"><table class="matrix">
       <thead><tr><th style="text-align:left">Pessoa</th>${STACKS.map(s=>`<th class="rot">${s}</th>`).join('')}</tr></thead>
-      <tbody>${PEOPLE.map(p=>`<tr><td class="name">${p.n} <span class="muted" style="font-weight:400;font-size:12px">${p.lv}</span></td>${STACKS.map(s=>{const l=p.sk[s]||0;return `<td><div class="lv lv${l}" title="${p.n} · ${s}: ${l||'—'}">${l||'·'}</div></td>`;}).join('')}</tr>`).join('')}
+      <tbody>${PEOPLE.map(p=>`<tr class="click" data-act="person" data-id="${p.id}"><td class="name">${p.n} <span class="muted" style="font-weight:400;font-size:12px">${p.lv}</span></td>${STACKS.map(s=>{const l=p.sk[s]||0;return `<td><div class="lv lv${l}" title="${p.n} · ${s}: ${l||'—'}">${l||'·'}</div></td>`;}).join('')}</tr>`).join('')}
       <tr><td class="name">Cobertura (nível ≥ 3)</td>${STACKS.map(s=>{const c=coverage(s),u=used.has(s);return `<td class="num ${u&&c===0?'cov-bad':u&&c===1?'cov-warn':''}">${c}</td>`;}).join('')}</tr>
       <tr><td class="name muted" style="font-weight:400">Clientes na stack</td>${STACKS.map(s=>`<td class="num muted">${clientsByStack(s).length||'·'}</td>`).join('')}</tr>
       </tbody></table></div>
@@ -1175,7 +1248,7 @@ function pgTeam(){
       <div class="card-h"><div><h3>Carga do mês</h3><p>Ordem alfabética. Ponto do RH comparado às horas apontadas no GLPI.</p></div></div>
       <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
         <thead><tr><th>Pessoa</th><th class="r">Ponto</th><th class="r">Clientes</th><th class="r">Interno</th><th class="r">Sem registro</th><th style="min-width:140px">Ocupação</th></tr></thead>
-        <tbody>${PEOPLE.slice().sort((a,b)=>a.n.localeCompare(b.n)).map(p=>{const c=pCli(p,m),i=pInt(p,m),o=c/p.ponto;return `<tr><td><b>${p.n}</b></td><td class="r num">${p.ponto}</td><td class="r num">${nf0.format(c)}</td><td class="r num">${i}</td><td class="r num">${nf0.format(p.ponto-c-i)}</td><td>${useBar2(o)}</td></tr>`;}).join('')}</tbody></table></div></div>
+        <tbody>${PEOPLE.slice().sort((a,b)=>a.n.localeCompare(b.n)).map(p=>{const c=pCli(p,m),i=pInt(p,m),o=c/p.ponto;return `<tr class="click" data-act="person" data-id="${p.id}"><td><b>${p.n}</b></td><td class="r num">${p.ponto}</td><td class="r num">${nf0.format(c)}</td><td class="r num">${i}</td><td class="r num">${nf0.format(p.ponto-c-i)}</td><td>${useBar2(o)}</td></tr>`;}).join('')}</tbody></table></div></div>
     </div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card"><div class="card-h"><div><h3>Trabalho fora de chamado</h3><p>Chamados internos recorrentes criados todo mês no GLPI.</p></div></div>
@@ -1188,6 +1261,308 @@ function pgTeam(){
   </div>`;
 }
 function useBar2(o){const c=o>0.9?'bad':o>0.8?'warn':'ok';return `<div style="display:flex;align-items:center;gap:8px"><div class="bar ${c}" style="flex:1"><i style="width:${Math.min(100,o*100)}%"></i></div><span class="num" style="font-size:12px;width:36px;text-align:right">${pct(o)}</span></div>`;}
+
+/* ---------- Pessoas: ficha individual ---------- */
+// Cada indicador é comparado só com o histórico da própria pessoa. Sem nota, sem ranking, sem custo individual.
+// Fontes: GLPI (chamados, horas, reaberturas, SLA), Azure DevOps (PRs e revisões), ponto do RH.
+const TL={id:'tl',n:'Rafael',full:'Rafael Monteiro',role:'Tech Lead Sênior',since:2015,ponto:168,
+  sk:{Java:4,SQL:4,'.NET':3,Angular:3,React:3,'Node.js':3,Python:3}};
+const DEVX={ // dados de RH e do 1:1 (fictícios)
+ ana:{full:'Ana Ribeiro',g:'f',since:2016,last:'29/09',next:'13/10',
+  plan:[['Voltar para até 85% de ocupação (repassar parte do Banco Arrecife Digital para a Elisa)',40],['Mentoria de Java para o Heitor, 1 h por semana',70],['Nível 3 em Python',35]],
+  notes:[['29/09','Terceiro mês acima de 90%. Combinado repassar parte do Banco Arrecife Digital para a Elisa na Sprint 43.'],['01/09','Retrabalho subiu em agosto (reaberturas em Ferro & Aço). Causa provável: pressa no fechamento. Combinada revisão em par nos chamados críticos.']]},
+ bruno:{full:'Bruno Carvalho',g:'m',since:2017,last:'24/09',next:'22/10',
+  plan:[['Documentar o cálculo de franquia da Seguradora Âncora no GlobalDoc',60],['Rodízio de Delphi com a Íris na Têxtil Aurora',50]],
+  notes:[['24/09','Previsibilidade alta e estável. Quer reduzir Delphi e atuar mais em .NET moderno.'],['27/08','Ajudou a destravar a coparticipação da Rede Saúde Mais. Registrar a solução no GlobalDoc.']]},
+ carla:{full:'Carla Mendes',g:'f',since:2021,last:'30/09',next:'14/10',
+  plan:[['Nível 3 em Oracle APEX (curso oficial + pareamento)',45],['Retrabalho no Vale Verde Agro abaixo de 6%',20]],
+  notes:[['30/09','Retrabalho alto no Vale Verde Agro: APEX ainda é novo para ela. Combinado curso até novembro e revisão de todo PR de APEX pelo tech lead.'],['02/09','Pediu apoio formal com APEX. As horas de estudo passam para o chamado interno de capacitação, com o cliente relacionado.']]},
+ diego:{full:'Diego Nascimento',g:'m',since:2018,last:'25/09',next:'23/10',
+  plan:[['Nível 3 em Go e documentar o rastreamento da Logística Porto Seco',30],['Formar o João como segunda pessoa em Go',15]],
+  notes:[['25/09','Única pessoa em Go, com nível 2. Estimativas em Go estouram mais de 50%. Prioridade: segunda pessoa na stack.'],['28/08','Boa entrega em Python e Node.js. Concentrar o desvio de estimativa no que é Go.']]},
+ elisa:{full:'Elisa Prado',g:'f',since:2020,last:'26/09',next:'24/10',
+  plan:[['Assumir parte do Banco Arrecife Digital em transição com a Ana',25],['Nível 4 em Angular',55]],
+  notes:[['26/09','Pronta para mais responsabilidade. Boa candidata a referência em Angular.'],['29/08','Ocupação saudável. Topou receber a transição do Banco Arrecife.']]},
+ fabio:{full:'Fábio Azevedo',g:'m',since:2020,last:'23/09',next:'21/10',
+  plan:[['Padronizar testes de componente nos projetos React',65],['Nível 4 em Flutter',40]],
+  notes:[['23/09','Aprovação de PR de primeira estável acima de 80%. Convidado a escrever o guia de revisão do time.'],['26/08','Fila da Conecta Telecom no horário de pico: propor monitoramento antes de nova urgência.']]},
+ gabi:{full:'Gabriela Lopes',g:'f',since:2023,last:'22/09',next:'20/10',
+  plan:[['Nível 3 em PHP',50],['Desvio de estimativa abaixo de 15%',35]],
+  notes:[['22/09','Estimativas otimistas em PHP legado. Combinado quebrar tarefas maiores que 6 h antes de estimar.'],['25/08','Cliente Associação Comercial Norte elogiou o atendimento. Repassar o elogio ao time.']]},
+ heitor:{full:'Heitor Batista',g:'m',since:2024,last:'29/09',next:'13/10',
+  plan:[['Nível 3 em Java com mentoria da Ana e do Rafael',60],['Aprovação de PR de primeira acima de 70%',80]],
+  notes:[['29/09','Retrabalho caiu pela metade desde que entrou na mentoria em junho. Manter o par semanal.'],['01/09','Primeira entrega sozinho em Angular no Grupo Maré Alta, sem reabertura.']]},
+ iris:{full:'Íris Fontana',g:'f',since:2019,last:'24/09',next:'22/10',
+  plan:[['Nível 4 em Delphi no rodízio com o Bruno',45],['Plano de migração para .NET da Transportes Rio Doce',30]],
+  notes:[['24/09','A lentidão do CT-e consumiu boa parte da sprint. Avaliar se vira projeto à parte, fora do pool.'],['27/08','Ocupação e qualidade estáveis.']]},
+ joao:{full:'João Teixeira',g:'m',since:2023,last:'23/09',next:'21/10',
+  plan:[['Segunda pessoa em Go, com o Diego',15],['Nível 3 em Node.js',55]],
+  notes:[['23/09','Evolução constante na revisão de código. Interesse em Go ajuda a reduzir a dependência do Diego.'],['26/08','Combinado pedir revisão antes de subir mudanças em lote nas notas da Universidade Atlântica.']]}
+};
+const LVP={ // referência por nível
+ 'Sênior':{task:7.5,lead:1.9,est:.06,rw:.025,pr:.86,cyc:1.3,com:2.2,bug:.5,sla:.975,mix:[.52,.34,.14]},
+ 'Pleno': {task:6,  lead:2.6,est:.11,rw:.045,pr:.76,cyc:1.6,com:3.1,bug:.9,sla:.955,mix:[.26,.5,.24]},
+ 'Júnior':{task:4.8,lead:3.4,est:.19,rw:.08, pr:.62,cyc:2.1,com:4.4,bug:1.5,sla:.93,mix:[.08,.42,.5]}
+};
+const STORY={ // situações plantadas, mês a mês (abr→set)
+ ana:{lead:[1,1,1,1.12,1.25,1.38],rw:[.6,.7,.9,1.6,2.6,3.6],est:[1,1,1,1.2,1.4,1.6],sla:[1,1,1,.99,.985,.975]},
+ carla:{rw:[.9,.9,1,1.9,2.3,2.5],est:[1,1,1,1.8,2.2,2.4],lead:[1,1,1,1.25,1.35,1.4],pr:[1,1,1,.88,.84,.82],bug:[1,1,1,2,2.5,2.5],sla:[1,1,1,.98,.97,.965]},
+ heitor:{rw:[1.55,1.45,1.25,1.05,.9,.78],pr:[.78,.82,.9,1,1.08,1.14],cyc:[1.25,1.2,1.1,1,.92,.85],com:[1.3,1.25,1.1,1,.9,.8],bug:[1.5,1.4,1.2,1,.8,.7]},
+ diego:{est:[1,1,1.1,1.3,1.5,1.6]},
+ joao:{pr:[.95,.97,1,1.04,1.07,1.1],com:[1.08,1.05,1,.97,.94,.9]}
+};
+const srand=(a,b)=>{const x=Math.sin(a*12.9898+b*78.233)*43758.5453;return x-Math.floor(x);};
+const jit=(a,b,amp)=>1+(srand(a,b)-.5)*2*amp;
+const pIdx=p=>PEOPLE.indexOf(p);
+const roleOf=p=>p.id==='tl'?TL.role:(DEVX[p.id].g==='f'?'Desenvolvedora ':'Desenvolvedor ')+p.lv;
+const fullOf=p=>p.id==='tl'?TL.full:DEVX[p.id].full;
+const PM={};
+function devMonth(p,m){
+  const key=p.id+m; if(PM[key]) return PM[key];
+  const L=LVP[p.lv], st=STORY[p.id]||{}, i=pIdx(p);
+  const k=(name,amp=.06)=>(st[name]?st[name][m]:1)*jit(i*11+m,name.length*3+name.charCodeAt(0),amp);
+  const cli=pCli(p,m), tasks=Math.max(1,Math.round(cli/L.task*jit(i,m+40,.05)));
+  const reopened=Math.round(tasks*L.rw*k('rw',.12)), prs=Math.round(tasks*.86), prFirst=Math.min(.97,L.pr*k('pr',.04));
+  const r={m,cli,tasks,reopened,rw:reopened/tasks,lead:L.lead*k('lead'),est:L.est*k('est',.1),sla:Math.min(.995,L.sla*(st.sla?st.sla[m]:1)*jit(i,m+70,.006)),
+    prs,first:Math.round(prs*prFirst),cyc:L.cyc*k('cyc'),com:L.com*k('com'),bugs:Math.round(L.bug*k('bug',.25)),
+    hi:Math.round(tasks*L.mix[0]),md:Math.round(tasks*L.mix[1]),int:pInt(p,m),cap:Math.round(pInt(p,m)*(p.id==='carla'?.7:.4))};
+  r.lo=Math.max(0,tasks-r.hi-r.md); r.prRate=r.first/Math.max(1,r.prs); r.merge=3+r.cyc*5.5*jit(i,m+90,.08);
+  r.occ=cli/p.ponto; r.free=p.ponto-cli-r.int;
+  return PM[key]=r;
+}
+const series=(p,f)=>MS.map((_,k)=>f(devMonth(p,k)));
+function hoursByClient(p,m){ // distribuição das horas da pessoa por cliente, fechando com o total do GLPI
+  const rows=CLIENTS.filter(c=>c.att[p.id]&&c.h[m]>0).map(c=>({c,h:c.h[m]*c.att[p.id]}));
+  const tot=rows.reduce((s,r)=>s+r.h,0)||1, cli=pCli(p,m), i=pIdx(p);
+  rows.forEach(r=>{r.h=r.h/tot*cli;r.plan=Math.max(1,Math.round(r.h*jit(r.c.i*3+m,i+7,.16)));r.h=Math.round(r.h);});
+  return rows.sort((a,b)=>b.h-a.h);
+}
+function reallocEvents(p,m){ // horas que saíram do planejado da sprint para outro projeto
+  const rows=hoursByClient(p,m), up=rows.filter(r=>r.h>r.plan), down=rows.filter(r=>r.h<r.plan), i=pIdx(p), ev=[];
+  up.slice(0,3).forEach((r,k)=>{const from=down[k%Math.max(1,down.length)];ev.push({id:48100+i*37+m*11+k*3,to:r.c.n,from:from?from.c.n:'Planejado da sprint',h:r.h-r.plan,why:k===0?'Urgência':'Apoio ao cliente'});});
+  if(m===5) S.tasks.filter(t=>t.urg&&t.p===p.id).forEach(t=>ev.unshift({id:t.id,to:t.cli,from:'Buffer da sprint',h:t.h,why:'Urgência atribuída agora',live:true}));
+  return ev;
+}
+const realloc=(p,m)=>reallocEvents(p,m).reduce((s,e)=>s+e.h,0);
+function clientSat(p){const rows=CLIENTS.filter(c=>c.att[p.id]);const w=rows.reduce((s,c)=>s+c.att[p.id]*c.pool,0);return rows.reduce((s,c)=>s+c.sat*c.att[p.id]*c.pool,0)/w;}
+
+/* comparação com o próprio histórico: mês atual × média dos 3 anteriores */
+function ownDelta(vals,m,good,fmt,unit){
+  if(m===0) return '<span class="muted">primeiro mês do histórico</span>';
+  const prev=vals.slice(Math.max(0,m-3),m), avg=prev.reduce((a,b)=>a+b,0)/prev.length, d=vals[m]-avg;
+  if(Math.abs(d)<1e-9) return '<span class="delta muted">estável</span>';
+  const cls=good==='none'?'muted':(d>0)===(good==='up')?'up':'down';
+  return `<span class="delta ${cls}">${d>0?'▲':'▼'} ${fmt(Math.abs(d))}${unit||''}</span> <span class="muted">vs média ${MS[Math.max(0,m-3)]}–${MS[m-1]}</span>`;
+}
+function spark(vals,m,col){
+  const W=104,H=30,P=3,mn=Math.min(...vals),mx=Math.max(...vals),sp=(mx-mn)||1;
+  const x=k=>P+(W-2*P)*k/(vals.length-1), y=v=>H-P-(H-2*P)*(v-mn)/sp;
+  const pts=vals.map((v,k)=>`${x(k).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="var(${col||'--primary'})" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" opacity=".9"/>${vals.map((v,k)=>k===m?`<circle cx="${x(k)}" cy="${y(v)}" r="3.2" fill="var(${col||'--primary'})"/>`:'').join('')}</svg>`;
+}
+const mtile=(lbl,val,sub,sp,hint,icon)=>`<div class="card mt"><div class="mt-h"><span>${lbl}</span>${icon?ic(icon,'muted'):''}</div><div class="mt-v">${val}</div><div class="mt-s">${sub}</div>${sp?`<div class="mt-sp">${sp}</div>`:''}${hint?`<div class="mt-hint">${hint}</div>`:''}</div>`;
+const pp=v=>nf1.format(v*100)+' p.p.';
+const srcTag=s=>`<span class="src">${s}</span>`;
+const avatarHTML=(p,big)=>`<div class="pav${big?' big':''}${p.id==='tl'?' tl':''}">${initials(fullOf(p))}</div>`;
+
+function chartDev(p,m){ // entregas (barras) e retrabalho (linha) em 6 meses
+  const W=560,H=210,L=34,R=40,T=14,B=26, d=MS.map((_,k)=>devMonth(p,k));
+  const tmax=Math.ceil(Math.max(...d.map(x=>x.tasks))*1.15/4)*4, rmax=Math.max(.08,Math.ceil(Math.max(...d.map(x=>x.rw))*1.25/.04)*.04);
+  const bw=(W-L-R)/6, y=v=>T+(H-T-B)*(1-v/tmax), yr=v=>T+(H-T-B)*(1-v/rmax);
+  let g='';
+  for(let k=0;k<=4;k++){const v=tmax*k/4;g+=`<line class="grid-l" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${nf0.format(v)}</text><text x="${W-R+6}" y="${yr(rmax*k/4)+4}">${nf0.format(rmax*k/4*100)}%</text>`;}
+  d.forEach((x,k)=>{const bx=L+bw*k+bw*.24,w=bw*.52,sel=k===m;
+    g+=`<rect x="${bx}" y="${y(x.tasks)}" width="${w}" height="${y(0)-y(x.tasks)}" rx="4" fill="var(--c1)" opacity="${sel?1:.4}"><title>${MONTHS[k]}: ${x.tasks} entregas, ${x.reopened} reabertas</title></rect>`;
+    g+=`<text x="${L+bw*k+bw/2}" y="${H-8}" text-anchor="middle" style="${sel?'fill:var(--fg);font-weight:600':''}">${MS[k]}</text>`;});
+  const pts=d.map((x,k)=>`${L+bw*k+bw/2},${yr(x.rw)}`).join(' ');
+  g+=`<polyline points="${pts}" fill="none" stroke="var(--c2)" stroke-width="2.2"/>`;
+  d.forEach((x,k)=>g+=`<circle cx="${L+bw*k+bw/2}" cy="${yr(x.rw)}" r="${k===m?4.5:3}" fill="var(--card)" stroke="var(--c2)" stroke-width="2"/>`);
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Entregas e retrabalho nos últimos 6 meses">${g}</svg>`;
+}
+
+function personHead(p,extra){
+  const x=p.id==='tl'?TL:DEVX[p.id], yrs=2026-x.since;
+  const sk=Object.entries(p.sk).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  return `<button type="button" class="btn sm ghost back" data-act="person-back">${ic('left')} Equipe</button>
+  <div class="card ph">
+    ${avatarHTML(p,true)}
+    <div class="ph-main">
+      <div class="ph-t"><h1>${esc(fullOf(p))}</h1>${p.id==='tl'?'<span class="badge b-info">Tech lead</span>':''}${extra||''}</div>
+      <div class="ph-r">${roleOf(p)} · na Globalsys desde ${x.since} (${yrs} ${yrs===1?'ano':'anos'})${p.id==='tl'?'':' · tech lead: '+TL.full}</div>
+      <div class="ph-chips">${sk.map(([s,l])=>`<span class="chip-s"><b>${esc(s)}</b><i>${l}</i></span>`).join('')}</div>
+    </div>
+    <div class="ph-side">${p.id==='tl'?'':`<div class="ph-kv"><span>Último 1:1</span><b>${x.last}</b></div><div class="ph-kv"><span>Próximo 1:1</span><b>${x.next}</b></div>
+      <button type="button" class="btn pri sm" data-act="pauta" data-id="${p.id}">${ic('spark')} Pauta do 1:1</button>`}</div>
+  </div>`;
+}
+
+function pgPerson(id){
+  const p=P[id], m=S.month, d=devMonth(p,m), x=DEVX[id], L=LVP[p.lv];
+  const occS=series(p,r=>r.occ), tS=series(p,r=>r.tasks), leadS=series(p,r=>r.lead), estS=series(p,r=>r.est), rwS=series(p,r=>r.rw), prS=series(p,r=>r.prRate), slaS=series(p,r=>r.sla);
+  const hb=hoursByClient(p,m), ev=reallocEvents(p,m), ra=ev.reduce((s,e)=>s+e.h,0), raS=MS.map((_,k)=>realloc(p,k));
+  const cls=CLIENTS.filter(c=>c.att[id]).sort((a,b)=>b.att[id]-a.att[id]);
+  const occBadge=d.occ>.9?'<span class="badge b-bad"><span class="dot"></span>Acima de 90%</span>':d.occ<.7?'<span class="badge b-warn"><span class="dot"></span>Abaixo de 70%</span>':'<span class="badge b-ok"><span class="dot"></span>Ocupação saudável</span>';
+  const maxH=Math.max(...hb.map(r=>Math.max(r.h,r.plan)),1);
+  const sat=clientSat(p);
+  return `
+  ${personHead(p,occBadge)}
+
+  <div class="grid g-kpi6">
+    ${mtile('Ocupação',pct(d.occ),ownDelta(occS,m,d.occ>.85?'down':'none',pp),spark(occS,m),`${hh(d.cli)} em clientes de ${hh(p.ponto)} de ponto`,'users')}
+    ${mtile('Entregas',String(d.tasks),ownDelta(tS,m,'up',v=>nf1.format(v)),spark(tS,m),`${d.hi} de complexidade alta · ${d.md} média · ${d.lo} baixa`,'check')}
+    ${mtile('Tempo médio de entrega',nf1.format(d.lead)+' dias',ownDelta(leadS,m,'down',v=>nf1.format(v),' d'),spark(leadS,m),'da abertura do chamado à conclusão','clock')}
+    ${mtile('Precisão de estimativa',(d.est>0?'+':'')+pct(d.est),ownDelta(estS,m,'down',pp),spark(estS,m),'horas reais acima do estimado','target')}
+    ${mtile('Retrabalho',pct1(d.rw),ownDelta(rwS,m,'down',pp),spark(rwS,m,'--c2'),`${d.reopened} de ${d.tasks} chamados reabertos em até 30 dias`,'repeat')}
+    ${mtile('Aprovação de PR de primeira',pct(d.prRate),ownDelta(prS,m,'up',pp),spark(prS,m),`${d.first} de ${d.prs} PRs sem pedido de ajuste`,'code')}
+  </div>
+
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-h"><div><h3>Entregas e retrabalho</h3><p>Barras: chamados concluídos no mês. Linha: % reaberto em até 30 dias.</p></div>${srcTag('GLPI')}</div>
+      <div class="card-b">${chartDev(p,m)}<div class="legend" style="margin-top:6px"><span><i style="background:var(--c1)"></i>Entregas</span><span><i style="background:var(--c2);height:3px"></i>Retrabalho</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div><h3>Qualidade de código</h3><p>PRs de ${MONTHS[m].toLowerCase()}, revisados pelo tech lead.</p></div>${srcTag('Azure DevOps')}</div>
+      <div class="card-b">
+        <div class="qgrid">
+          <div><span>PRs abertos</span><b>${d.prs}</b></div>
+          <div><span>Ciclos de revisão</span><b>${nf1.format(d.cyc)}</b><small>${ownDelta(series(p,r=>r.cyc),m,'down',v=>nf1.format(v))}</small></div>
+          <div><span>Comentários por PR</span><b>${nf1.format(d.com)}</b><small>${ownDelta(series(p,r=>r.com),m,'down',v=>nf1.format(v))}</small></div>
+          <div><span>Tempo até o merge</span><b>${nf0.format(d.merge)} h</b></div>
+          <div><span>Bugs após a entrega</span><b class="${d.bugs>=3?'bad-c':''}">${d.bugs}</b><small>${ownDelta(series(p,r=>r.bugs),m,'down',v=>nf1.format(v))}</small></div>
+          <div><span>SLA nos chamados</span><b>${pct1(d.sla)}</b><small>${ownDelta(slaS,m,'up',pp)}</small></div>
+        </div>
+        <div class="kv" style="margin-top:6px"><span>Satisfação dos clientes que atende</span><span class="num">${nf1.format(sat)} / 5</span></div>
+        <p class="note" style="margin:8px 0 0">${ic('info')}<span>Referência do nível ${p.lv.toLowerCase()}: aprovação de primeira perto de ${pct(L.pr)} e retrabalho perto de ${pct1(L.rw)}. Serve de régua, não de meta.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-h"><div><h3>Horas por projeto</h3><p>Planejado na sprint × realizado no GLPI em ${MONTHS[m].toLowerCase()}.</p></div>${srcTag('GLPI + ponto')}</div>
+      <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
+        <thead><tr><th>Cliente / projeto</th><th class="r">Planejado</th><th class="r">Realizado</th><th style="min-width:130px"></th></tr></thead>
+        <tbody>${hb.map(r=>{const df=r.h-r.plan;return `<tr><td><div class="cell-main">${esc(r.c.n)}</div><div class="cell-sub">${esc(projOf(r.c.n))}</div></td><td class="r num">${r.plan} h</td><td class="r num">${r.h} h <span class="${df>0?'warn-c':'muted'}" style="font-size:12px">${df>0?'+':''}${df}</span></td><td><div class="pbar"><i class="pl" style="width:${r.plan/maxH*100}%"></i><i class="re" style="width:${r.h/maxH*100}%"></i></div></td></tr>`;}).join('')}
+          <tr><td><div class="cell-main">Chamados internos</div><div class="cell-sub">capacitação, documentação, reuniões</div></td><td class="r num muted">·</td><td class="r num">${d.int} h</td><td></td></tr>
+          <tr><td><div class="cell-main">Sem registro</div><div class="cell-sub">ponto do RH sem chamado apontado</div></td><td class="r num muted">·</td><td class="r num ${d.free>12?'warn-c':''}">${nf0.format(d.free)} h</td><td></td></tr>
+        </tbody></table></div>
+        <div class="legend" style="padding:8px 12px 4px"><span><i style="background:color-mix(in srgb,var(--primary) 22%,transparent)"></i>Planejado</span><span><i style="background:var(--primary)"></i>Realizado</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div><h3>Horas realocadas</h3><p>Horas que saíram do planejado para outro projeto.</p></div>${srcTag('GLPI + sprint')}</div>
+      <div class="card-b">
+        <div class="ra-top"><div><div class="big">${hh(ra)}</div><div class="cell-sub">${pct(ra/Math.max(1,d.cli))} das horas em clientes</div></div><div>${spark(raS,m,'--warn')}<div class="cell-sub" style="text-align:right">${ownDelta(raS,m,'down',v=>nf0.format(v),' h')}</div></div></div>
+        <div class="tl-list">${ev.map(e=>`<div class="tl-i${e.live?' live':''}"><i></i><div><b>+${e.h} h · ${esc(e.to)}</b><div class="cell-sub">${esc(e.why)} · #${e.id} · saiu de ${esc(e.from)}</div></div></div>`).join('')||'<div class="empty">Nada realocado neste mês.</div>'}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid g-3">
+    <div class="card">
+      <div class="card-h"><div><h3>Competências</h3><p>Nível de 1 a 4, validado no rito trimestral.</p></div></div>
+      <div class="card-b">${Object.entries(p.sk).sort((a,b)=>b[1]-a[1]).map(([s,l])=>{const only=clientsByStack(s).length&&coverage(s)<=1&&l>=2;return `<div class="skr"><span>${esc(s)}${only?' <span class="badge b-warn" style="height:18px">risco</span>':''}</span><div class="skb">${[1,2,3,4].map(n=>`<i class="${n<=l?'on':''}"></i>`).join('')}</div></div>`;}).join('')}
+        <div class="kv" style="margin-top:8px"><span>Capacitação no mês</span><span class="num">${d.cap} h</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div><h3>Clientes que atende</h3><p>Participação nas horas de cada contrato.</p></div></div>
+      <div class="card-b">${cls.map(c=>{const f=focal(c),ref=f.tit===p;return `<div class="cl-r" data-act="client" data-id="${c.id}"><div><b>${esc(c.n)}</b><div class="cell-sub">${esc(c.st)} · ${pct(c.att[id])} das horas${ref?' · referência':''}</div></div>${ref&&f.risk?`<span class="badge b-warn">${(p.sk[c.st]||0)<3?'titular abaixo do nível 3':'sem reserva no time'}</span>`:''}</div>`;}).join('')}</div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div><h3>Plano de desenvolvimento</h3><p>Combinado no 1:1 com o tech lead.</p></div></div>
+      <div class="card-b">${x.plan.map(([t,v])=>`<div class="pl-r"><div class="pl-t">${esc(t)}</div><div class="pl-b"><div class="bar" style="flex:1"><i style="width:${v}%"></i></div><span class="num">${v}%</span></div></div>`).join('')}
+        <div class="doc-l" style="margin-top:14px">Últimos 1:1</div>
+        ${x.notes.map(([dt,t])=>`<div class="note-r"><span class="num">${dt}</span><p>${esc(t)}</p></div>`).join('')}</div>
+    </div>
+  </div>
+  <p class="note">${ic('info')}<span>Cada número é comparado com o histórico da própria pessoa. Não há nota, ranking nem custo individual. Fontes: GLPI (chamados, horas, reaberturas, SLA), Azure DevOps (PRs e revisões) e ponto do RH.</span></p>`;
+}
+
+const TL_TIME=[['Revisão de código',46],['Mentoria e 1:1',34],['Arquitetura e decisões técnicas',30],['Escalonamentos de cliente',28],['Planejamento e reuniões',22],['Capacitação',8]];
+const TL_FIRST=[7.8,7.1,6.4,5.6,4.9,4.2], TL_MENTOR=[22,24,30,32,34,34], TL_INC=[2,4,1,3,2,4];
+const ADR=[['ADR-014','Logs estruturados em todos os serviços Java','Aprovada'],['ADR-015','Testes automatizados obrigatórios em PR de .NET','Aprovada'],['ADR-016','Segunda pessoa em Go: Diego forma o João até dezembro','Em andamento'],['ADR-017','Projeto à parte para a lentidão do CT-e (Transportes Rio Doce)','Em discussão']];
+function teamMonth(m){
+  const d=PEOPLE.map(p=>devMonth(p,m)), sum=f=>d.reduce((s,x)=>s+f(x),0);
+  return {prs:sum(x=>x.prs),first:sum(x=>x.first),tasks:sum(x=>x.tasks),reopened:sum(x=>x.reopened),bugs:sum(x=>x.bugs)};
+}
+function pgTechLead(){
+  const m=S.month, t=teamMonth(m), tS=MS.map((_,k)=>teamMonth(k));
+  const firstS=tS.map(x=>x.first/x.prs), rwS=tS.map(x=>x.reopened/x.tasks), prsS=tS.map(x=>x.prs);
+  const risks=[
+    ['Go sem ninguém com nível 3','Logística Porto Seco depende só do Diego (nível 2). ADR-016 em andamento.','bad'],
+    ['Oracle APEX em aprendizado','Vale Verde Agro com retrabalho alto enquanto a Carla faz o curso. Todo PR de APEX passa pelo tech lead.','warn'],
+    ['Ana acima de 90% há 3 meses','O retrabalho dela subiu junto com a carga. Transição de parte do Banco Arrecife para a Elisa na Sprint 43.','warn']];
+  return `
+  ${personHead(TL)}
+  <div class="grid g-kpi6">
+    ${mtile('PRs revisados',String(t.prs),ownDelta(prsS,m,'up',v=>nf0.format(v)),spark(prsS,m),'todos os PRs do time passam pelo tech lead','code')}
+    ${mtile('Tempo até a 1ª revisão',nf1.format(TL_FIRST[m])+' h',ownDelta(TL_FIRST,m,'down',v=>nf1.format(v),' h'),spark(TL_FIRST,m),'do PR aberto ao primeiro comentário','clock')}
+    ${mtile('Aprovação de primeira do time',pct(t.first/t.prs),ownDelta(firstS,m,'up',pp),spark(firstS,m),`${t.first} de ${t.prs} PRs`,'check')}
+    ${mtile('Retrabalho do time',pct1(t.reopened/t.tasks),ownDelta(rwS,m,'down',pp),spark(rwS,m,'--c2'),`${t.reopened} de ${t.tasks} chamados reabertos`,'repeat')}
+    ${mtile('Horas de mentoria',hh(TL_MENTOR[m]),ownDelta(TL_MENTOR,m,'up',v=>nf0.format(v),' h'),spark(TL_MENTOR,m),'pareamento, 1:1 e revisão guiada','users')}
+    ${mtile('Incidentes críticos atuados',String(TL_INC[m]),ownDelta(TL_INC,m,'down',v=>nf1.format(v)),spark(TL_INC,m,'--bad'),'escalonados pelo time ou pelo cliente','alert')}
+  </div>
+
+  <div class="card">
+    <div class="card-h"><div><h3>Time sob liderança</h3><p>Ordem alfabética. Setas comparam cada pessoa com o próprio histórico, não com os colegas.</p></div>${srcTag('GLPI + Azure DevOps')}</div>
+    <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table>
+      <thead><tr><th>Pessoa</th><th class="r">Ocupação</th><th class="r">Entregas</th><th class="r">Retrabalho</th><th class="r">Aprovação de primeira</th><th class="r">Horas realocadas</th><th>Último 1:1</th><th></th></tr></thead>
+      <tbody>${PEOPLE.slice().sort((a,b)=>a.n.localeCompare(b.n)).map(p=>{const d=devMonth(p,m),tr=(vals,good)=>{if(m===0)return '';const prev=vals.slice(Math.max(0,m-3),m),avg=prev.reduce((a,b)=>a+b,0)/prev.length,df=vals[m]-avg;if(Math.abs(df)<.003*Math.max(1,Math.abs(avg)))return '';return `<span class="${(df>0)===(good==='up')?'up':'down'}" style="font-size:11px"> ${df>0?'▲':'▼'}</span>`;};
+        return `<tr class="click" data-act="person" data-id="${p.id}"><td><div style="display:flex;gap:10px;align-items:center">${avatarHTML(p)}<div><div class="cell-main">${esc(fullOf(p))}</div><div class="cell-sub">${p.lv}</div></div></div></td>
+        <td class="r num ${d.occ>.9?'bad-c':''}">${pct(d.occ)}</td><td class="r num">${d.tasks}${tr(series(p,r=>r.tasks),'up')}</td><td class="r num">${pct1(d.rw)}${tr(series(p,r=>r.rw),'down')}</td><td class="r num">${pct(d.prRate)}${tr(series(p,r=>r.prRate),'up')}</td><td class="r num">${hh(realloc(p,m))}</td><td class="num">${DEVX[p.id].last}</td><td>${ic('right','muted')}</td></tr>`;}).join('')}</tbody></table></div></div>
+  </div>
+
+  <div class="grid g-3">
+    <div class="card"><div class="card-h"><div><h3>Tempo do tech lead</h3><p>${hh(TL.ponto)} de ponto em ${MONTHS[m].toLowerCase()}. Fica fora da capacidade de atendimento.</p></div></div>
+      <div class="card-b">${TL_TIME.map(([n,h])=>`<div class="pl-r"><div class="pl-t" style="display:flex;justify-content:space-between"><span>${n}</span><span class="num muted">${h} h</span></div><div class="bar"><i style="width:${h/TL_TIME[0][1]*100}%"></i></div></div>`).join('')}</div></div>
+    <div class="card"><div class="card-h"><div><h3>Decisões técnicas</h3><p>Registros de decisão de arquitetura (ADR).</p></div></div>
+      <div class="card-b">${ADR.map(([c,t,s])=>`<div class="note-r"><span class="num">${c}</span><p>${esc(t)}<br><span class="badge ${s==='Aprovada'?'b-ok':s==='Em andamento'?'b-info':'b-mute'}" style="margin-top:6px">${s}</span></p></div>`).join('')}</div></div>
+    <div class="card"><div class="card-h"><div><h3>Riscos técnicos acompanhados</h3><p>Entram na pauta da revisão mensal.</p></div></div>
+      <div class="card-b alert-list">${risks.map(([t,dd,sv])=>`<div class="alert" style="grid-template-columns:18px minmax(0,1fr)">${ic('alert','sev-'+sv)}<div><div class="t">${t}</div><div class="d">${dd}</div></div></div>`).join('')}</div></div>
+  </div>
+  <p class="note">${ic('info')}<span>O tech lead não entra no cálculo de capacidade nem no custo dos clientes: o caso considera as 10 pessoas de atendimento e R$ 1 mi/ano. Ele aparece aqui como liderança técnica do time.</span></p>`;
+}
+
+/* Pauta do 1:1: rascunho da IA a partir dos números da pessoa; o tech lead revisa antes */
+function pautaItems(p,m){
+  const d=devMonth(p,m), x=DEVX[p.id], good=[], talk=[], deal=[];
+  const cmp=(vals)=>{if(m===0)return 0;const prev=vals.slice(Math.max(0,m-3),m);return vals[m]-prev.reduce((a,b)=>a+b,0)/prev.length;};
+  const drw=cmp(series(p,r=>r.rw)), dpr=cmp(series(p,r=>r.prRate)), dest=cmp(series(p,r=>r.est)), dlead=cmp(series(p,r=>r.lead));
+  if(drw<-.005) good.push(`Retrabalho caiu para ${pct1(d.rw)} (${pp(-drw)} abaixo da própria média).`);
+  if(dpr>.01) good.push(`Aprovação de PR de primeira subiu para ${pct(d.prRate)}.`);
+  if(dest<-.01) good.push(`Estimativas mais precisas: desvio de ${pct(d.est)}.`);
+  if(d.sla>=.97) good.push(`SLA de ${pct1(d.sla)} nos chamados que atendeu.`);
+  if(!good.length) good.push(`${d.tasks} entregas no mês, ${d.hi} de complexidade alta.`);
+  if(d.occ>.9) talk.push(`Ocupação de ${pct(d.occ)}: entender o que pode sair da mesa ${x.g==='m'?'dele':'dela'}.`);
+  if(drw>.005) talk.push(`Retrabalho subiu para ${pct1(d.rw)} (${d.reopened} reaberturas). Olhar os chamados juntos.`);
+  if(dest>.02) talk.push(`Horas reais ${pct(d.est)} acima do estimado. Onde a estimativa está escapando?`);
+  if(dlead>.15) talk.push(`Tempo médio de entrega subiu para ${nf1.format(d.lead)} dias.`);
+  const ra=realloc(p,m); if(ra>=10) talk.push(`${hh(ra)} realocadas para outros projetos: o plano da sprint está protegendo o tempo ${x.g==='m'?'dele':'dela'}?`);
+  if(!talk.length) talk.push('Indicadores estáveis. Perguntar o que atrapalha e o que quer aprender.');
+  x.plan.forEach(([t,v])=>deal.push(`${t}: ${v}% concluído. Próximo passo até o próximo 1:1.`));
+  return {good,talk,deal};
+}
+function modalPauta(id){
+  const p=P[id], it=pautaItems(p,S.month), sec=(t,a)=>`<div class="doc-l" style="margin-top:4px">${t}</div><ul class="pauta-l">${a.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`;
+  return `<div class="scrim" data-act="close-layer"></div>
+  <div class="modal" role="dialog" aria-label="Pauta do 1:1">
+    <div class="sheet-h"><div><h2>Pauta do 1:1 · ${esc(fullOf(p))}</h2><div class="muted" style="font-size:13px;margin-top:4px">Próximo 1:1 em ${DEVX[id].next} · dados de ${MONTHS[S.month].toLowerCase()}</div></div><button type="button" class="icon-btn" data-act="close-layer" aria-label="Fechar">${ic('x')}</button></div>
+    <div class="sheet-b">
+      <p class="note" style="margin:0">${ic('spark')}<span>Rascunho gerado pela IA a partir dos números do mês. O tech lead revisa e ajusta antes da conversa.</span></p>
+      ${sec('Reconhecer',it.good)}${sec('Conversar',it.talk)}${sec('Combinar',it.deal)}
+    </div>
+    <div class="sheet-f"><button type="button" class="btn" data-act="close-layer">Fechar</button><button type="button" class="btn pri" data-act="pauta-save" data-id="${id}">${ic('check')} Salvar no histórico do 1:1</button></div>
+  </div>`;
+}
+function teamRoster(m){
+  const card=p=>{const tl=p.id==='tl',d=tl?null:devMonth(p,m),sk=Object.entries(p.sk).sort((a,b)=>b[1]-a[1]).slice(0,3).map(e=>e[0]).join(' · ');
+    return `<button type="button" class="pc${tl?' tl':''}" data-act="person" data-id="${p.id}">${avatarHTML(p)}
+      <div class="pc-b"><b>${esc(fullOf(p))}</b><span>${tl?TL.role:p.lv} · ${esc(sk)}</span>
+      ${tl?'<div class="pc-m"><span class="badge b-info">Tech lead</span><span class="cell-sub">revisa todos os PRs</span></div>':`<div class="pc-m"><div class="bar ${d.occ>.9?'bad':d.occ>=.8?'warn':'ok'}" style="flex:1"><i style="width:${Math.min(100,d.occ*100)}%"></i></div><span class="num">${pct(d.occ)}</span></div>`}</div>
+      ${ic('right','muted')}</button>`;};
+  return `<div class="card"><div class="card-h"><div><h3>Time</h3><p>Clique numa pessoa para abrir a ficha individual. Ordem alfabética, depois do tech lead.</p></div></div>
+    <div class="card-b"><div class="roster">${card(TL)}${PEOPLE.slice().sort((a,b)=>a.n.localeCompare(b.n)).map(card).join('')}</div></div></div>`;
+}
 
 const RITES={
  sem:{lab:'Semanal',n:'Planejamento da sprint',quem:'Gestor e equipe',dur:'Segunda, 9h · 30 min',tela:'Sprint e alocação',obj:'Fechar a próxima sprint abaixo de 100% da capacidade.'},
@@ -1549,7 +1924,7 @@ function visiblePages(){return Object.entries(PAGES).filter(([k,v])=>S.view==='g
 function renderNav(){
   const groups={};visiblePages().forEach(([k,v])=>{(groups[v.group]=groups[v.group]||[]).push([k,v]);});
   document.getElementById('nav').innerHTML=Object.entries(groups).map(([g,items])=>`<div class="nav-label">${g}</div>${items.map(([k,v])=>`<a data-act="go" data-p="${k}" class="${S.page===k?'active':''}" href="#${k}">${ic(v.icon)}<span>${v.label}</span>${k==='roi'?'<span class="tag">simulador</span>':''}</a>`).join('')}`).join('');
-  document.getElementById('crumb').textContent=PAGES[S.page].label;
+  document.getElementById('crumb').textContent=PAGES[S.page].label+(S.page==='team'&&S.person?' / '+(S.person==='tl'?TL.full:fullOf(P[S.person])):'');
   document.getElementById('vw-gestor').classList.toggle('on',S.view==='gestor');
   document.getElementById('vw-diretoria').classList.toggle('on',S.view==='diretoria');
 }
@@ -1565,6 +1940,7 @@ function render(){
 }
 function renderLayer(){
   let h='';
+  if(S.pauta) h+=modalPauta(S.pauta);
   if(S.sheet) h+=sheetClient(S.sheet);
   if(S.msheet) h+=sheetMonthly(S.msheet);
   if(S.add) h+=modalAdd();
@@ -1592,13 +1968,17 @@ const monthSel=document.getElementById('month');
 monthSel.innerHTML=MONTHS.map((n,k)=>`<option value="${k}" ${k===S.month?'selected':''}>${n} 2026</option>`).join('');
 monthSel.addEventListener('change',()=>{S.month=+monthSel.value;S.pageN=0;render();});
 
-function closeLayers(){S.sheet=null;S.msheet=null;S.modal=null;S.add=false;S.editing=null;}
+function closeLayers(){S.sheet=null;S.msheet=null;S.modal=null;S.add=false;S.editing=null;S.pauta=null;}
 function readFields(r){const g=id=>document.getElementById(id);if(!g('f-type'))return;r.ty=g('f-type').value;r.st=g('f-stack').value;r.desc=g('f-desc').value;r.chg=g('f-chg').value;}
 const curR=()=>S.reports.find(x=>x.id===S.modal);
 document.addEventListener('click',e=>{
   const el=e.target.closest('[data-act]'); if(!el) return;
   const a=el.dataset.act, id=el.dataset.id;
-  if(a==='go'){e.preventDefault();S.page=el.dataset.p;closeLayers();document.body.classList.remove('nav-open');render();window.scrollTo(0,0);return;}
+  if(a==='person'){closeLayers();S.page='team';S.person=id;render();window.scrollTo(0,0);return;}
+  if(a==='person-back'){S.person=null;render();window.scrollTo(0,0);return;}
+  if(a==='pauta'){closeLayers();S.pauta=id;renderLayer();return;}
+  if(a==='pauta-save'){log('Pauta do 1:1 salva',`${fullOf(P[id])} · revisada pelo tech lead`,'');closeLayers();renderLayer();toast('Pauta salva no histórico do 1:1.');return;}
+  if(a==='go'){e.preventDefault();S.page=el.dataset.p;S.person=null;closeLayers();document.body.classList.remove('nav-open');render();window.scrollTo(0,0);return;}
   if(a==='open-nav'){document.body.classList.add('nav-open');return;}
   if(a==='close-nav'){document.body.classList.remove('nav-open');return;}
   if(a==='view'){S.view=el.dataset.v;render();return;}
@@ -1701,7 +2081,7 @@ document.addEventListener('dragstart',e=>{const k=e.target.closest&&e.target.clo
 document.addEventListener('dragend',e=>{document.querySelectorAll('.kcard.dragging').forEach(n=>n.classList.remove('dragging'));document.querySelectorAll('.kcol.over').forEach(n=>n.classList.remove('over'));dragId=null;});
 document.addEventListener('dragover',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(n=>n!==col&&n.classList.remove('over'));col.classList.add('over');});
 document.addEventListener('drop',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();const id=dragId;dragId=null;setStage(id,col.dataset.stage);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.sheet||S.modal||S.msheet||S.add)){closeLayers();render();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.sheet||S.modal||S.msheet||S.add||S.pauta)){closeLayers();render();}});
 
 const h0=(location.hash||'').slice(1);if(PAGES[h0]) S.page=h0;
 render();
