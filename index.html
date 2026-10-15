@@ -239,6 +239,63 @@ tr.tl-row td{background:color-mix(in srgb,var(--primary) 5%,transparent)}
 .kpi-inline{font-size:24px;font-weight:650;letter-spacing:-.02em}
 .sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
 
+/* Relatórios */
+.pipe-card{padding:12px 10px 10px}
+.pipe-h{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 6px 8px}
+.pipe-h span{font:600 11px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted-fg);padding-bottom:8px;border-bottom:2px solid color-mix(in srgb,var(--primary) 30%,var(--border))}
+.pipe-h span+span{border-bottom-color:color-mix(in srgb,var(--ok) 45%,var(--border))}
+.pipe{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.ps{position:relative;border:0;background:transparent;text-align:left;padding:10px 18px 10px 12px;border-radius:10px;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:var(--fg);font:inherit;transition:background .15s}
+.ps:hover{background:var(--hover)}
+.ps.on{background:color-mix(in srgb,var(--primary) 8%,transparent)}
+.ps>span{font-size:12.5px;font-weight:550;color:var(--muted-fg)}
+.ps.on>span{color:var(--primary)}
+.ps b{font:650 26px/1.15 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ps small{font-size:11.5px;color:var(--muted-fg)}
+.ps:not(:last-child)::after{content:"";position:absolute;right:4px;top:50%;width:7px;height:7px;border-top:1.5px solid var(--muted-fg);border-right:1.5px solid var(--muted-fg);opacity:.5;transform:translateY(-50%) rotate(45deg)}
+@media (max-width:1000px){.pipe{grid-template-columns:repeat(3,minmax(0,1fr))}.ps:nth-child(3)::after{display:none}}
+@media (max-width:560px){.pipe{grid-template-columns:repeat(2,minmax(0,1fr))}.pipe-h{display:none}.ps::after{display:none}}
+.tyt{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;white-space:nowrap}
+.tyt i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.send-prog{display:flex;align-items:center;gap:10px}
+.qgrid.q4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){.qgrid.q4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.hb{display:grid;grid-template-columns:minmax(0,1fr) 90px 24px;gap:10px;align-items:center;padding:7px 0;font-size:13px;border-bottom:1px solid var(--border)}
+.hb:last-child{border-bottom:0}
+.hb b{text-align:right;font-weight:600}
+.modal.lg{width:min(900px,calc(100% - 32px))}
+.rgrid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.rgrid{grid-template-columns:minmax(0,1fr)}}
+.side{display:flex;flex-direction:column;gap:16px;border-left:1px solid var(--border);padding-left:20px}
+@media (max-width:760px){.side{border-left:0;padding-left:0}}
+.side .kv{padding:6px 0;font-size:13px}
+.ck{display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:5px 0;line-height:1.4}
+.ck svg{margin-top:1px}
+.ck.ok svg{color:var(--ok)} .ck.warn svg{color:var(--warn)}
+.tline{list-style:none;margin:6px 0 0;padding:0}
+.tline li{position:relative;padding:0 0 12px 20px;display:flex;flex-direction:column;font-size:13px}
+.tline li:last-child{padding-bottom:0}
+.tline li::before{content:"";position:absolute;left:3px;top:5px;width:9px;height:9px;border-radius:50%;border:2px solid var(--border);background:var(--card);box-sizing:border-box}
+.tline li:not(:last-child)::after{content:"";position:absolute;left:7px;top:16px;bottom:0;width:1px;background:var(--border)}
+.tline li.on::before{border-color:var(--ok);background:var(--ok)}
+.tline li b{font-weight:550}
+.tline li span{font-size:12px;color:var(--muted-fg)}
+.side-links{display:flex;gap:14px;flex-wrap:wrap}
+.sheet.lg{width:min(760px,100%)}
+.stepper{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:14px}
+.stepper div{display:flex;flex-direction:column;gap:3px;font-size:12px}
+.stepper i{height:4px;border-radius:999px;background:var(--muted)}
+.stepper div.on i{background:var(--ok)}
+.stepper div.cur i{background:var(--primary)}
+.stepper b{font-weight:550;color:var(--muted-fg)}
+.stepper div.on b{color:var(--fg)}
+.stepper span{color:var(--muted-fg);font-family:var(--mono);font-size:11px}
+.mdoc{padding:18px;gap:14px}
+.mdoc p{margin:3px 0 0}
+table.mini{font-size:13px;margin-top:4px}
+table.mini td{padding:6px 8px 6px 0}
+.scroll-list{max-height:300px;overflow-y:auto;margin:0 -8px;padding:0 8px}
+
 /* Sheet & modal */
 .scrim{position:fixed;inset:0;background:var(--overlay);z-index:50}
 .sheet{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--bg);border-left:1px solid var(--border);z-index:51;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px);animation:slide .22s ease-out}
@@ -772,11 +829,26 @@ const S={page:'overview',month:5,view:'gestor',price:85,q:'',quad:'Todos',pageN:
   load:Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint])),
   urgIdx:0, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
   quadSel:null, ctab:'acoes', rtab:'task', kstage:{}, monthly:{}, msheet:null, add:false, addSel:null,
+  rf:'all', ra:'all', rq:'', mf:'all', sentAt:{},
+  // relatórios das 17 tasks já encerradas na Sprint 42 (somam 118 h). done/apr = dia de outubro; fix = como o analista aprovou
   reports:[
-   {id:4,tid:48182,cli:'Mercado Bom Preço',proj:'Sustentação React',t:'Lentidão na busca de produtos',st:'React',p:'fabio',h:9,open:6,ty:'Melhoria',chg:'Busca mais rápida.',desc:'Criado índice e cache na busca de produtos.',status:'Pendente',src:'auto'},
-   {id:3,tid:48185,cli:'Seguradora Âncora',proj:'Sustentação .NET',t:'Correção no cálculo de franquia',st:'.NET',p:'iris',h:7,open:9,ty:'Ajuste',chg:'',desc:'Revisada a fórmula de franquia para apólices de frota.',status:'Pendente',src:'auto'},
-   {id:2,tid:48188,cli:'Hotel Costa Verde',proj:'Sustentação PHP',t:'Confirmação de reserva sem e-mail',st:'PHP',p:'gabi',h:4,open:6,ty:'Incidente',chg:'Hóspedes voltaram a receber a confirmação da reserva por e-mail.',desc:'',status:'Pendente',src:'auto'},
-   {id:1,tid:48211,cli:'Mercado Bom Preço',proj:'Sustentação React',t:'Cupom de desconto aplicado duas vezes',st:'React',p:'gabi',h:3,open:5,ty:'Incidente',chg:'O desconto passou a ser aplicado uma única vez por pedido.',desc:'Ajustada a regra no carrinho e criado teste para o caso.',status:'Aprovado',src:'auto'}
+   {id:17,tid:48191,cli:'Distribuidora Litoral',t:'Divergência no relatório de comissões',st:'Node.js',p:'joao',h:4,open:6,ty:'Dúvida',chg:'',desc:'Conferida a regra de comissão com o financeiro do cliente: a divergência vinha de vendas canceladas no mês seguinte.',status:'Rascunho',src:'manual',done:15,apr:null,fix:'none'},
+   {id:16,tid:48189,cli:'Vale Verde Agro',t:'Campo de talhão no apontamento de safra',st:'Oracle APEX',p:'carla',h:9,open:7,ty:'Ajuste',chg:'O apontamento de safra passa a ser feito por talhão, sem planilha à parte.',desc:'Criado o campo de talhão na tela de apontamento e ajustado o relatório de produção.',status:'Pendente',src:'auto',done:15,apr:null,fix:'none'},
+   {id:4,tid:48188,cli:'Hotel Costa Verde',t:'Confirmação de reserva sem e-mail',st:'PHP',p:'gabi',h:4,open:6,ty:'Incidente',chg:'Hóspedes voltaram a receber a confirmação da reserva por e-mail.',desc:'',status:'Pendente',src:'auto',done:15,apr:null,fix:'none'},
+   {id:3,tid:48185,cli:'Seguradora Âncora',t:'Correção no cálculo de franquia',st:'.NET',p:'iris',h:7,open:9,ty:'Ajuste',chg:'',desc:'Revisada a fórmula de franquia para apólices de frota.',status:'Pendente',src:'auto',done:14,apr:null,fix:'none'},
+   {id:2,tid:48182,cli:'Mercado Bom Preço',t:'Lentidão na busca de produtos',st:'React',p:'fabio',h:9,open:6,ty:'Melhoria',chg:'Busca mais rápida.',desc:'Criado índice e cache na busca de produtos.',status:'Pendente',src:'auto',done:14,apr:null,fix:'none'},
+   {id:15,tid:48187,cli:'Laticínios Serrano',t:'Integração com balança fora do ar',st:'Java',p:'heitor',h:6,open:9,ty:'Incidente',chg:'A pesagem volta a entrar no sistema sozinha, sem digitação na expedição.',desc:'Reiniciado o serviço de leitura da balança e corrigido o tempo limite da conexão serial. Criado alerta de queda.',status:'Aprovado',src:'auto',done:14,apr:15,fix:'ia'},
+   {id:14,tid:48186,cli:'Farmácia Bem Viver',t:'Consulta de estoque por lote',st:'SQL',p:'bruno',h:6,open:8,ty:'Melhoria',chg:'O balcão encontra o lote com validade mais próxima em segundos.',desc:'Criado índice por lote e validade e nova consulta ordenada por vencimento.',status:'Aprovado',src:'auto',done:14,apr:15,fix:'none'},
+   {id:13,tid:48184,cli:'Prefeitura de Serra Azul',t:'Emissão de alvará travando no PDF',st:'PHP',p:'carla',h:8,open:11,ty:'Incidente',chg:'O cidadão volta a baixar o alvará na hora, sem ir ao balcão.',desc:'Trocada a biblioteca de geração de PDF e reduzido o tamanho das imagens do brasão.',status:'Aprovado',src:'auto',done:14,apr:14,fix:'none'},
+   {id:12,tid:48183,cli:'Grupo Maré Alta',t:'Filtro por região no painel de vendas',st:'Angular',p:'heitor',h:6,open:9,ty:'Ajuste',chg:'Os gerentes regionais veem só as vendas da própria região.',desc:'Incluído filtro por região no painel e restrição pelo perfil do usuário.',status:'Aprovado',src:'auto',done:14,apr:14,fix:'none'},
+   {id:11,tid:48180,cli:'Universidade Atlântica',t:'Regra de arredondamento das médias',st:'Python',p:'joao',h:4,open:7,ty:'Dúvida',chg:'A secretaria tem a regra de arredondamento documentada para responder aos alunos.',desc:'Explicada a regra de arredondamento por disciplina e registrada no GlobalDoc.',status:'Aprovado',src:'auto',done:13,apr:13,fix:'ia'},
+   {id:10,tid:48179,cli:'Clínica Viver',t:'Lembrete de consulta enviado em duplicidade',st:'Python',p:'diego',h:6,open:8,ty:'Incidente',chg:'Cada paciente recebe um único lembrete por consulta.',desc:'Corrigida a rotina agendada que rodava em dois servidores e criada trava de envio.',status:'Aprovado',src:'auto',done:13,apr:14,fix:'none'},
+   {id:9,tid:48177,cli:'Transportes Rio Doce',t:'Layout novo do MDF-e',st:'Delphi',p:'iris',h:6,open:10,ty:'Ajuste',chg:'O manifesto sai no layout exigido pela Sefaz a partir de novembro.',desc:'Atualizado o layout do MDF-e para a nova versão do schema e validado em homologação.',status:'Aprovado',src:'auto',done:13,apr:13,fix:'none'},
+   {id:8,tid:48176,cli:'Ferro & Aço Industrial',t:'Pedido de compra sem centro de custo',st:'Java',p:'elisa',h:9,open:14,ty:'Incidente',chg:'Nenhum pedido de compra passa sem centro de custo para o ERP.',desc:'Incluída validação obrigatória do centro de custo e corrigidos 37 pedidos antigos.',status:'Aprovado',src:'auto',done:13,apr:13,fix:'manual'},
+   {id:7,tid:48174,cli:'Banco Arrecife Digital',t:'Conciliação de PIX em lote',st:'Java',p:'ana',h:12,open:20,ty:'Melhoria',chg:'A conciliação de PIX do dia fecha em minutos, não mais em horas.',desc:'Processamento em lote dos extratos de PIX com paralelismo por agência.',status:'Aprovado',src:'auto',done:12,apr:13,fix:'none'},
+   {id:6,tid:48172,cli:'Conecta Telecom',t:'Webhook de cobrança com timeout',st:'Node.js',p:'fabio',h:11,open:16,ty:'Incidente',chg:'As baixas de pagamento chegam ao sistema em tempo real.',desc:'Ajustado o tempo limite do webhook, incluída fila de reenvio e monitor de falhas.',status:'Aprovado',src:'auto',done:12,apr:13,fix:'ia'},
+   {id:5,tid:48170,cli:'Rede Saúde Mais',t:'Nova faixa etária na tabela de preços',st:'.NET',p:'bruno',h:8,open:12,ty:'Ajuste',chg:'A tabela de preços já sai com a faixa etária exigida pela ANS, sem planilha paralela.',desc:'Incluída a faixa 59+ na tabela de preços e ajustado o cálculo da mensalidade.',status:'Aprovado',src:'auto',done:12,apr:12,fix:'none'},
+   {id:1,tid:48211,cli:'Mercado Bom Preço',t:'Cupom de desconto aplicado duas vezes',st:'React',p:'gabi',h:3,open:5,ty:'Incidente',chg:'O desconto passou a ser aplicado uma única vez por pedido.',desc:'Ajustada a regra no carrinho e criado teste para o caso.',status:'Aprovado',src:'auto',done:12,apr:12,fix:'none'}
   ],
   tasks:[
    {id:48190,cli:'Rede Saúde Mais',t:'Ajuste no cálculo de coparticipação',st:'.NET',p:'bruno',h:8,open:14,s:'Em andamento'},
@@ -1623,59 +1695,183 @@ const AI={
  48216:{ty:'Incidente',ch:'O portal do corretor voltou ao ar e ganhou alerta de queda.'},
  48219:{ty:'Incidente',ch:'Consultas deixaram de ser duplicadas no agendamento.'}
 };
-let RID=4;
+S.reports.forEach(r=>{r.proj=projOf(r.cli);});
+let RID=17;
+const TODAY=15, SPRINT_N=42;                     // hoje é 15/10, meio da Sprint 42
+const SPRINT_HIST=[[37,14,.48],[38,16,.52],[39,15,.55],[40,18,.58],[41,16,.62]]; // [sprint, relatórios gerados, aprovados sem alteração]
 function makeReport(t,src,status){
   const ex=S.reports.find(r=>r.tid===t.id); if(ex) return ex;
   const ai=AI[t.id]||{ty:'Incidente',ch:'O problema relatado deixou de acontecer.'};
-  const r={id:++RID,tid:t.id,cli:t.cli,proj:projOf(t.cli),t:t.t,st:t.st,p:t.p,h:t.h,open:t.open,ty:ai.ty,chg:ai.ch,desc:`Analisado o chamado no Azure DevOps, corrigido em ${t.st} e validado em homologação.`,status,src};
+  const r={id:++RID,tid:t.id,cli:t.cli,proj:projOf(t.cli),t:t.t,st:t.st,p:t.p,h:t.h,open:t.open,ty:ai.ty,chg:ai.ch,desc:`Analisado o chamado no Azure DevOps, corrigido em ${t.st} e validado em homologação.`,status,src,done:TODAY,apr:null,fix:'none'};
   S.reports.unshift(r); return r;
 }
 function checks(r){
   const chg=(r.chg||'').trim(), generic=chg.length<25||/problema relatado/i.test(chg);
   return [
-   {ok:!!r.ty,block:true,t:r.ty?'Tipo de trabalho preenchido':'Falta o tipo de trabalho'},
-   {ok:!!chg&&!generic,block:!chg,t:!chg?'Falta dizer o que muda para o cliente':generic?'"O que muda para o cliente" está genérico: diga o resultado concreto':'Resultado para o cliente descrito'},
-   {ok:r.h<=r.open,t:r.h<=r.open?`Horas (${r.h} h) dentro do tempo em que o chamado ficou aberto`:`Horas apontadas (${r.h} h) passam do tempo útil aberto (${r.open} h)`},
-   {ok:!!(r.desc||'').trim(),t:(r.desc||'').trim()?'Descrição do que foi feito presente':'Sem descrição do que foi feito'}
+   {k:'tipo',ok:!!r.ty,block:true,t:r.ty?'Tipo de trabalho preenchido':'Falta o tipo de trabalho'},
+   {k:'chg',ok:!!chg&&!generic,block:!chg,t:!chg?'Falta dizer o que muda para o cliente':generic?'"O que muda para o cliente" está genérico: diga o resultado concreto':'Resultado para o cliente descrito'},
+   {k:'horas',ok:r.h<=r.open,t:r.h<=r.open?`Horas (${r.h} h) dentro do tempo em que o chamado ficou aberto`:`Horas apontadas (${r.h} h) passam do tempo útil aberto (${r.open} h)`},
+   {k:'desc',ok:!!(r.desc||'').trim(),t:(r.desc||'').trim()?'Descrição do que foi feito presente':'Sem descrição do que foi feito'}
   ];
 }
+const ISSUE={tipo:'Tipo de trabalho não preenchido',chg:'Resultado para o cliente ausente ou genérico',horas:'Horas acima do tempo do chamado aberto',desc:'Sem descrição do que foi feito'};
 const RST={'Rascunho':['b-mute','Rascunho'],'Pendente':['b-warn','Aguardando aprovação'],'Aprovado':['b-ok','Aprovado']};
-function pgReports(){
-  const m=S.month, pend=S.reports.filter(r=>r.status!=='Aprovado'), apr=S.reports.filter(r=>r.status==='Aprovado');
-  const act=monthCalc(m).rows, sent=act.filter(r=>S.monthly[r.c.id]==='Enviado').length;
-  const saved=1.5*30*0.7; // 1,5 h por cliente × 30 clientes × 70% automatizado
-  const tabTask=`<div class="tbl-wrap"><table>
-    <thead><tr><th>Task</th><th>Cliente · projeto</th><th>Analista</th><th class="r">Horas</th><th>Avisos</th><th>Status</th><th></th></tr></thead>
-    <tbody>${S.reports.map(r=>{const w=checks(r).filter(x=>!x.ok).length;return `<tr class="click" data-act="ropen" data-id="${r.id}">
+const FIX={none:'sem alteração',ia:'corrigido com IA',manual:'editado à mão'};
+const pad2=n=>String(n).padStart(2,'0');
+const dt=(d,mo)=>pad2(d)+'/'+pad2(mo||10);
+const TYCOL=Object.fromEntries(TYPES.map(t=>[t[0],t[2]]));
+const tyTag=t=>t?`<span class="tyt"><i style="background:var(${TYCOL[t]})"></i>${t}</span>`:'<span class="muted">—</span>';
+const stBadge=r=>`<span class="badge ${RST[r.status][0]}"><span class="dot"></span>${RST[r.status][1]}</span>`;
+// indicadores acordados por cliente (no real: SLA e reabertura vêm do GLPI; satisfação, da pesquisa pós-chamado)
+const cliSla=(c,m)=>Math.round(Math.min(.995,0.90+((c.i*13)%9)/100+(((m*7+c.i)%3)-1)/100)*1000)/1000;
+const cliRework=c=>0.02+((c.i*7)%6)/100;
+
+/* relatórios de task aprovados que compõem o relatório mensal de cada cliente (fictícios, determinísticos) */
+const TPL={
+ Incidente:['Erro ao gerar relatório gerencial','Lentidão no horário de pico','Integração parou de responder','Falha no envio de e-mail automático','Erro de permissão ao abrir tela','Importação de arquivo falhando'],
+ Ajuste:['Novo campo no cadastro','Ajuste em regra de cálculo','Alteração no layout de documento','Novo filtro na consulta','Permissão nova por perfil de usuário'],
+ Melhoria:['Otimização de consulta lenta','Automação de rotina manual','Novo indicador no painel','Exportação em lote'],
+ 'Dúvida':['Orientação sobre parametrização','Dúvida sobre regra de negócio','Apoio no fechamento do mês']};
+const TCHG={Incidente:'O fluxo voltou a funcionar sem intervenção manual.',Ajuste:'A regra pedida pela área do cliente já está em produção.',Melhoria:'A rotina ficou mais rápida para os usuários do cliente.','Dúvida':'A orientação ficou registrada no GlobalDoc para consulta.'};
+const TDESC={Incidente:'Identificada a causa no log da aplicação, corrigida e validada com o usuário.',Ajuste:'Implementada a alteração pedida, testada em homologação e publicada.',Melhoria:'Revisado o processo, aplicada a otimização e medido o ganho antes e depois.','Dúvida':'Explicado o funcionamento ao usuário e registrada a resposta no GlobalDoc.'};
+const MT={};
+function monthTasks(c,m){
+  const key=c.id+'-'+m; if(MT[key]) return MT[key];
+  const H=c.h[m]; if(!H) return MT[key]=[];
+  const n=Math.max(1,Math.round(H/4.5)), tys=[];
+  TYPES.forEach(t=>{for(let k=0;k<Math.round(n*t[1]);k++)tys.push(t[0]);});
+  while(tys.length<n) tys.push('Incidente'); tys.length=n;
+  const w=tys.map((_,k)=>1+((c.i*7+k*13+m*3)%5)/4), ws=w.reduce((a,b)=>a+b,0);
+  const ppl=Object.entries(c.att).sort((a,b)=>b[1]-a[1]);
+  const who=f=>{let acc=0;for(const [pid,sh] of ppl){acc+=sh;if(f<acc)return pid;}return ppl[0][0];};
+  return MT[key]=tys.map((ty,k)=>{
+    const h=Math.max(1,Math.round(H*w[k]/ws)), d=1+Math.floor((k+.5)/n*28), fx=(c.i+k)%6===2?'ia':(c.i+k)%11===5?'manual':'none';
+    return {id:`v:${c.id}:${m}:${k}`,tid:41000+m*1300+c.i*40+k,cli:c.n,proj:projOf(c.n),t:TPL[ty][(c.i+k*3+m)%TPL[ty].length],st:c.st,p:who(((k*7+c.i)%n+.5)/n),
+      h,open:h+2+(k%4)*2,ty,chg:k===0?GAINS[c.st].charAt(0).toUpperCase()+GAINS[c.st].slice(1)+'.':TCHG[ty],desc:TDESC[ty],status:'Aprovado',src:'auto',done:d,apr:Math.min(30,d+(k%3===0?1:0)),mo:m+4,fix:fx};
+  });
+}
+const getR=id=>typeof id==='string'?(()=>{const [,cid,m,k]=id.split(':');return monthTasks(CLIENTS.find(c=>c.id===cid),+m)[+k];})():S.reports.find(x=>x.id===id);
+
+/* filtros da aba "Por task" */
+const RF=[['all','Todos'],['wait','Aguardando aprovação'],['draft','Rascunho'],['ok','Aprovados']];
+const rfMatch=(r,f)=>f==='all'||(f==='wait'&&r.status==='Pendente')||(f==='draft'&&r.status==='Rascunho')||(f==='ok'&&r.status==='Aprovado');
+function taskTable(){
+  const q=(S.rq||'').toLowerCase().trim();
+  const rows=S.reports.filter(r=>rfMatch(r,S.rf)&&(S.ra==='all'||r.p===S.ra)&&(!q||`${r.t} ${r.cli} ${r.tid} ${fullOf(P[r.p])}`.toLowerCase().includes(q)))
+    .sort((a,b)=>(a.status==='Aprovado')-(b.status==='Aprovado')||b.done-a.done||b.tid-a.tid);
+  if(!rows.length) return '<div class="empty">Nenhum relatório com esses filtros.</div>';
+  return `<div class="tbl-wrap"><table>
+    <thead><tr><th>Task</th><th>Cliente · projeto</th><th>Analista</th><th>Tipo</th><th class="r">Horas</th><th>Encerrada</th><th>Conferência</th><th>Status</th><th></th></tr></thead>
+    <tbody>${rows.map(r=>{const w=checks(r).filter(x=>!x.ok).length;return `<tr class="click" data-act="ropen" data-id="${r.id}">
       <td><div class="cell-main">${esc(r.t)}</div><div class="cell-sub mono">#${r.tid}${r.src==='manual'?' · adicionado manualmente':''}</div></td>
-      <td><div>${esc(r.cli)}</div><div class="cell-sub">${esc(r.proj)}</div></td><td>${P[r.p].n}</td><td class="r num">${r.h}</td>
+      <td><div>${esc(r.cli)}</div><div class="cell-sub">${esc(r.proj)}</div></td>
+      <td>${P[r.p].n}</td><td>${tyTag(r.ty)}</td>
+      <td class="r num">${r.h} h</td><td class="num">${dt(r.done)}</td>
       <td>${w?`<span class="badge b-warn">${w} ponto${w>1?'s':''} a conferir</span>`:'<span class="badge b-ok">Completo</span>'}</td>
-      <td><span class="badge ${RST[r.status][0]}"><span class="dot"></span>${RST[r.status][1]}</span></td>
-      <td class="r"><button type="button" class="btn sm" data-act="ropen" data-id="${r.id}">${r.status==='Aprovado'?'Ver':'Revisar'}</button></td></tr>`;}).join('')}</tbody></table></div>`;
-  const tabMon=`<div class="tbl-wrap"><table>
-    <thead><tr><th>Cliente</th><th class="r">Relatórios de task</th><th>Ponto focal</th><th>Status</th><th></th></tr></thead>
-    <tbody>${act.slice().sort((a,b)=>Object.keys(MST).indexOf(S.monthly[a.c.id])-Object.keys(MST).indexOf(S.monthly[b.c.id])).map(r=>`<tr class="click" data-act="msheet" data-id="${r.c.id}">
-      <td><div class="cell-main">${esc(r.c.n)}</div><div class="cell-sub">${esc(r.c.st)} · ${hh(r.h)}</div></td>
-      <td class="r num">${Math.max(1,Math.round(r.h/4.5))} aprovados</td><td>${focal(r.c).tit.n}</td>
-      <td><span class="badge ${MST[S.monthly[r.c.id]]}"><span class="dot"></span>${S.monthly[r.c.id]}</span></td>
-      <td class="r"><button type="button" class="btn sm" data-act="msheet" data-id="${r.c.id}">Abrir</button></td></tr>`).join('')}</tbody></table></div>`;
+      <td>${stBadge(r)}${r.status==='Aprovado'?`<div class="cell-sub" style="margin-top:3px">${FIX[r.fix]}</div>`:''}</td>
+      <td class="r">${ic('right','muted')}</td></tr>`;}).join('')}</tbody></table></div>`;
+}
+function tabTask(){
+  const cnt=f=>S.reports.filter(r=>rfMatch(r,f)).length;
+  return `<div class="toolbar">
+      ${RF.map(([k,l])=>`<button type="button" class="chip ${S.rf===k?'on':''}" data-act="rf" data-v="${k}">${l} <span class="num muted">${cnt(k)}</span></button>`).join('')}
+      <div style="flex:1"></div>
+      <select class="select" id="ra" aria-label="Analista"><option value="all">Todos os analistas</option>${PEOPLE.slice().sort(byName).map(p=>`<option value="${p.id}" ${S.ra===p.id?'selected':''}>${esc(fullOf(p))}</option>`).join('')}</select>
+      <div class="search">${ic('search')}<input id="rq" placeholder="Buscar task, cliente ou chamado" value="${esc(S.rq)}" aria-label="Buscar"></div>
+    </div>
+    <div id="rtable">${taskTable()}</div>`;
+}
+function tabMonthly(m){
+  const all=monthCalc(m).rows, keys=Object.keys(MST), cnt=k=>all.filter(r=>S.monthly[r.c.id]===k).length;
+  const rows=all.filter(r=>S.mf==='all'||S.monthly[r.c.id]===S.mf).sort((a,b)=>keys.indexOf(S.monthly[a.c.id])-keys.indexOf(S.monthly[b.c.id])||a.c.n.localeCompare(b.c.n));
+  const seg=keys.map(k=>`<i style="width:${cnt(k)/all.length*100}%;background:var(${{'Rascunho gerado':'--muted-fg','Em revisão':'--warn','Aprovado':'--c3','Enviado':'--ok'}[k]})" title="${k}: ${cnt(k)}"></i>`).join('');
+  return `<div class="toolbar">
+      <button type="button" class="chip ${S.mf==='all'?'on':''}" data-act="mf" data-v="all">Todos <span class="num muted">${all.length}</span></button>
+      ${keys.map(k=>`<button type="button" class="chip ${S.mf===k?'on':''}" data-act="mf" data-v="${k}">${k} <span class="num muted">${cnt(k)}</span></button>`).join('')}
+      <div style="flex:1"></div>
+      <div class="send-prog"><span class="cell-sub">${cnt('Enviado')} de ${all.length} enviados</span><div class="stack" style="height:8px;width:160px">${seg}</div></div>
+    </div>
+    ${rows.length?`<div class="tbl-wrap"><table>
+    <thead><tr><th>Cliente</th><th class="r">Tasks aprovadas</th><th style="min-width:150px">Horas / pool</th><th class="r">SLA</th><th class="r">Satisfação</th><th>Ponto focal</th><th>Status</th><th></th></tr></thead>
+    <tbody>${rows.map(r=>{const c=r.c,sla=cliSla(c,m),ms=S.monthly[c.id];return `<tr class="click" data-act="msheet" data-id="${c.id}">
+      <td><div class="cell-main">${esc(c.n)}</div><div class="cell-sub">${esc(c.st)} · criticidade ${c.crit.toLowerCase()}</div></td>
+      <td class="r num">${monthTasks(c,m).length}</td>
+      <td>${useBar(r.use)}<div class="cell-sub num">${nf0.format(r.h)} de ${c.pool} h</div></td>
+      <td class="r num" style="${sla<.95?'color:var(--warn)':''}">${pct(sla)}</td>
+      <td class="r num" style="${c.sat<4?'color:var(--warn)':''}">${nf1.format(c.sat)}</td>
+      <td>${esc(fullOf(focal(c).tit))}</td>
+      <td><span class="badge ${MST[ms]}"><span class="dot"></span>${ms}</span>${S.sentAt[c.id]?'<div class="cell-sub" style="margin-top:3px">enviado hoje</div>':''}</td>
+      <td class="r">${ic('right','muted')}</td></tr>`;}).join('')}</tbody></table></div>`:'<div class="empty">Nenhum cliente nesse status.</div>'}`;
+}
+function tabQuality(){
+  const rs=S.reports, apr=rs.filter(r=>r.status==='Aprovado'), n=apr.length||1;
+  const f=k=>apr.filter(r=>r.fix===k).length, avg=apr.reduce((s,r)=>s+(r.apr-r.done),0)/n;
+  const iss={};rs.forEach(r=>checks(r).filter(x=>!x.ok).forEach(x=>{iss[x.k]=(iss[x.k]||0)+1;}));
+  const issRows=Object.keys(ISSUE).map(k=>[ISSUE[k],iss[k]||0]).sort((a,b)=>b[1]-a[1]), imax=Math.max(1,...issRows.map(x=>x[1]));
+  const byTy=TYPES.map(t=>[t[0],rs.filter(r=>r.ty===t[0]).length,rs.filter(r=>r.ty===t[0]).reduce((s,r)=>s+r.h,0),t[2]]);
+  const hist=[...SPRINT_HIST,[SPRINT_N,rs.length,f('none')/n]];
+  const W=420,Hh=170,L=8,B=34,T=24,bw=36,gap=(W-2*L-hist.length*bw)/(hist.length-1),mx=Math.max(...hist.map(x=>x[1]));
+  const chart=`<svg class="chart" viewBox="0 0 ${W} ${Hh}" width="100%" role="img" aria-label="Relatórios por sprint">${hist.map(([s,g,p],k)=>{const x=L+k*(bw+gap),h=(Hh-B-T)*g/mx,y=Hh-B-h,cur=k===hist.length-1;
+    return `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="5" fill="var(--primary)" opacity="${cur?1:.35}"/><text x="${x+bw/2}" y="${y-7}" text-anchor="middle" style="fill:var(--fg)">${pct(p)}</text><text x="${x+bw/2}" y="${Hh-18}" text-anchor="middle">S${s}</text><text x="${x+bw/2}" y="${Hh-4}" text-anchor="middle">${g} rel.</text>`;}).join('')}</svg>`;
+  return `<div class="card-b" style="display:flex;flex-direction:column;gap:18px">
+    <div class="qgrid q4">
+      <div><span>Aprovados sem alteração</span><b>${pct(f('none')/n)}</b><small class="muted">${f('none')} de ${apr.length} na Sprint ${SPRINT_N}</small></div>
+      <div><span>Corrigidos com IA</span><b>${pct(f('ia')/n)}</b><small class="muted">pelo campo "Faltou algo?"</small></div>
+      <div><span>Editados à mão</span><b>${pct(f('manual')/n)}</b><small class="muted">quando a IA errou o contexto</small></div>
+      <div><span>Tempo até aprovação</span><b>${nf1.format(avg)} dia</b><small class="muted">média, do encerramento à aprovação</small></div>
+    </div>
+    <div class="grid g-2e">
+      <div><div class="sub-h" style="margin-bottom:8px">Aprovados sem alteração por sprint</div>${chart}
+        <p class="note" style="margin:6px 0 0">${ic('info')}<span>Cada correção feita pelo analista ensina o padrão do relatório. A barra mostra quantos relatórios a IA gerou; o número em cima, quantos passaram sem alteração.</span></p></div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div><div class="sub-h" style="margin-bottom:4px">Pontos apontados na conferência · Sprint ${SPRINT_N}</div>
+          ${issRows.map(([l,v])=>`<div class="hb"><span>${l}</span><div class="bar ${v?'warn':''}"><i style="width:${v/imax*100}%"></i></div><b class="num">${v}</b></div>`).join('')}</div>
+        <div><div class="sub-h" style="margin-bottom:4px">Por tipo de trabalho · Sprint ${SPRINT_N}</div>
+          ${byTy.map(([t,c,h])=>`<div class="kv"><span>${tyTag(t)}</span><span class="num">${c} relatórios · ${h} h</span></div>`).join('')}</div>
+      </div>
+    </div>
+    <p class="note" style="margin:0">${ic('info')}<span>Indicadores do processo, sempre da equipe inteira. Não há comparação entre pessoas.</span></p>
+  </div>`;
+}
+function pipeline(m){
+  const rs=S.reports, apr=rs.filter(r=>r.status==='Aprovado').length, wait=rs.length-apr, man=rs.filter(r=>r.src==='manual').length;
+  const act=monthCalc(m).rows, ms=act.map(r=>S.monthly[r.c.id]), okM=ms.filter(s=>s==='Aprovado'||s==='Enviado').length, sent=ms.filter(s=>s==='Enviado').length;
+  const on=(t,v)=>v!=='all'&&S.rtab===t&&(t==='task'?S.rf===v:S.mf===v);
+  const st=[
+   ['task','all','Tasks encerradas',S.doneN,'no GLPI'],
+   ['task','all','Relatório gerado',rs.length,man?`${rs.length-man} pela IA · ${man} manual`:'pela IA'],
+   ['task','ok','Aprovado pelo analista',apr,`${wait} aguardando`],
+   ['mes','all','Mensal montado pela IA',act.length,'um por cliente'],
+   ['mes','Aprovado','Ponto focal aprovou',okM,`${act.length-okM} em revisão`],
+   ['mes','Enviado','Enviado ao cliente',sent,pct(sent/act.length)+' da carteira']];
+  return `<div class="card pipe-card">
+    <div class="pipe-h"><span>Por task · Sprint ${SPRINT_N}</span><span>Mensal por cliente · ${MONTHS[m]}</span></div>
+    <div class="pipe">${st.map(([t,v,l,n,s])=>`<button type="button" class="ps${on(t,v)?' on':''}" data-act="rstage" data-t="${t}" data-v="${v}"><span>${l}</span><b>${n}</b><small>${s}</small></button>`).join('')}</div>
+  </div>`;
+}
+function pgReports(){
+  const m=S.month, rs=S.reports, wait=rs.filter(r=>r.status!=='Aprovado'), apr=rs.filter(r=>r.status==='Aprovado');
+  const act=monthCalc(m).rows, sent=act.filter(r=>S.monthly[r.c.id]==='Enviado').length, okOnly=act.filter(r=>S.monthly[r.c.id]==='Aprovado').length;
+  const warnN=wait.filter(r=>checks(r).some(x=>!x.ok)).length, oldest=Math.min(...wait.map(r=>r.done));
+  const saved=1.5*30*0.7; // 1,5 h por cliente × 30 clientes × 70% automatizado
+  const tabs=[['task','Por task',rs.length],['mes','Mensal por cliente · '+MONTHS[m],act.length],['qual','Qualidade do processo',null]];
   return `
   <div class="page-head"><div><h1>Relatórios</h1><p>Cada task encerrada gera um relatório que o próprio analista aprova. No fim do mês, a IA junta os aprovados no relatório de cada cliente, e o ponto focal aprova antes de enviar.</p></div>
   <div class="head-actions"><button type="button" class="btn pri" data-act="add-open">${ic('file')} Adicionar relatório</button></div></div>
 
-  <div class="card"><div class="card-b flow"><span class="st h">Task encerrada</span>${ic('right','muted')}<span class="st">IA gera o relatório da task</span>${ic('right','muted')}<span class="st h">Analista confere e aprova</span>${ic('right','muted')}<span class="st">IA junta no relatório mensal</span>${ic('right','muted')}<span class="st h">Ponto focal aprova e envia</span></div></div>
+  ${pipeline(m)}
 
   <div class="grid g-kpi">
-    ${kpi('Relatórios de task pendentes',String(pend.length),'<span>aguardando o próprio analista</span>','alert')}
-    ${kpi('Aprovados nesta sprint',String(apr.length),'<span>já entram no relatório de outubro</span>','check')}
-    ${kpi('Relatórios mensais enviados',`${sent}<span class="muted" style="font-size:15px"> / ${act.length}</span>`,`<span>${MONTHS[m]}</span>`,'send')}
-    ${kpi('Relatório manual evitado',hh(saved)+'<span class="muted" style="font-size:15px">/mês</span>','<span>premissa conservadora</span>','trend')}
+    ${kpi('Pendentes de aprovação',String(wait.length),`<span>${wait.length?`${warnN} com ponto a conferir · mais antigo de ${dt(oldest)}`:'nada pendente'}</span>`,'clock')}
+    ${kpi('Aprovados na Sprint '+SPRINT_N,`${apr.length}<span class="muted" style="font-size:15px"> / ${rs.length}</span>`,`<span>${pct(apr.filter(r=>r.fix==='none').length/(apr.length||1))} sem alteração · entram no mensal de outubro</span>`,'check')}
+    ${kpi('Relatórios mensais enviados',`${sent}<span class="muted" style="font-size:15px"> / ${act.length}</span>`,`<span>${MONTHS[m]} · ${okOnly} aprovado${okOnly===1?'':'s'} aguardando envio</span>`,'send')}
+    ${kpi('Relatório manual evitado',hh(saved)+'<span class="muted" style="font-size:15px">/mês</span>',`<span>≈ ${brlk(saved*OP_COST/1400)} por mês em custo · premissa conservadora</span>`,'trend')}
   </div>
 
   <div class="card">
-    <div class="toolbar"><div class="tabs" role="tablist"><button type="button" role="tab" class="${S.rtab==='task'?'on':''}" data-act="rtab" data-t="task">Por task <span class="num muted">${S.reports.length}</span></button><button type="button" role="tab" class="${S.rtab==='mes'?'on':''}" data-act="rtab" data-t="mes">Mensal por cliente · ${MONTHS[m]}</button></div>
-    <span class="muted" style="font-size:13px">${S.rtab==='task'?'Sprint 42 · aprovação feita por quem executou a task':'Aprovação do ponto focal de cada cliente'}</span></div>
-    ${S.rtab==='task'?tabTask:tabMon}
+    <div class="toolbar" style="justify-content:space-between"><div class="tabs" role="tablist">${tabs.map(([k,l,n])=>`<button type="button" role="tab" class="${S.rtab===k?'on':''}" data-act="rtab" data-t="${k}">${l}${n!==null?` <span class="num muted">${n}</span>`:''}</button>`).join('')}</div>
+    <span class="muted" style="font-size:13px">${{task:`Sprint ${SPRINT_N} · aprovação feita por quem executou a task`,mes:'Aprovação do ponto focal de cada cliente',qual:`Como o fluxo está funcionando · Sprint ${SPRINT_N}`}[S.rtab]}</span></div>
+    ${S.rtab==='task'?tabTask():S.rtab==='mes'?tabMonthly(m):tabQuality()}
   </div>`;
 }
 function isGeneric(t){t=(t||'').trim();return !t||t.length<25||/problema relatado/i.test(t);}
@@ -1688,11 +1884,12 @@ function aiMerge(r,note){
   r.desc=((r.desc||'').trim()?(r.desc.trim()+' '):'')+t; r.aiAdded=t; return 'added';
 }
 function modalReport(rid){
-  const r=S.reports.find(x=>x.id===rid), ro=r.status==='Aprovado', ed=S.editing===rid&&!ro;
+  const r=getR(rid), virt=typeof rid==='string', ro=r.status==='Aprovado', ed=S.editing===rid&&!ro, ck=checks(r), c=CLIENTS.find(x=>x.n===r.cli);
+  const mon=virt?MONTHS[r.mo-4].toLowerCase():'outubro';
   const descHTML=esc(r.desc||'').replace(r.aiAdded?esc(r.aiAdded):'\u0000',m=>`<mark class="ai">${m}</mark>`)||'<span class="muted">Não informado.</span>';
   const doc=`<div class="report doc">
-      <div class="doc-h"><b>Relatório da task #${r.tid} · ${esc(r.t)}</b>${!ro&&!ed?`<button type="button" class="linkbtn" data-act="redit">Editar manualmente</button>`:''}</div>
-      <div class="doc-meta"><span>Cliente: ${esc(r.cli)}</span><span>Projeto: ${esc(r.proj)}</span><span>Analista: ${P[r.p].n}</span><span class="num">${r.h} h</span><span>${esc(r.ty||'—')} · ${esc(r.st)}</span></div>
+      <div class="doc-h"><div><div class="doc-l">Relatório da task</div><b style="font-size:15px">${esc(r.t)}</b></div>${!ro&&!ed?`<button type="button" class="linkbtn" data-act="redit">Editar manualmente</button>`:''}</div>
+      <div class="doc-meta"><span>${esc(r.cli)}</span><span>${esc(r.proj)}</span><span>${esc(fullOf(P[r.p]))}</span><span>${tyTag(r.ty)}</span></div>
       <div><div class="doc-l">O que foi feito</div><p>${descHTML}</p></div>
       <div><div class="doc-l">O que muda para o cliente</div><p>${r.chg?esc(r.chg):'<span class="muted">Não informado.</span>'}</p></div>
     </div>`;
@@ -1700,16 +1897,39 @@ function modalReport(rid){
       <div class="field"><label for="f-stack">Stack usada</label><select id="f-stack">${STACKS.map(x=>`<option ${x===r.st?'selected':''}>${x}</option>`).join('')}</select></div>
       <div class="field"><label for="f-desc">O que foi feito</label><textarea id="f-desc">${esc(r.desc||'')}</textarea></div>
       <div class="field"><label for="f-chg">O que muda para o cliente</label><textarea id="f-chg">${esc(r.chg||'')}</textarea></div>`;
+  const tl=[
+   ['Task encerrada no GLPI',dt(r.done,r.mo),true],
+   [r.src==='manual'?'Relatório adicionado manualmente':'IA gerou o relatório',dt(r.done,r.mo),true],
+   ['Analista aprovou',r.apr?`${dt(r.apr,r.mo)} · ${FIX[r.fix]}`:'aguardando',!!r.apr],
+   ['Entra no relatório mensal',`${mon} · ${esc(r.cli)}`,ro]];
+  const side=`<div class="side">
+      <div><div class="sub-h">Dados do GLPI</div>
+        <div class="kv"><span>Chamado</span><span class="mono">#${r.tid}</span></div>
+        <div class="kv"><span>Horas apontadas</span><span class="num" style="${r.h>r.open?'color:var(--warn)':''}">${r.h} h</span></div>
+        <div class="kv"><span>Tempo útil aberto</span><span class="num">${r.open} h</span></div>
+        <div class="kv"><span>Stack</span><span>${esc(r.st)}</span></div></div>
+      <div><div class="sub-h">Conferência automática</div>${ck.map(x=>`<div class="ck ${x.ok?'ok':'warn'}">${ic(x.ok?'check':'alert')}<span>${esc(x.t)}</span></div>`).join('')}</div>
+      <div><div class="sub-h">Linha do tempo</div><ol class="tline">${tl.map(([l,d,on])=>`<li class="${on?'on':''}"><b>${l}</b><span>${d}</span></li>`).join('')}</ol></div>
+      <div class="side-links">
+        <button type="button" class="linkbtn" data-act="person" data-id="${r.p}">Ficha de ${esc(P[r.p].n)}</button>
+        ${!virt&&c?`<button type="button" class="linkbtn" data-act="client" data-id="${c.id}">Ficha do cliente</button>`:''}
+      </div>
+    </div>`;
   return `<div class="scrim" data-act="close-layer"></div>
-  <div class="modal" role="dialog" aria-label="Relatório da task">
-    <div class="sheet-h"><div><h2>Relatório da task</h2><div style="margin-top:8px"><span class="badge ${RST[r.status][0]}"><span class="dot"></span>${RST[r.status][1]}</span>${r.aiAdded&&!ro?' <span class="badge b-info">Atualizado pela IA</span>':''}</div></div><button type="button" class="icon-btn" data-act="close-layer" aria-label="Fechar">${ic('x')}</button></div>
+  <div class="modal lg" role="dialog" aria-label="Relatório da task">
+    <div class="sheet-h"><div><div class="muted mono" style="font-size:12px">#${r.tid} · ${esc(r.cli)}</div><h2 style="margin-top:2px">${esc(r.t)}</h2><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">${stBadge(r)}${r.aiAdded&&!ro?'<span class="badge b-info">Atualizado pela IA</span>':''}${virt?`<span class="badge b-out">Compõe o relatório de ${mon}</span>`:''}</div></div><button type="button" class="icon-btn" data-act="close-layer" aria-label="Fechar">${ic('x')}</button></div>
     <div class="sheet-b">
       ${r.h>r.open?`<div class="warnbox">${ic('alert')}<div>No GLPI: ${r.h} h apontadas, mas o chamado ficou aberto ${r.open} h úteis. Confira as horas.</div></div>`:''}
-      ${ed?edit:doc}
-      ${ro?'':`<div class="field"><label for="f-note">Faltou algo?</label><textarea id="f-note" placeholder="Escreva só o que faltou. Ex.: também ajustei o filtro por categoria."></textarea>
-        <p class="note" style="margin:0">${ic('spark')}<span>A IA compara com o relatório e incorpora só o que ainda não estiver nele.</span></p></div>`}
+      <div class="rgrid">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          ${ed?edit:doc}
+          ${ro?'':`<div class="field"><label for="f-note">Faltou algo?</label><textarea id="f-note" placeholder="Escreva só o que faltou. Ex.: também ajustei o filtro por categoria."></textarea>
+            <p class="note" style="margin:0">${ic('spark')}<span>A IA compara com o relatório e incorpora só o que ainda não estiver nele.</span></p></div>`}
+        </div>
+        ${side}
+      </div>
     </div>
-    <div class="sheet-f">${ro?`<button type="button" class="btn" data-act="close-layer">Fechar</button>`:`<button type="button" class="btn" data-act="rsave">Aprovar depois</button><button type="button" class="btn" data-act="rfix">${ic('spark')} Corrigir com IA</button><button type="button" class="btn pri" data-act="rapprove">${ic('check')} Aprovar relatório</button>`}</div>
+    <div class="sheet-f">${ro?`<button type="button" class="btn" data-act="close-layer">${virt?'Voltar ao relatório mensal':'Fechar'}</button>`:`<button type="button" class="btn" data-act="rsave">Aprovar depois</button><button type="button" class="btn" data-act="rfix">${ic('spark')} Corrigir com IA</button><button type="button" class="btn pri" data-act="rapprove">${ic('check')} Aprovar relatório</button>`}</div>
   </div>`;
 }
 function modalAdd(){
@@ -1726,15 +1946,37 @@ function modalAdd(){
   </div>`;
 }
 function sheetMonthly(id){
-  const m=S.month, r=monthCalc(m).rows.find(x=>x.c.id===id), c=r.c, ms=S.monthly[id], n=Math.max(1,Math.round(r.h/4.5));
-  const src=[[c.st,GAINS[c.st]],[c.st,'ajuste em regra de negócio pedido pelo cliente'],[c.st,'correção de erro reportado por usuário']];
+  const m=S.month, r=monthCalc(m).rows.find(x=>x.c.id===id), c=r.c, ms=S.monthly[id], ts=monthTasks(c,m), sla=cliSla(c,m), rw=cliRework(c), u=r.use;
+  const keys=Object.keys(MST), ix=keys.indexOf(ms), o=c.i%3;
+  const dates=['01/10',`0${2+o}/10`,`0${4+o}/10`,S.sentAt[id]?'hoje':`0${5+o}/10`];
+  const byTy=TYPES.map(t=>[t[0],ts.filter(x=>x.ty===t[0]).length,t[2]]).filter(x=>x[1]);
+  const gains=[...new Set(ts.map(x=>x.chg))].slice(0,3);
+  const nx=u>1?`Propor revisão do pool de ${c.pool} h: o consumo ficou em ${pct(u)} no mês.`:c.sat<4?'Combinar um plano para levar a satisfação acima de 4.':sla<.95?'Revisar a fila de chamados críticos para voltar a cumprir o SLA de 95%.':'Manter escopo e prioridades. Nenhum ajuste de contrato necessário.';
+  const met=(l,meta,real,ok)=>`<tr><td>${l}</td><td class="muted">${meta}</td><td class="r num">${real}</td><td class="r"><span class="badge ${ok?'b-ok':'b-warn'}">${ok?'Dentro':'Fora'}</span></td></tr>`;
   return `<div class="scrim" data-act="close-layer"></div>
-  <aside class="sheet" role="dialog" aria-label="Relatório mensal">
-    <div class="sheet-h"><div><h2>Relatório mensal</h2><div class="muted" style="font-size:13px;margin-top:4px">${esc(c.n)} · ${MONTHS[m]} · ponto focal ${focal(c).tit.n}</div><div style="margin-top:8px"><span class="badge ${MST[ms]}"><span class="dot"></span>${ms}</span></div></div><button type="button" class="icon-btn" data-act="close-layer" aria-label="Fechar">${ic('x')}</button></div>
+  <aside class="sheet lg" role="dialog" aria-label="Relatório mensal">
+    <div class="sheet-h"><div style="flex:1;min-width:0"><div class="muted" style="font-size:13px">Relatório mensal · ${MONTHS[m]} de 2026</div><h2 style="margin-top:2px">${esc(c.n)}</h2>
+      <div class="muted" style="font-size:13px;margin-top:4px">${esc(c.st)} · ponto focal ${esc(fullOf(focal(c).tit))} · ${ts.length} relatórios de task</div>
+      <div class="stepper">${keys.map((k,j)=>`<div class="${j<=ix?'on':''}${j===ix?' cur':''}"><i></i><b>${k}</b><span>${j<=ix?dates[j]:'—'}</span></div>`).join('')}</div></div>
+      <button type="button" class="icon-btn" data-act="close-layer" aria-label="Fechar">${ic('x')}</button></div>
     <div class="sheet-b">
-      ${reportDraft(c,m,r)}
-      <div class="box"><h4>De onde veio</h4><div class="cell-sub" style="margin-bottom:6px">${n} relatórios de task aprovados em ${MONTHS[m].toLowerCase()}. Exemplos:</div>
-        ${src.map((x,k)=>`<div class="kv"><span>#4${8100+c.i*7+k} · ${esc(x[1])}</span><span class="badge b-ok">Aprovado</span></div>`).join('')}</div>
+      <div class="ro" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div>Horas usadas<b class="num">${nf0.format(r.h)} de ${c.pool} h</b></div><div>Chamados<b class="num">${ts.length}</b></div><div>SLA<b class="num" style="${sla<.95?'color:var(--warn)':''}">${pct(sla)}</b></div><div>Satisfação<b class="num" style="${c.sat<4?'color:var(--warn)':''}">${nf1.format(c.sat)} / 5</b></div></div>
+      <div class="report doc mdoc">
+        <div class="doc-h"><div><div class="doc-l">Prévia do que o cliente recebe</div><b style="font-size:16px">${esc(c.n)} · ${MONTHS[m]} de 2026</b></div><span class="badge ${MST[ms]}"><span class="dot"></span>${ms}</span></div>
+        <div><div class="doc-l">Resumo do mês</div><p>Atendemos ${ts.length} chamados em ${nf0.format(r.h)} h das ${c.pool} h contratadas (${pct(u)} do pool). ${sla>=.95?'O SLA ficou dentro do acordado':'O SLA ficou abaixo do acordado'} e a satisfação média foi ${nf1.format(c.sat)} de 5.</p></div>
+        <div><div class="doc-l">O que mudou para você</div><ul>${gains.map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>
+        <div><div class="doc-l">Indicadores acordados</div><table class="mini"><tbody>
+          ${met('SLA cumprido','meta ≥ 95%',pct(sla),sla>=.95)}
+          ${met('Satisfação','meta ≥ 4,0',nf1.format(c.sat),c.sat>=4)}
+          ${met('Consumo do pool','meta ≤ 100%',pct(u),u<=1)}
+          ${met('Retrabalho','meta ≤ 5%',pct(rw),rw<=.05)}
+        </tbody></table></div>
+        <div><div class="doc-l">Chamados por tipo</div><div class="stack" style="margin:6px 0 8px">${byTy.map(([t,n,col])=>`<i style="width:${n/ts.length*100}%;background:var(${col})"></i>`).join('')}</div>
+          <div class="legend">${byTy.map(([t,n,col])=>`<span><i style="background:var(${col})"></i>${t} · ${n}</span>`).join('')}</div></div>
+        <div><div class="doc-l">Próximos passos</div><p>${nx}</p></div>
+      </div>
+      <div class="box"><h4>Composição · ${ts.length} relatórios de task aprovados</h4><div class="cell-sub" style="margin-bottom:6px">Clique para abrir o relatório de cada task.</div>
+        <div class="scroll-list">${ts.map(t=>`<div class="rk click" data-act="ropen-v" data-id="${t.id}"><div><div class="cell-main">${esc(t.t)}</div><div class="cell-sub">#${t.tid} · ${t.ty} · ${esc(P[t.p].n)} · ${t.h} h · ${dt(t.done,t.mo)}</div></div>${ic('right','muted')}</div>`).join('')}</div></div>
       <p class="note" style="margin:0">${ic('info')}<span>A IA só junta o que já foi aprovado task a task. Nada é enviado ao cliente sem a aprovação do ponto focal.</span></p>
     </div>
     <div class="sheet-f"><button type="button" class="btn" data-act="close-layer">Fechar</button><button type="button" class="btn pri" data-act="send-rep" data-id="${id}" ${ms==='Enviado'?'disabled':''}>${ms==='Enviado'?ic('check')+' Enviado':ic('send')+' Aprovar e enviar'}</button></div>
@@ -1792,6 +2034,8 @@ monthSel.innerHTML=MONTHS.map((n,k)=>`<option value="${k}" ${k===S.month?'select
 monthSel.addEventListener('change',()=>{S.month=+monthSel.value;S.pageN=0;render();});
 
 function closeLayers(){S.sheet=null;S.msheet=null;S.modal=null;S.add=false;S.editing=null;S.pauta=null;}
+// relatório de task aberto por cima do relatório mensal: fechar volta ao mensal
+function closeTop(){if(S.modal&&S.msheet){S.modal=null;S.editing=null;renderLayer();return;}closeLayers();render();}
 function readFields(r){const g=id=>document.getElementById(id);if(!g('f-type'))return;r.ty=g('f-type').value;r.st=g('f-stack').value;r.desc=g('f-desc').value;r.chg=g('f-chg').value;}
 const curR=()=>S.reports.find(x=>x.id===S.modal);
 document.addEventListener('click',e=>{
@@ -1807,10 +2051,14 @@ document.addEventListener('click',e=>{
   if(a==='view'){S.view=el.dataset.v;render();return;}
   if(a==='theme'){theme=theme==='system'?'dark':theme==='dark'?'light':'system';try{localStorage.setItem('gs-theme',theme);}catch(err){}applyTheme(theme);return;}
   if(a==='client'){closeLayers();S.sheet=id;renderLayer();return;}
-  if(a==='close-layer'){closeLayers();render();return;}
+  if(a==='close-layer'){closeTop();return;}
   if(a==='qsel'){S.quadSel=el.dataset.q||null;render();return;}
   if(a==='ctab'){S.ctab=el.dataset.t;render();return;}
   if(a==='rtab'){S.rtab=el.dataset.t;render();return;}
+  if(a==='rf'){S.rf=el.dataset.v;render();return;}
+  if(a==='mf'){S.mf=el.dataset.v;render();return;}
+  if(a==='rstage'){S.rtab=el.dataset.t;if(S.rtab==='task')S.rf=el.dataset.v;else S.mf=el.dataset.v;render();return;}
+  if(a==='ropen-v'){S.modal=id;S.editing=null;renderLayer();return;}
   if(a==='quad'){S.quad=el.dataset.q;S.pageN=0;render();return;}
   if(a==='pg'){S.pageN+=+el.dataset.d;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));return;}
   if(a==='kadv'){
@@ -1820,7 +2068,7 @@ document.addEventListener('click',e=>{
     const msg={pauta:'Levado à revisão mensal',negociacao:'Em negociação com o comercial',resolvido:'Contrato ajustado'}[nx[0]];
     log(msg,`${c.n} · ${nx[1].toLowerCase()}`,'');render();toast(`${c.n}: ${nx[1].toLowerCase()}.`);return;
   }
-  if(a==='send-rep'){const c=CLIENTS.find(x=>x.id===id);S.monthly[id]='Enviado';log(`Relatório de ${MONTHS[S.month].toLowerCase()} enviado`,`${c.n} · aprovado pelo ponto focal`,'');render();toast('Relatório aprovado e enviado ao cliente.');return;}
+  if(a==='send-rep'){const c=CLIENTS.find(x=>x.id===id);S.monthly[id]='Enviado';S.sentAt[id]=true;log(`Relatório de ${MONTHS[S.month].toLowerCase()} enviado`,`${c.n} · aprovado pelo ponto focal`,'');render();toast('Relatório aprovado e enviado ao cliente.');return;}
   if(a==='msheet'){closeLayers();S.msheet=id;if(S.monthly[id]==='Rascunho gerado')S.monthly[id]='Em revisão';render();return;}
   if(a==='next-urg'){if(S.realloc)return;S.urgIdx++;S.pick=null;render();return;}
   if(a==='reset-urg'){S.urgIdx=0;S.pick=null;S.next=[];S.realloc=null;S.spN=SPRINT0.n;S.doneN=SPRINT0.doneN;S.doneH=SPRINT0.doneH;S.load=Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint]));S.tasks=S.tasks.filter(t=>!t.urg).map(t=>({...t,moved:false}));render();return;}
@@ -1856,6 +2104,7 @@ document.addEventListener('click',e=>{
   if(a==='rapprove'){
     const r=curR();readFields(r);
     if(!r.ty||!(r.chg||'').trim()){S.editing=r.id;renderLayer();toast('Preencha o tipo e o que muda para o cliente antes de aprovar.');return;}
+    r.fix=r.aiAdded?'ia':S.editing===r.id?'manual':r.fix||'none';r.apr=TODAY;
     r.status='Aprovado';r.aiAdded=null;S.editing=null;log('Relatório de task aprovado',`#${r.tid} ${r.cli} · ${P[r.p].n}`,'');S.modal=null;render();toast('Relatório aprovado. Entra no relatório mensal do cliente.');return;
   }
   if(a==='add-open'){closeLayers();S.add=true;S.addSel=null;renderLayer();return;}
@@ -1869,8 +2118,10 @@ function doAssign(pids,over){
   S.urgIdx++;S.pick=null;render();toast(`#${u.id} atribuído a ${names}.`);
 }
 document.addEventListener('input',e=>{
-  if(e.target.id==='q'){S.q=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));}});
+  if(e.target.id==='q'){S.q=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable(monthCalc(S.month).rows.slice().sort((x,y)=>x.margin-y.margin));}
+  if(e.target.id==='rq'){S.rq=e.target.value;document.getElementById('rtable').innerHTML=taskTable();}});
 document.addEventListener('change',e=>{
+  if(e.target.id==='ra'){S.ra=e.target.value;document.getElementById('rtable').innerHTML=taskTable();}
   if(e.target.id==='price-c'){S.price=+e.target.value;render();}
   if(e.target.id==='f-task'){S.addSel=+e.target.value||null;renderLayer();}
 });
@@ -1887,7 +2138,7 @@ document.addEventListener('dragstart',e=>{const k=e.target.closest&&e.target.clo
 document.addEventListener('dragend',e=>{document.querySelectorAll('.kcard.dragging').forEach(n=>n.classList.remove('dragging'));document.querySelectorAll('.kcol.over').forEach(n=>n.classList.remove('over'));dragId=null;});
 document.addEventListener('dragover',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(n=>n!==col&&n.classList.remove('over'));col.classList.add('over');});
 document.addEventListener('drop',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();const id=dragId;dragId=null;setStage(id,col.dataset.stage);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.sheet||S.modal||S.msheet||S.add||S.pauta)){closeLayers();render();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.sheet||S.modal||S.msheet||S.add||S.pauta))closeTop();});
 
 const h0=(location.hash||'').slice(1);if(PAGES[h0]) S.page=h0;
 render();
