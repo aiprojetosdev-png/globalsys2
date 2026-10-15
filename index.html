@@ -175,6 +175,14 @@ td.r,th.r{text-align:right}
 .alert .d{font-size:13px;color:var(--muted-fg)}
 .sev-bad{color:var(--bad)} .sev-warn{color:var(--warn)} .sev-info{color:var(--c3)}
 
+.pmx th.c,.pmx td.c{text-align:center;padding-left:4px;padding-right:4px}
+.pmx tbody tr.on td{background:var(--hover)}
+.pmx tr.tot td{border-bottom:0;background:var(--muted)}
+.hm{display:inline-block;min-width:30px;padding:3px 6px;border-radius:6px;font-family:var(--mono);font-size:12.5px;font-weight:600;background:color-mix(in srgb,var(--c1) var(--a),transparent)}
+.hm.sup{outline:2px solid var(--warn);outline-offset:-2px}
+.p43-open{margin:6px 12px 4px;padding:10px 12px;border:1px solid var(--border);border-radius:8px}
+.p43-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 12px 8px}
+ol.crit{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:13.5px}
 .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted-fg)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
@@ -882,6 +890,7 @@ const CLIENTS=RAW.map((r,i)=>{
 const SPRINT0={n:46,doneN:17,doneH:118};        // itens da sprint 42 e o que já foi concluído até agora
 const S={page:'overview',month:5,view:'gestor',price:85,q:'',quad:'Todos',pageN:0,sheet:null,modal:null,
   load:Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint])),
+  stab:'atual', p43ovr:{}, p43open:null, p43ok:null,
   urgIdx:0, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
   quadSel:null, ctab:'mapa', rtab:'task',
   client:null, cpt:'resumo', cty:'all', cst:'all', csort:{k:'margin',d:1}, rsort:'mr', sim:{adj:0,fat:false}, kstage:{}, monthly:{}, msheet:null, add:false, addSel:null,
@@ -1526,7 +1535,116 @@ function forecast(){
   const over=mc.rows.filter(r=>r.use>1).sort((a,b)=>b.use-a.use).map(r=>r.c.n);
   return {avg,pend,total:avg+pend,saldo,over};
 }
+/* ---------- Planejamento da Sprint 43: distribuição por critérios ---------- */
+const P_H=35, P_TGT=0.9;                         // horas por pessoa na semana e meta de ocupação (abaixo de 100%)
+function plan43(){
+  const fc=forecast(), mc=monthCalc(5), totH=mc.rows.reduce((s,r)=>s+r.h,0);
+  // demanda da sprint por cliente: peso do cliente nas horas do GLPI × média das sprints + itens que ficaram no topo
+  const dem=mc.rows.map(r=>({c:r.c,h:Math.round(r.h/totH*fc.avg)}));
+  const diff=fc.avg-dem.reduce((s,d)=>s+d.h,0); dem.slice().sort((a,b)=>b.h-a.h)[0].h+=diff; // fecha com a previsão
+  S.next.forEach(x=>{const d=dem.find(y=>y.c.n===x.cli);if(d)d.h+=x.h;});
+  const cov=st=>PEOPLE.filter(p=>(p.sk[st]||0)>=3).length;
+  // ordem: stacks mais escassas primeiro, depois clientes maiores
+  dem.sort((a,b)=>cov(a.c.st)-cov(b.c.st)||b.h-a.h);
+  const load=Object.fromEntries(PEOPLE.map(p=>[p.id,0])), al=Object.fromEntries(PEOPLE.map(p=>[p.id,{}])), sup=[], left=[];
+  const nCli=pid=>Object.keys(al[pid]).length;
+  const give=(pid,c,h)=>{load[pid]+=h;al[pid][c.id]=(al[pid][c.id]||0)+h;const l=P[pid].sk[c.st]||0;if(l<3&&(!c.att[pid]||cov(c.st)===0))sup.push({c,pid,h,lvl:l});};
+  const pts=(p,c)=>{const lvl=p.sk[c.st]||0;
+    return lvl/4*50                                   // 1. stack
+      +(c.att[p.id]||0)*30                            // 2. relação com o cliente
+      +(P_H*P_TGT-load[p.id])/(P_H*P_TGT)*15          // 3. folga
+      +(al[p.id][c.id]?10:-3*nCli(p.id));};           // 4. foco
+  dem.forEach(d=>{
+    let h=d.h; if(h<=0) return;
+    const fixed=S.p43ovr[d.c.id];
+    if(fixed){give(fixed,d.c,h);return;}
+    // a stack vem primeiro: quem domina (nível 3+) ou já atende o cliente com nível 2; depois nível 2 com apoio;
+    // primeiro até 90% das horas, só depois até 100%
+    const ok1=(p,c)=>{const l=p.sk[c.st]||0;return l>=3||(l===2&&!!c.att[p.id]);}, ok2=(p,c)=>(p.sk[c.st]||0)===2;
+    for(const [lim,okf] of [[P_H*P_TGT,ok1],[P_H*P_TGT,ok2],[P_H,ok1],[P_H,ok2]]){
+      while(h>0){
+        const cand=PEOPLE.filter(p=>okf(p,d.c)&&Math.floor(lim-load[p.id])>=1).sort((a,b)=>pts(b,d.c)-pts(a,d.c))[0];
+        if(!cand) break;
+        const g=Math.min(h,Math.floor(lim-load[cand.id]));
+        give(cand.id,d.c,g); h-=g;
+      }
+      if(h<=0) break;
+    }
+    if(h>0) left.push({c:d.c,h});
+  });
+  const stacks=[...new Set(dem.map(d=>d.c.st))].sort((a,b)=>STACKS.indexOf(a)-STACKS.indexOf(b));
+  const cell=(pid,st)=>Object.entries(al[pid]).filter(([cid])=>CLIENTS.find(c=>c.id===cid).st===st).reduce((s,[,h])=>s+h,0);
+  const byStack=stacks.map(st=>({st,h:dem.filter(d=>d.c.st===st).reduce((s,d)=>s+d.h,0),cov:cov(st)}));
+  const today=mean(PEOPLE.map(p=>CLIENTS.filter(c=>c.att[p.id]).length));
+  const planC=mean(PEOPLE.map(p=>nCli(p.id)));
+  return {fc,dem,load,al,sup,left,stacks,cell,byStack,today,planC,tot:dem.reduce((s,d)=>s+d.h,0)};
+}
+function pgPlan(){
+  const pl=plan43(), over=PEOPLE.filter(p=>pl.load[p.id]>P_H*P_TGT), supH=pl.sup.reduce((s,x)=>s+x.h,0), leftH=pl.left.reduce((s,x)=>s+x.h,0);
+  const maxCell=Math.max(...PEOPLE.flatMap(p=>pl.stacks.map(st=>pl.cell(p.id,st))));
+  const supBy={}; pl.sup.forEach(x=>{const k=x.pid+'|'+x.c.st;supBy[k]=(supBy[k]||0)+x.h;});
+  const alerts=[];
+  if(leftH) alerts.push({sev:'bad',t:`${leftH} h não cabem nem com a equipe a 100%`,d:pl.left.map(x=>`${x.c.n} (${x.h} h)`).join(', ')+'. Adiar no planejamento ou negociar prazo.'});
+  const zero=[...new Set(pl.sup.map(x=>x.c.st))].filter(st=>pl.byStack.find(b=>b.st===st).cov===0);
+  zero.forEach(st=>{const its=pl.sup.filter(x=>x.c.st===st);alerts.push({sev:'bad',t:`${st}: ninguém com nível 3 ou 4`,d:`${its.reduce((s,x)=>s+x.h,0)} h com ${[...new Set(its.map(x=>P[x.pid].n))].join(', ')} (nível 2), com apoio do tech lead.`});});
+  const sup2=pl.sup.filter(x=>!zero.includes(x.c.st));
+  if(sup2.length){const g={};sup2.forEach(x=>{const k=x.c.st;g[k]=g[k]||{h:0,ps:new Set()};g[k].h+=x.h;g[k].ps.add(P[x.pid].n);});
+    alerts.push({sev:'warn',t:`${sup2.reduce((s,x)=>s+x.h,0)} h com nível 2 em cliente novo para a pessoa`,d:Object.entries(g).sort((a,b)=>b[1].h-a[1].h).map(([st,v])=>`${st} ${v.h} h (${[...v.ps].join(', ')})`).join(' · ')+'. Apoio do tech lead.'});}
+  if(over.length) alerts.push({sev:'warn',t:`${over.map(p=>p.n).join(', ')} acima de 90%`,d:'A demanda das stacks dessas pessoas não coube na meta de 90%.'});
+  const idle=PEOPLE.filter(p=>pl.load[p.id]<P_H*0.8);
+  if(idle.length&&(over.length||leftH||sup2.length)){const free=Math.round(idle.reduce((s,p)=>s+P_H*P_TGT-pl.load[p.id],0)),busy=[...new Set([...over.flatMap(p=>Object.keys(p.sk).filter(st=>p.sk[st]>=3)),...sup2.map(x=>x.c.st),...pl.left.map(x=>x.c.st)])].filter(st=>pl.stacks.includes(st));
+    alerts.push({sev:'info',t:`Folga na stack errada: ${free} h livres`,d:`${idle.map(p=>p.n).join(', ')} têm folga, mas não dominam ${busy.slice(0,4).join(', ')}. Capacitar uma dessas pessoas resolve antes de contratar.`});}
+  if(!alerts.length) alerts.push({sev:'ok',t:'Tudo coberto dentro de 90%',d:'Toda a demanda prevista tem alguém com nível 3 ou 4 e folga.'});
+  const open=S.p43open&&P[S.p43open]?P[S.p43open]:null;
+  const ok=S.p43ok;
+  return `
+  <div class="card"><div class="card-b"><div class="cap-row">
+    <div class="cap"><div class="l">Demanda prevista</div><div class="v num">${pl.tot} h</div><div class="cell-sub">média das sprints + ${pl.fc.pend} h no topo</div></div>
+    <div class="cap"><div class="l">Distribuído</div><div class="v num">${pl.tot-leftH} h</div><div class="bar ${over.length?'warn':'c1'}" style="margin:6px 0 4px"><i style="width:${Math.min(100,(pl.tot-leftH)/SPRINT_CAP*100)}%"></i></div><div class="cell-sub num">${pct((pl.tot-leftH)/SPRINT_CAP)} de ${SPRINT_CAP} h · meta 90% por pessoa</div></div>
+    <div class="cap"><div class="l">Com apoio ou sem dono</div><div class="v num" style="${supH+leftH?'color:var(--warn)':''}">${supH+leftH} h</div><div class="cell-sub num">${supH} h com nível 2${leftH?` · ${leftH} h sem dono`:''}</div></div>
+    <div class="cap"><div class="l">Clientes por pessoa</div><div class="v num">${nf1.format(pl.planC)}</div><div class="cell-sub num">hoje: ${nf1.format(pl.today)} · menos troca de contexto</div></div>
+  </div></div></div>
+
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-h"><div><h3>Proposta de distribuição · Sprint 43</h3><p>Horas por pessoa e stack. Clique numa pessoa para ver os clientes dela e trocar quem atende.</p></div>${ok?`<span class="badge b-ok">${ic('check')} Aprovado ${ok}</span>`:'<span class="badge b-warn">Aguardando aprovação</span>'}</div>
+      <div class="card-b" style="padding:8px 6px 6px"><div class="tbl-wrap"><table class="pmx">
+        <thead><tr><th>Pessoa</th>${pl.stacks.map(st=>`<th class="c" title="${st}: ${pl.byStack.find(b=>b.st===st).h} h previstas">${st}</th>`).join('')}<th class="r">Total</th><th class="r">Clientes</th></tr></thead>
+        <tbody>${PEOPLE.map(p=>{const L=pl.load[p.id],u=L/P_H;return `<tr class="click ${open===p?'on':''}" data-act="p43open" data-p="${p.id}">
+          <td><div class="cell-main">${p.n}</div><div class="cell-sub">${p.lv}</div></td>
+          ${pl.stacks.map(st=>{const h=pl.cell(p.id,st),s=supBy[p.id+'|'+st];return `<td class="c">${h?`<span class="hm${s?' sup':''}" style="--a:${Math.round(18+h/maxCell*62)}%" title="${p.n} · ${st} nível ${p.sk[st]||0}: ${h} h${s?' (com apoio)':''}">${h}</span>`:'<span class="muted">·</span>'}</td>`;}).join('')}
+          <td class="r"><div class="num" style="font-weight:600;${u>1?'color:var(--bad)':u>P_TGT?'color:var(--warn)':''}">${L} h</div><div class="cell-sub num">${pct(u)}</div></td>
+          <td class="r num">${Object.keys(pl.al[p.id]).length}</td></tr>`;}).join('')}
+        <tr class="tot"><td class="cell-main">Previsto</td>${pl.byStack.map(b=>`<td class="c num"><b>${b.h}</b><div class="cell-sub">${b.cov} nív. 3+</div></td>`).join('')}<td class="r num"><b>${pl.tot} h</b></td><td></td></tr></tbody></table></div>
+        <div class="legend" style="padding:8px 12px 4px"><span><i style="background:var(--c1)"></i>Horas na stack (mais escuro = mais horas)</span><span><i style="background:var(--warn)"></i>Nível 2: precisa de apoio</span></div>
+        ${open?`<div class="p43-open">
+          <div style="font-weight:550;margin-bottom:4px">Clientes de ${open.n} na Sprint 43</div>
+          ${Object.entries(pl.al[open.id]).sort((a,b)=>b[1]-a[1]).map(([cid,h])=>{const c=CLIENTS.find(x=>x.id===cid),opts=PEOPLE.filter(x=>(x.sk[c.st]||0)>=2);
+            return `<div class="kv"><span>${esc(c.n)} · ${c.st} nível ${open.sk[c.st]||0}${S.p43ovr[cid]?' · <b style="color:var(--fg)">trocado pelo gestor</b>':''}</span><span style="display:flex;gap:8px;align-items:center"><b class="num" style="color:var(--fg)">${h} h</b>
+              <select class="select" data-p43="${cid}" aria-label="Quem atende ${esc(c.n)}" style="height:30px"><option value="">Passar para…</option>${opts.filter(x=>x!==open).map(x=>`<option value="${x.id}">${x.n} · nível ${x.sk[c.st]}</option>`).join('')}${S.p43ovr[cid]?'<option value="auto">Voltar à sugestão</option>':''}</select></span></div>`;}).join('')||'<div class="muted" style="font-size:13px">Sem clientes nesta proposta.</div>'}
+        </div>`:''}
+        <div class="p43-bar"><span class="muted" style="font-size:13px">${ok?'Plano aprovado. Mudanças depois disso pedem nova aprovação.':'A proposta é sugestão: o gestor troca quem quiser antes de aprovar, e o analista ainda pode pegar outro item.'}</span>
+          <button type="button" class="btn pri" data-act="p43ok" ${ok?'disabled':''}>${ic('check')} ${ok?'Plano aprovado':'Aprovar plano da Sprint 43'}</button></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card"><div class="card-h"><div><h3>Pontos de atenção</h3><p>O que o gestor precisa olhar antes de aprovar.</p></div></div>
+        <div class="card-b"><div class="alert-list">${alerts.map(a=>`<div class="alert">${ic(a.sev==='info'?'info':a.sev==='ok'?'check':'alert','sev-'+(a.sev==='ok'?'info':a.sev))}<div><div class="t">${esc(a.t)}</div><div class="d">${esc(a.d)}</div></div><span></span></div>`).join('')}</div></div></div>
+      <div class="card"><div class="card-h"><div><h3>Critérios da distribuição</h3><p>Regra fixa e escrita. Sem IA decidindo.</p></div></div>
+        <div class="card-b"><ol class="crit">
+          <li><b>Stack.</b> Nível 3 ou 4 atende sozinho. Nível 2 atende cliente que já conhece; em cliente novo, com apoio do tech lead.</li>
+          <li><b>Relação com o cliente.</b> Quem já atende tem preferência: conhece o negócio.</li>
+          <li><b>Folga.</b> Cada pessoa vai até 90% das 35 h. Só passa disso se a demanda não couber.</li>
+          <li><b>Foco.</b> Menos clientes diferentes por pessoa, para reduzir troca de contexto.</li>
+        </ol><p class="note" style="margin:8px 0 0">${ic('info')}<span>Stacks com menos gente qualificada são distribuídas primeiro. A demanda vem das horas do GLPI por cliente; o real é corrigido pelo apontado.</span></p></div></div>
+    </div>
+  </div>`;
+}
+
+function sprintTabs(){return `<div class="tabs" role="tablist"><button type="button" role="tab" class="${S.stab==='atual'?'on':''}" data-act="stab" data-t="atual">Sprint 42 (atual)</button><button type="button" role="tab" class="${S.stab==='plano'?'on':''}" data-act="stab" data-t="plano">Planejamento da Sprint 43${S.p43ok?' '+ic('check'):''}</button></div>`;}
 function pgSprint(){
+  if(S.stab==='plano') return `<div class="page-head"><div><h1>Sprint e alocação</h1><p>Sprint 43 · 20 a 24 de outubro. A automação propõe quem atende cada stack seguindo critérios escritos; o gestor ajusta e aprova.</p></div></div>
+  <div>${sprintTabs()}</div>${pgPlan()}`;
   const u=URGENT[S.urgIdx]||null;
   const used=sprintUsed(), useP=used/SPRINT_CAP;
   const urgN=S.tasks.filter(t=>t.urg).length;
@@ -1566,6 +1684,7 @@ function pgSprint(){
   return `
   <div class="page-head"><div><h1>Sprint e alocação</h1><p>Sprint 42 · 13 a 17 de outubro. Urgência crítica entra na sprint atual; as demais vão para o topo da próxima.</p></div>
   <div class="head-actions"><button type="button" class="btn" data-act="next-urg" ${!u?'disabled':''}>${ic('zap')} Simular nova urgência</button></div></div>
+  <div>${sprintTabs()}</div>
 
   <div class="card"><div class="card-b"><div class="cap-row">
     <div class="cap"><div class="l">Capacidade da semana</div><div class="v num">${SPRINT_CAP} h</div><div class="cell-sub">10 pessoas × 35 h para chamados</div></div>
@@ -1577,7 +1696,7 @@ function pgSprint(){
   <div class="grid g-2">
     ${urgent}
     <div class="card">
-      <div class="card-h"><div><h3>Previsão da Sprint 43</h3><p>A automação calcula toda sexta. O gestor ajusta no planejamento.</p></div></div>
+      <div class="card-h"><div><h3>Previsão da Sprint 43</h3><p>A automação calcula toda sexta. O gestor ajusta no planejamento.</p></div><button type="button" class="btn sm" data-act="stab" data-t="plano">Ver distribuição ${ic('right')}</button></div>
       <div class="card-b" style="display:flex;flex-direction:column;gap:12px">
         <div><div style="display:flex;align-items:baseline;gap:6px"><b class="num" style="font-size:22px">${fc.total} h</b><span class="muted">de ${SPRINT_CAP} h · ${pct(fcP)}</span></div>
           <div class="bar ${fcP>1?'bad':fcP>0.9?'warn':'c1'}" style="margin-top:6px"><i style="width:${Math.min(100,fcP*100)}%"></i></div></div>
@@ -2427,6 +2546,11 @@ document.addEventListener('click',e=>{
   }
   if(a==='send-rep'){const c=CLIENTS.find(x=>x.id===id);S.monthly[id]='Enviado';S.sentAt[id]=true;log(`Relatório de ${MONTHS[S.month].toLowerCase()} enviado`,`${c.n} · aprovado pelo ponto focal`,'');render();toast('Relatório aprovado e enviado ao cliente.');return;}
   if(a==='msheet'){closeLayers();S.msheet=id;if(S.monthly[id]==='Rascunho gerado')S.monthly[id]='Em revisão';render();return;}
+  if(a==='stab'){S.stab=el.dataset.t;render();window.scrollTo(0,0);return;}
+  if(a==='p43open'){if(e.target.closest('select'))return;S.p43open=S.p43open===el.dataset.p?null:el.dataset.p;render();return;}
+  if(a==='p43ok'){const pl=plan43();S.p43ok=now();
+    log('Plano da Sprint 43 aprovado',`${pl.tot} h distribuídas entre 10 pessoas${Object.keys(S.p43ovr).length?` · ${Object.keys(S.p43ovr).length} troca(s) do gestor`:''}`,'');
+    render();toast('Plano da Sprint 43 aprovado.');return;}
   if(a==='next-urg'){if(S.realloc)return;S.urgIdx++;S.pick=null;render();return;}
   if(a==='reset-urg'){S.urgIdx=0;S.pick=null;S.next=[];S.realloc=null;S.spN=SPRINT0.n;S.doneN=SPRINT0.doneN;S.doneH=SPRINT0.doneH;S.load=Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint]));S.tasks=S.tasks.filter(t=>!t.urg).map(t=>({...t,moved:false}));render();return;}
   if(a==='pick'){
@@ -2444,9 +2568,9 @@ document.addEventListener('click',e=>{
     }
     doAssign(pids);return;
   }
-  if(a==='realloc-ok'){const t=S.realloc.task;t.moved=true;S.load[t.p]-=t.h;S.spN--;S.next.push({id:t.id,cli:t.cli,t:t.t,h:t.h,lv:'Adiado'});log('Item adiado para a Sprint 43',`#${t.id} ${t.cli} · abre espaço para urgência crítica`,'');const pids=S.realloc.pids;S.realloc=null;doAssign(pids);return;}
+  if(a==='realloc-ok'){const t=S.realloc.task;t.moved=true;S.load[t.p]-=t.h;S.spN--;S.next.push({id:t.id,cli:t.cli,t:t.t,st:t.st,h:t.h,lv:'Adiado'});log('Item adiado para a Sprint 43',`#${t.id} ${t.cli} · abre espaço para urgência crítica`,'');const pids=S.realloc.pids;S.realloc=null;doAssign(pids);return;}
   if(a==='realloc-no'){const pids=S.realloc.pids;S.realloc=null;doAssign(pids,true);return;}
-  if(a==='defer'){const u=URGENT[S.urgIdx];S.next.push({id:u.id,cli:u.cli,t:u.t,h:u.h,lv:u.lv});log('Urgência para o topo da Sprint 43',`#${u.id} ${u.cli} · prioridade ${u.lv.toLowerCase()}`,'');S.urgIdx++;S.pick=null;render();toast(`#${u.id} vai para o topo da Sprint 43.`);return;}
+  if(a==='defer'){const u=URGENT[S.urgIdx];S.next.push({id:u.id,cli:u.cli,t:u.t,st:u.st,h:u.h,lv:u.lv});log('Urgência para o topo da Sprint 43',`#${u.id} ${u.cli} · prioridade ${u.lv.toLowerCase()}`,'');S.urgIdx++;S.pick=null;render();toast(`#${u.id} vai para o topo da Sprint 43.`);return;}
   if(a==='close'){const t=S.tasks.find(x=>x.id===+id);t.s='Concluído';S.doneN++;S.doneH+=t.h;const r=makeReport(t,'auto','Pendente');closeLayers();S.modal=r.id;render();return;}
   if(a==='ropen'){closeLayers();S.modal=+id;renderLayer();return;}
   if(a==='redit'){S.editing=S.modal;renderLayer();return;}
@@ -2483,6 +2607,7 @@ document.addEventListener('change',e=>{
   if(e.target.id==='price-c'){S.price=+e.target.value;render();}
   if(e.target.id==='cst'){S.cst=e.target.value;S.pageN=0;document.getElementById('ctable').innerHTML=clientTable();}
   if(e.target.id==='sim-fat'){S.sim.fat=e.target.checked;simRefresh();}
+  if(e.target.dataset&&e.target.dataset.p43){const cid=e.target.dataset.p43,v=e.target.value;if(!v)return;if(v==='auto')delete S.p43ovr[cid];else S.p43ovr[cid]=v;S.p43ok=null;const c=CLIENTS.find(x=>x.id===cid);log('Distribuição ajustada pelo gestor',`${c.n} → ${v==='auto'?'sugestão automática':P[v].n}`,'');render();return;}
   if(e.target.id==='f-task'){S.addSel=+e.target.value||null;renderLayer();}
 });
 function hl(id,on){document.querySelectorAll(`[data-hl="${id}"]`).forEach(n=>n.classList.toggle('hl',on));}
