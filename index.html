@@ -430,6 +430,24 @@ th .sa{margin-left:4px;font-size:11px;opacity:.6}
 .tri-empty{margin:auto;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;color:var(--muted-fg);padding:40px;font-size:13px}
 .tri-empty svg{width:30px;height:30px}
 .tri-empty b{color:var(--fg);font-size:15px}
+.tri-d{position:relative}
+.tri-x{position:absolute;top:14px;right:14px;z-index:2}
+.tri-h{padding-right:44px}
+.tri-hint-closed{display:none}
+.tri-d.leaving .tri-in{animation:triOut .2s ease-in forwards}
+@keyframes triOut{to{opacity:0;transform:translateX(24px)}}
+/* painel fechado: a fila ocupa a largura toda, em colunas */
+.tri.closed{grid-template-columns:minmax(0,1fr);min-height:0}
+.tri.closed .tri-d{display:none}
+.tri.closed .tri-l{border-right:0;background:var(--card)}
+.tri.closed .tri-hint-open{display:none}
+.tri.closed .tri-hint-closed{display:inline}
+.tri.closed .tri-s{max-width:360px}
+.tri.closed .tri-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px;max-height:none;padding:4px 16px 16px}
+.tri.closed .tq{border-color:var(--border);background:var(--card);animation:tqIn .3s cubic-bezier(.2,.8,.2,1) both}
+.tri.closed .tq:hover{border-color:color-mix(in srgb,var(--primary) 40%,var(--border));box-shadow:var(--shadow-lg)}
+@keyframes tqIn{from{opacity:0;transform:scale(.97)}}
+.tri:not(.closed) .tri-l{animation:none}
 @media (max-width:1000px){.tri{grid-template-columns:minmax(0,1fr)}.tri-l{border-right:0;border-bottom:1px solid var(--border)}.tri-list{max-height:300px}.tri-ctx{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){.rc{grid-template-columns:40px minmax(0,1fr) 60px}.rc-n{display:none}.tri-mini{grid-template-columns:repeat(2,minmax(0,1fr))}.tri-d{padding:16px}}
 
@@ -961,7 +979,7 @@ const SPRINT0={n:46,doneN:17,doneH:118};        // itens da sprint 42 e o que j�
 const S={page:'overview',month:5,price:85,q:'',quad:'Todos',pageN:0,sheet:null,modal:null,
   load:Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint])),
   stab:'atual', p43ovr:{}, p43open:null, p43ok:null,
-  qsel:null, qf:'all', qq:'', qall:false, qanim:false, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
+  qsel:null, qf:'all', qq:'', qall:false, qanim:false, qopen:true, pick:null, next:[], spN:SPRINT0.n, doneN:SPRINT0.doneN, doneH:SPRINT0.doneH, realloc:null, assigned:[], log:[], toast:null,
   quadSel:null, ctab:'mapa', rtab:'task',
   client:null, cpt:'resumo', cty:'all', cst:'all', csort:{k:'margin',d:1}, rsort:'mr', sim:{adj:0,fat:false}, kstage:{}, monthly:{}, msheet:null, add:false, addSel:null,
   rf:'all', ra:'all', rq:'', mf:'all', sentAt:{},
@@ -1632,7 +1650,7 @@ function qList(){
 const slaTxt=u=>u.sla<=3?`<span style="color:var(--bad)">vence em ${nf1.format(u.sla)} h</span>`:`vence em ${nf0.format(u.sla)} h`;
 function triQueue(){
   const list=qList();
-  return list.map(u=>{const s=qStatus(u),on=S.qsel===u.id;
+  return list.map(u=>{const s=qStatus(u),on=S.qopen&&S.qsel===u.id;
     return `<button type="button" class="tq${on?' on':''}${s.k!=='free'?' done':''}" data-act="tsel" data-id="${u.id}" style="--lv:var(${LV_COL[u.lv]})">
       <div class="tq-top"><span class="tq-lv">${u.lv}</span><span class="mono muted">#${u.id}</span><span class="tq-sla">${s.k==='free'?slaTxt(u):s.k==='task'?`${ic('check')} ${esc(s.who)}`:`${ic('right')} Sprint 43`}</span></div>
       <b>${esc(u.t)}</b>
@@ -1657,6 +1675,7 @@ function triDetail(){
     :`<div class="tri-act"><span class="muted">Prioridade ${u.lv.toLowerCase()} não mexe na sprint em andamento: vai para o topo da próxima${pick[0]?`, já com ${P[pick[0]].n} sugerido`:''}.</span><button type="button" class="btn pri" data-act="defer">${ic('right')} Enviar para a Sprint ${SPRINT_N+1}</button></div>`;
   return `<div class="tri-in${S.qanim?' fade':''}">
     <div class="tri-h">
+      <button type="button" class="icon-btn tri-x" data-act="tclose" aria-label="Fechar o chamado" title="Fechar (Esc)">${ic('x')}</button>
       <div class="tri-hl"><span class="badge ${LV[u.lv]}"><span class="dot"></span>${u.lv}</span><span class="mono muted">GLPI #${u.id} · aberto há ${u.age<1?'menos de 1 h':nf0.format(u.age)+' h'}</span></div>
       <h2>${esc(u.t)}</h2>
       <p>${esc(u.d)}</p>
@@ -1690,9 +1709,9 @@ function triDetail(){
 }
 function triHTML(){
   const free=URGENT.filter(u=>qStatus(u).k==='free'), crit=free.filter(u=>u.lv==='Crítica').length;
-  return `<div class="card tri" id="tri">
+  return `<div class="card tri${S.qopen?'':' closed'}" id="tri">
     <div class="tri-l">
-      <div class="tri-lh"><div><h3>Fila de chamados</h3><p>${free.length} sem dono${crit?` · <b style="color:var(--bad)">${crit} crítico${crit>1?'s':''}</b>`:''} · use ↑ ↓ para navegar</p></div></div>
+      <div class="tri-lh"><div><h3>Fila de chamados</h3><p>${free.length} sem dono${crit?` · <b style="color:var(--bad)">${crit} crítico${crit>1?'s':''}</b>`:''} · <span class="tri-hint-open">use ↑ ↓ para navegar</span><span class="tri-hint-closed">clique num chamado para ver o projeto e os recomendados</span></p></div></div>
       <div class="tri-f">${QF.map(([k,l])=>`<button type="button" class="chip ${S.qf===k?'on':''}" data-act="qf" data-v="${k}">${l}</button>`).join('')}</div>
       <div class="search tri-s">${ic('search')}<input id="qq" placeholder="Buscar chamado, cliente ou stack" value="${esc(S.qq)}" aria-label="Buscar chamado"></div>
       <div class="tri-list" id="tri-list">${triQueue()}</div>
@@ -1702,6 +1721,14 @@ function triHTML(){
 }
 /* troca de chamado sem redesenhar a página: só a fila e o painel */
 function triRefresh(anim){S.qanim=!!anim;const l=document.getElementById('tri-list'),d=document.getElementById('tri-d');if(!l||!d){render();return;}l.innerHTML=triQueue();d.innerHTML=triDetail();S.qanim=false;}
+/* fechar o painel do chamado: ele sai deslizando e a fila ocupa a largura toda; abrir de novo ao escolher um chamado */
+function triClose(){
+  const t=document.getElementById('tri'), d=document.getElementById('tri-d'); S.qopen=false;
+  if(!t||!d){render();return;}
+  d.classList.add('leaving');
+  setTimeout(()=>{d.classList.remove('leaving');t.classList.add('closed');document.querySelectorAll('.tq.on').forEach(n=>n.classList.remove('on'));},200);
+}
+function triOpen(){S.qopen=true;const t=document.getElementById('tri');if(t)t.classList.remove('closed');}
 function triNext(){const nx=URGENT.find(u=>qStatus(u).k==='free'&&u.id!==S.qsel);S.qsel=nx?nx.id:S.qsel;S.pick=null;S.qall=false;}
 function sprintUsed(){return Math.round(PEOPLE.reduce((s,p)=>s+S.load[p.id],0));}
 function forecast(){
@@ -2695,7 +2722,8 @@ document.addEventListener('click',e=>{
   if(a==='p43ok'){const pl=plan43();S.p43ok=now();
     log('Plano da Sprint 43 aprovado',`${pl.tot} h distribuídas entre 10 pessoas${Object.keys(S.p43ovr).length?` · ${Object.keys(S.p43ovr).length} troca(s) do gestor`:''}`,'');
     render();toast('Plano da Sprint 43 aprovado.');return;}
-  if(a==='tsel'){const nid=+id;if(nid!==S.qsel){S.qsel=nid;S.pick=null;S.qall=false;S.realloc=null;triRefresh(true);}return;}
+  if(a==='tsel'){const nid=+id;if(nid!==S.qsel||!S.qopen){S.qsel=nid;S.pick=null;S.qall=false;S.realloc=null;triOpen();triRefresh(true);}return;}
+  if(a==='tclose'){triClose();return;}
   if(a==='qf'){S.qf=el.dataset.v;document.querySelectorAll('[data-act="qf"]').forEach(b=>b.classList.toggle('on',b.dataset.v===S.qf));triRefresh();return;}
   if(a==='qall'){S.qall=!S.qall;triRefresh();return;}
   if(a==='reset-urg'){S.qsel=null;S.pick=null;S.qall=false;S.next=[];S.realloc=null;S.spN=SPRINT0.n;S.doneN=SPRINT0.doneN;S.doneH=SPRINT0.doneH;S.load=Object.fromEntries(PEOPLE.map(p=>[p.id,p.sprint]));S.tasks=S.tasks.filter(t=>!t.urg).map(t=>({...t,moved:false}));render();return;}
@@ -2780,7 +2808,11 @@ document.addEventListener('dragstart',e=>{const k=e.target.closest&&e.target.clo
 document.addEventListener('dragend',e=>{document.querySelectorAll('.kcard.dragging').forEach(n=>n.classList.remove('dragging'));document.querySelectorAll('.kcol.over').forEach(n=>n.classList.remove('over'));dragId=null;});
 document.addEventListener('dragover',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(n=>n!==col&&n.classList.remove('over'));col.classList.add('over');});
 document.addEventListener('drop',e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||!dragId)return;e.preventDefault();const id=dragId;dragId=null;setStage(id,col.dataset.stage);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(S.sheet||S.modal||S.msheet||S.add||S.pauta))closeTop();});
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape') return;
+  if(S.sheet||S.modal||S.msheet||S.add||S.pauta){closeTop();return;}
+  if(S.page==='sprint'&&S.stab==='atual'&&S.qopen&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName||'')) triClose();
+});
 // ↑ ↓ percorrem a fila de chamados da Sprint, sem tirar o foco de um campo de texto
 document.addEventListener('keydown',e=>{
   if((e.key!=='ArrowDown'&&e.key!=='ArrowUp')||S.page!=='sprint'||S.stab!=='atual'||S.modal||S.sheet||S.msheet) return;
@@ -2788,7 +2820,7 @@ document.addEventListener('keydown',e=>{
   const list=qList(); if(!list.length) return;
   const ix=list.findIndex(u=>u.id===S.qsel), nx=list[Math.max(0,Math.min(list.length-1,ix+(e.key==='ArrowDown'?1:-1)))];
   e.preventDefault(); if(!nx||nx.id===S.qsel) return;
-  S.qsel=nx.id;S.pick=null;S.qall=false;S.realloc=null;triRefresh(true);
+  S.qsel=nx.id;S.pick=null;S.qall=false;S.realloc=null;triOpen();triRefresh(true);
   const b=document.querySelector(`.tq[data-id="${nx.id}"]`); if(b) b.scrollIntoView({block:'nearest',behavior:'smooth'});
 });
 
