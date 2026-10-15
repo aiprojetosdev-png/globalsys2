@@ -1652,7 +1652,7 @@ function triQueue(){
   const list=qList();
   return list.map(u=>{const s=qStatus(u),on=S.qopen&&S.qsel===u.id;
     return `<button type="button" class="tq${on?' on':''}${s.k!=='free'?' done':''}" data-act="tsel" data-id="${u.id}" style="--lv:var(${LV_COL[u.lv]})">
-      <div class="tq-top"><span class="tq-lv">${u.lv}</span><span class="mono muted">#${u.id}</span><span class="tq-sla">${s.k==='free'?slaTxt(u):s.k==='task'?`${ic('check')} ${esc(s.who)}`:`${ic('right')} Sprint 43`}</span></div>
+      <div class="tq-top"><span class="tq-lv">${u.lv}</span><span class="mono muted">#${u.id}</span><span class="tq-sla" title="Prazo do SLA: vence em ${nf1.format(u.sla)} h">${s.k==='free'?`ativa há ${u.age<1?Math.round(u.age*60)+' min':nf0.format(u.age)+' h'}`:s.k==='task'?`${ic('check')} ${esc(s.who)}`:`${ic('right')} Sprint 43`}</span></div>
       <b>${esc(u.t)}</b>
       <span class="tq-sub">${esc(u.cli)} · ${u.st}</span>
     </button>`;}).join('')||'<div class="empty">Nenhum chamado com esse filtro.</div>';
