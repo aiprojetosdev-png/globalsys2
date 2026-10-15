@@ -995,7 +995,8 @@ function pgClients(){
   const m=S.month, mc=monthCalc(m);
   const rows=mc.rows.slice().sort((a,b)=>a.margin-b.margin);
   const counts=Object.fromEntries(Object.keys(QUAD).map(q=>[q,rows.filter(r=>r.quad===q).length]));
-  const risk=rows.filter(r=>r.margin<0.15).length, kb=kanbanItems(mc);
+  const kb=kanbanItems(mc);
+  const satAvg=mean(rows.map(r=>r.c.sat)), satLow=rows.filter(r=>r.c.sat<4).length;
   return `
   <div class="page-head"><div><h1>Clientes</h1><p>Quanto cada contrato paga, quanto custa atender e o que fazer com ele. Horas do GLPI, custo do RH e valor do contrato do comercial.</p></div>
   <div class="head-actions"><label class="muted" for="price-c" style="font-size:13px">Preço médio da hora (premissa)</label><select class="select" id="price-c">${[60,70,85,100,120,150].map(v=>`<option value="${v}" ${v===S.price?'selected':''}>R$ ${v}/h</option>`).join('')}</select></div></div>
@@ -1004,7 +1005,7 @@ function pgClients(){
     ${kpi('Receita do mês',brlk(mc.rev),`<span>${mc.rows.length} contratos ativos</span>`,'trend')}
     ${kpi('Custo de atender',brlk(mc.cost),`<span class="num">≈ ${brl(mc.cost/mc.H)}/h com rateio</span>`,'users')}
     ${kpi('Margem média',pct(mc.margin),`<span>com preço da hora de R$ ${S.price}</span>`,'spark')}
-    ${kpi('Clientes com margem < 15%',String(risk),`<span>${counts['Reprecificar']} para reprecificar · ${counts['Revisar escopo']} para revisar escopo</span>`,'building')}
+    ${kpi('Satisfação média',nf1.format(satAvg)+'<span class="muted" style="font-size:15px"> / 5</span>',`<span>${satLow} cliente${satLow===1?'':'s'} abaixo de 4</span>`,'spark')}
   </div>
 
   <div class="g-q">
@@ -1266,7 +1267,7 @@ function sheetClient(id){
   <aside class="sheet" role="dialog" aria-label="${esc(c.n)}">
     <div class="sheet-h"><div><h2>${esc(c.n)}</h2><div class="muted" style="font-size:13px;margin-top:4px">${c.st} · criticidade ${c.crit.toLowerCase()} · ${MONTHS[m]}</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">${qBadge(r.quad)}${neg>=2?'<span class="badge b-bad">Negativa há '+neg+' meses</span>':''}${stLab?`<span class="badge b-out">${stLab}</span>`:''}</div></div>${close}</div>
     <div class="sheet-b">
-      <div class="ro" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div>Receita<b class="num">${brl(r.rev)}</b></div><div>Custo<b class="num">${brl(r.cost)}</b></div><div>Margem<b class="num" style="color:${r.margin<0?'var(--bad)':'var(--fg)'}">${pct(r.margin)}</b></div><div>Pool<b class="num">${nf0.format(r.h)}/${c.pool} h</b></div></div>
+      <div class="ro" style="grid-template-columns:repeat(5,minmax(0,1fr))"><div>Receita<b class="num">${brl(r.rev)}</b></div><div>Custo<b class="num">${brl(r.cost)}</b></div><div>Margem<b class="num" style="color:${r.margin<0?'var(--bad)':'var(--fg)'}">${pct(r.margin)}</b></div><div>Pool<b class="num">${nf0.format(r.h)}/${c.pool} h</b></div><div>Satisfação<b class="num" style="color:${c.sat<4?'var(--warn)':'var(--fg)'}">${nf1.format(c.sat)} / 5</b></div></div>
       <div><div style="font-weight:550;margin-bottom:4px">Margem nos últimos meses</div>${sparkMargin(c)}</div>
       <div><div style="font-weight:550;margin-bottom:6px">Quem atende</div>${Object.entries(c.att).map(([pid,sh])=>`<div class="kv"><span>${P[pid].n} · ${P[pid].lv} · ${c.st} nível ${P[pid].sk[c.st]||0}</span><span class="num">${pct(sh)} das horas</span></div>`).join('')}</div>
       <div><div style="font-weight:550;margin-bottom:6px;display:flex;gap:8px;align-items:center">Relatório mensal <span class="badge ${MST[ms]}">${ms}</span></div>${reportDraft(c,m,r)}
